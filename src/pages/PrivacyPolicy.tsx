@@ -50,6 +50,7 @@ export function PrivacyPolicyPage() {
             <li>- <Trans i18nKey="privacy.s3.li3" components={components} /></li>
             <li>- <Trans i18nKey="privacy.s3.li4" components={components} /></li>
             <li>- <Trans i18nKey="privacy.s3.li5" components={components} /></li>
+            <li>- <Trans i18nKey="privacy.s3.li6" components={components} /></li>
           </ul>
           <p><Trans i18nKey="privacy.s3.p3" components={components} /></p>
         </div>

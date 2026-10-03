@@ -272,7 +272,7 @@
       "stats": {
         "title": "Analytiques",
         "description1": "Nous utilisons une instance auto-hébergée d'<umamiLink>Umami Analytics</umamiLink> pour collecter des statistiques d'utilisation anonymes afin d'améliorer Rature. Umami n'utilise pas de cookies, ne collecte aucune donnée personnelle et est entièrement conforme au RGPD.",
-        "description2": "Nous mesurons : les pages consultées, les informations sur l'appareil et le navigateur, la localisation approximative (pays / région) et les sources de trafic. Aucun contenu de document n'est jamais collecté. Consultez notre <policyLink>politique de confidentialité</policyLink> pour plus de détails.",
+        "description2": "Nous mesurons : les pages consultées, les informations sur l'appareil et le navigateur, la localisation approximative (pays / région), les sources de trafic et les événements d'utilisation (actions d'export et de téléchargement). Aucun contenu de document n'est jamais collecté. Consultez notre <policyLink>politique de confidentialité</policyLink> pour plus de détails.",
         "description3": "Les analytiques sont activées par défaut. Vous pouvez vous désinscrire à tout moment : votre préférence est enregistrée localement dans votre navigateur.",
         "subscribe": "Activer",
         "unsubscribe": "Désactiver"
@@ -562,7 +562,7 @@
   },
   "privacy": {
     "title": "Politique de confidentialité",
-    "lastUpdated": "Dernière mise à jour : 24/03/2026",
+    "lastUpdated": "Dernière mise à jour : 03/10/2026",
     "s1": {
       "title": "1. Présentation",
       "p1": "Rature est un outil permettant d'anonymiser des documents PDF en masquant les informations sensibles avant leur partage.",
@@ -586,6 +586,7 @@
       "li3": "<bold>Lieu</bold> (ville, région et pays).",
       "li4": "<bold>Provenance</bold> (depuis quel site vous avez atteint Rature).",
       "li5": "Les <bold>erreurs techniques</bold> (ex. : échec de l'anonymisation, pour le débogage).",
+      "li6": "Les <bold>événements d'utilisation</bold> (ex. : actions d'export et de téléchargement).",
       "p3": "<bold>Ces informations ne permettent en aucun cas d'identifier un utilisateur ou un document.</bold>"
     },
     "s4": {
