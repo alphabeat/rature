@@ -11,6 +11,7 @@ import { useAnonymization } from '@/hooks/useAnonymization.ts';
 import { useDocument } from '@/hooks/useDocument.ts';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
 import { downloadPDFDocument } from '@/lib/pdf/exportPDF.ts';
+import { track } from '@/lib/analytics.ts';
 import { DocumentProvider } from '@/providers/DocumentProvider.tsx';
 import type { WorkflowMode } from '@/types/index.ts';
 
@@ -49,6 +50,11 @@ function DocumentLayoutInner() {
     }
   }, [t, reset, resetEntities, resetPdfDocument, navigate]);
 
+  const handleExport = useCallback(() => {
+    track('export-opened');
+    setShowExport(true);
+  }, [setShowExport]);
+
   if (!file) return <Navigate to="/" />;
 
   return (
@@ -63,7 +69,7 @@ function DocumentLayoutInner() {
         onNextPage={() => setCurrentPage(p => Math.min(p + 1, pageCount))}
         onZoomIn={handleZoomIn}
         onZoomOut={handleZoomOut}
-        onExport={() => setShowExport(true)}
+        onExport={handleExport}
       />
 
       <div className="h-10.5 shrink-0 px-5 py-2.5 border-b border-border-theme bg-card flex items-baseline gap-3">
@@ -103,11 +109,16 @@ function DocumentLayoutInner() {
               if (!doc && file) {
                 doc = await redact(file, entities, 0, () => {}, detectedImages, imageMethod);
               }
-              if (!doc || !file) return;
+              if (!doc || !file) {
+                track('export-failed', { reason: 'no-document' });
+                return;
+              }
               downloadPDFDocument(doc, exportFileName, removeMetadata);
+              track('document-downloaded', { pages: pageCount, entities: entities.filter(e => e.included).length });
             } catch (err) {
               console.error('Export failed:', err);
               toast.error(t('export.error'));
+              track('export-failed', { reason: 'exception' });
             }
           }}
         />
