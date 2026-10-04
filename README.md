@@ -1,5 +1,7 @@
 # Rature
 
+> Anonymisez vos PDF directement dans le navigateur, sans envoyer vos documents : [rature.fr](https://rature.fr)
+
 **Redact sensitive information from PDFs, entirely in your browser.**
 
 Rature is a privacy-first PDF anonymisation tool powered by on-device AI. Drop in a document, let the NER model detect names, dates, organisations, and other personal data, then export a clean redacted copy. Nothing ever leaves your machine.
@@ -88,4 +90,6 @@ If you have a larger idea (new feature, architecture change), open an issue firs
 
 ## License
 
-MIT
+Rature is licensed under the [GNU Affero General Public License v3.0 or later](LICENSE), the same licence as the bundled [MuPDF](https://mupdf.com) engine.
+
+Copyright (c) 2026 Julien Kilo
