@@ -1,10 +1,12 @@
 import { BookOpen, CheckCircle, Cpu, ExternalLink, HardDriveDownload, ScanEye } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAnonymization } from '@/hooks/useAnonymization.ts';
 import { useNERWorker } from '@/hooks/useNERWorker.ts';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
+import { track } from '@/lib/analytics.ts';
+import { isModelCached } from '@/lib/cache.ts';
 import { CUSTOM_PAGE_SPLIT_TOKEN, NER_MODELS } from '@/models/utils.ts';
 import { Navigate } from 'react-router';
 
@@ -26,6 +28,14 @@ export function LoadingPage({ onComplete }: LoadingPageProps) {
   const [showSubPanel, setShowSubPanel] = useState(false);
   const [iconStep, setIconStep] = useState(0);
   const [iconPhase, setIconPhase] = useState<'enter' | 'exit'>('enter');
+  const [startedAt] = useState(() => performance.now());
+  const cachedRef = useRef(false);
+
+  useEffect(() => {
+    isModelCached(NER_MODELS[modelName].url).then((cached) => {
+      cachedRef.current = cached;
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleShowSubPanel = useCallback(() => {
     if (!showSubPanel && downloadProgress && downloadProgress.percent < 100) {
@@ -63,15 +73,28 @@ export function LoadingPage({ onComplete }: LoadingPageProps) {
   const analyzeDocument = useCallback(async (text: string) => {
     setTimeout(() => updateStep(2), 500);
 
-    const { entities } = await processText(text);
+    let entities;
+    try {
+      ({ entities } = await processText(text));
+    } catch (err) {
+      console.error(err);
+      track('analysis-failed', { stage: 'ner' });
+      return;
+    }
 
     const labeledEntities = entities.filter((entity) => entity.type !== 'O');
+
+    track('analysis-completed', {
+      seconds: Math.round((performance.now() - startedAt) / 1000),
+      entities: labeledEntities.length,
+      cached: cachedRef.current,
+    });
 
     setNerEntities(labeledEntities);
     setModelTokens(modelTokens);
 
     setTimeout(() => finalize(), 500);
-  }, [finalize, modelTokens, processText, setModelTokens, setNerEntities, updateStep]);
+  }, [finalize, modelTokens, processText, setModelTokens, setNerEntities, startedAt, updateStep]);
 
   const processDocument = useCallback(async () => {
     if (pdfProcessingStatus !== 'idle') return;
@@ -91,6 +114,10 @@ export function LoadingPage({ onComplete }: LoadingPageProps) {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     processDocument();
   }, [pdfProcessingStatus, processDocument, stepIndex, workerStatus]);
+
+  useEffect(() => {
+    if (error) track('analysis-failed', { stage: 'model-download' });
+  }, [error]);
 
   useEffect(() => {
     return () => {

@@ -24,3 +24,14 @@ export async function deleteAllCaches(): Promise<void> {
   const names = await caches.keys();
   await Promise.all(names.map(n => caches.delete(n)));
 }
+
+export async function isModelCached(modelUrl: string): Promise<boolean> {
+  try {
+    if (!('caches' in window)) return false;
+    const cache = await caches.open('transformers-cache');
+    const requests = await cache.keys();
+    return requests.some(req => req.url.startsWith(`${modelUrl}/`) && req.url.endsWith('.onnx'));
+  } catch {
+    return false;
+  }
+}
