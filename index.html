@@ -17,9 +17,22 @@
     <meta property="og:url" content="https://rature.fr/">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:site_name" content="Rature">
+    <meta property="og:image" content="https://rature.fr/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Rature : anonymisez vos PDF, sans serveur, confidentialité totale.">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Rature | Anonymisation de PDF, 100% dans le navigateur">
     <meta name="twitter:description" content="Protégez vos données confidentielles avant de partager vos PDF avec un agent IA. Anonymisation locale, sans serveur, sans compromis.">
-    <script defer src="https://umami.julienkilo.dev/script.js" data-website-id="39520de9-59ed-482b-80ad-bc208c863614" crossorigin="anonymous"></script>
+    <meta name="twitter:image" content="https://rature.fr/og-image.png">
+    <script>
+      window.umamiBeforeSend = function (type, payload) {
+        var n = navigator, b = n.userAgentData && n.userAgentData.brands;
+        if (n.webdriver === true || (b && b.some(function (x) { return /Headless/i.test(x.brand); }))) return null;
+        return payload;
+      };
+    </script>
+    <script defer src="https://umami.julienkilo.dev/script.js" data-website-id="39520de9-59ed-482b-80ad-bc208c863614" data-before-send="umamiBeforeSend" data-domains="rature.fr" crossorigin="anonymous"></script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,9 +1,12 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, ExternalLink, RotateCcw } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button.tsx';
 import { useAnonymization } from '@/hooks/useAnonymization.ts';
+import { track } from '@/lib/analytics.ts';
+import { validateFile } from '@/lib/pdf/validatePDF.ts';
 import { cn } from '@/lib/utils.ts';
 import {
   DEFAULT_FEATURES,
@@ -27,6 +30,13 @@ const TEXT_LINES = [
   { width: '88%' },
   { width: '73%' },
 ];
+
+function fileExtension(name: string): string {
+  const dot = name.lastIndexOf('.');
+  if (dot < 0) return 'none';
+  const ext = name.slice(dot + 1).toLowerCase();
+  return /^[a-z0-9]{1,10}$/.test(ext) ? ext : 'other';
+}
 
 interface DropZoneProps {
   onFileSelect: (file: File) => void;
@@ -81,12 +91,16 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
   const activeFeatures = [activeLanguage, activeSpeed, activeFocus];
 
   const handleFile = useCallback(
-    (file: File) => {
-      if (file.type === 'application/pdf') {
+    (file: File, method: 'drop' | 'picker') => {
+      if (validateFile(file).valid) {
+        track('pdf-selected', { method });
         onFileSelect(file);
+      } else {
+        toast.error(t('dropzone.notPdf'));
+        track('file-rejected', { ext: fileExtension(file.name) });
       }
     },
-    [onFileSelect],
+    [onFileSelect, t],
   );
 
   const onDragOver = (e: React.DragEvent) => { e.preventDefault(); setIsDragging(true); };
@@ -95,11 +109,12 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
     e.preventDefault();
     setIsDragging(false);
     const file = e.dataTransfer.files[0];
-    if (file) handleFile(file);
+    if (file) handleFile(file, 'drop');
   };
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) handleFile(file);
+    if (file) handleFile(file, 'picker');
+    e.target.value = '';
   };
 
   useEffect(() => {
@@ -133,7 +148,10 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
-        onClick={() => inputRef.current?.click()}
+        onClick={() => {
+          track('picker-opened');
+          inputRef.current?.click();
+        }}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         className={cn(
@@ -146,7 +164,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
         <input
           ref={inputRef}
           type="file"
-          accept="application/pdf"
+          accept="application/pdf,.pdf"
           className="sr-only"
           onChange={onInputChange}
         />

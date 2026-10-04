@@ -1,5 +1,5 @@
 export function validateFile(file: File): { valid: boolean; error?: string } {
-  const isPDF = file.type === "application/pdf" || file.name.endsWith(".pdf");
+  const isPDF = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
 
   if (!isPDF) {
     return { valid: false, error: "Please select a PDF file" };
