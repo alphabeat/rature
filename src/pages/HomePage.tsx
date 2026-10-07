@@ -1,4 +1,4 @@
-import { Laptop, WandSparkles, WifiOff } from 'lucide-react';
+import { Code2, CloudOff, MapPin } from 'lucide-react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { DropZone } from '@/components/home/DropZone.tsx';
@@ -11,10 +11,10 @@ interface HomePageProps {
   onFileSelect: () => void;
 }
 
-const BADGES = [
-  { icon: Laptop, key: 'home.badges.local' },
-  { icon: WandSparkles, key: 'home.badges.detection' },
-  { icon: WifiOff, key: 'home.badges.noServer' },
+const TRUST = [
+  { icon: CloudOff, key: 'home.trust.noUpload' },
+  { icon: Code2, key: 'home.trust.openSource', href: 'https://github.com/alphabeat/rature' },
+  { icon: MapPin, key: 'home.trust.madeInFrance' },
 ] as const;
 
 export function HomePage({ onFileSelect }: HomePageProps) {
@@ -47,16 +47,16 @@ export function HomePage({ onFileSelect }: HomePageProps) {
         }}
       />
 
-      <section className="relative z-10 flex-1 mx-auto h-full w-full max-w-6xl px-6 pt-52 pb-16 flex flex-col gap-10 items-center">
+      <section className="relative z-10 flex-1 mx-auto h-full w-full max-w-6xl px-6 pt-28 pb-12 flex flex-col gap-5 items-center">
 
         <h1
           className="text-center tracking-tight leading-[1.05]"
           style={{ animation: 'fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both' }}
         >
-          <span className="block text-accent text-6xl lg:text-7xl font-extrabold">
+          <span className="block text-accent text-5xl lg:text-6xl font-extrabold">
             {t('home.title')}
-          </span>
-          <span className="block text-3xl lg:text-4xl font-extrabold text-fg mt-2">
+          </span>{' '}
+          <span className="block text-3xl lg:text-4xl font-extrabold text-fg mt-1">
             {t('home.subtitle')}
           </span>
         </h1>
@@ -77,7 +77,7 @@ export function HomePage({ onFileSelect }: HomePageProps) {
         </p>
 
         <div
-          className="max-w-3xl w-full backdrop-blur-xs bg-transparent shadow-2xl my-4 hover:shadow-xl transition-shadow duration-300"
+          className="max-w-3xl w-full backdrop-blur-xs bg-transparent shadow-2xl hover:shadow-xl transition-shadow duration-300"
           style={{
             animation: 'fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both',
           }}
@@ -89,15 +89,32 @@ export function HomePage({ onFileSelect }: HomePageProps) {
           className="flex items-center gap-4 flex-wrap justify-center"
           style={{ animation: 'fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both' }}
         >
-          {BADGES.map(({ icon: Icon, key }) => (
-            <li
-              key={key}
-              className="flex items-center gap-2 text-sm font-medium text-fg-muted bg-surface-subtle border border-border-theme px-3 py-2"
-            >
-              <Icon size={16} className="text-accent shrink-0" />
-              {t(key)}
-            </li>
-          ))}
+          {TRUST.map(item => {
+            const Icon = item.icon;
+            const content = (
+              <>
+                <Icon size={16} className="text-accent shrink-0" aria-hidden="true" />
+                {t(item.key)}
+              </>
+            );
+            return (
+              <li
+                key={item.key}
+                className="flex items-center gap-2 text-sm font-medium text-fg-muted bg-surface-subtle border border-border-theme px-3 py-2"
+              >
+                {'href' in item ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 hover:text-fg transition-colors"
+                  >
+                    {content}
+                  </a>
+                ) : content}
+              </li>
+            );
+          })}
         </ul>
       </section>
 

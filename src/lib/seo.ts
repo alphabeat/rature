@@ -37,8 +37,8 @@ function softwareApplication(description: string, audienceType: string, featureL
 const PAGES: Record<PublicPath, Record<Lang, PageCopy>> = {
   '/': {
     fr: {
-      title: 'Rature | Anonymisation de PDF 100% locale et sécurisée',
-      description: 'Anonymisez vos documents PDF directement dans votre navigateur, sans envoi de données. Rature protège vos informations confidentielles avant tout partage avec une IA.',
+      title: 'Anonymiser un PDF gratuitement, sans envoi de fichier | Rature',
+      description: 'Anonymisez un PDF avant de le partager ou de le confier à ChatGPT. Détection automatique des données personnelles, dans votre navigateur. Gratuit et open source.',
       ogTitle: 'Rature | Anonymisez vos PDF avant de les confier à une IA',
       ogDescription: 'Outil d\'anonymisation de documents PDF, 100% local. Aucune donnée ne quitte votre navigateur. Idéal pour juristes, DPO et avocats.',
       jsonLd: softwareApplication(
@@ -53,8 +53,8 @@ const PAGES: Record<PublicPath, Record<Lang, PageCopy>> = {
       ),
     },
     en: {
-      title: 'Rature | 100% local, private PDF anonymization',
-      description: 'Anonymize your PDF documents directly in your browser, with no upload. Rature protects your confidential information before you share it with an AI.',
+      title: 'Redact a PDF for free, without uploading it | Rature',
+      description: 'Redact a PDF before sharing it or giving it to ChatGPT. Personal data is detected automatically, in your browser. Free and open source.',
       ogTitle: 'Rature | Anonymize your PDFs before handing them to an AI',
       ogDescription: 'PDF anonymization tool that runs 100% locally. No data leaves your browser. Built for lawyers, DPOs and compliance teams.',
       jsonLd: softwareApplication(

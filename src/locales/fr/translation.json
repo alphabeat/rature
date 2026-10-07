@@ -7,14 +7,12 @@
   },
   "home": {
     "title": "Anonymisez vos PDF",
-    "subtitle": "Sans serveur, confidentialité totale.",
-    "description": "<logo /> détecte et masque automatiquement <accent>les données sensibles</accent> : les noms, adresses,<br />emails, numéros de téléphone et bien plus, directement <bold>dans votre navigateur</bold>.<br />Aucun envoi, aucun serveur : vos documents <accent>ne quittent jamais</accent> votre ordinateur.",
-    "descriptionBrowser": "dans votre navigateur",
-    "descriptionNeverLeave": "ne quittent jamais",
-    "badges": {
-      "local": "100% local",
-      "detection": "Détection automatique",
-      "noServer": "Aucun serveur"
+    "subtitle": "avant de les partager",
+    "description": "Avant de les envoyer à ChatGPT, à un confrère ou à un expert,<br /><logo /> détecte et masque noms, adresses, emails, téléphones et identifiants.<br />Tout se passe <bold>dans votre navigateur</bold> : <accent>aucun fichier n'est envoyé</accent>.",
+    "trust": {
+      "noUpload": "Aucun envoi de fichier",
+      "openSource": "Code source ouvert (AGPL)",
+      "madeInFrance": "Fait en France"
     },
     "mobile": {
       "title": "Version desktop recommandée",
@@ -23,14 +21,11 @@
   },
   "dropzone": {
     "drop": "Déposez votre PDF ici",
-    "idle": "Déposez votre PDF ou cliquez ici pour importer",
-    "steps": "Ce qui se passe ensuite :",
-    "step1": "1. Le modèle IA se charge dans votre navigateur",
-    "step2": "2. Le texte de votre document est extrait localement",
-    "step3": "3. Les données sensibles sont identifiées automatiquement par le modèle",
-    "step4": "4. Vous pouvez modifier à votre guise les données à masquer",
-    "standard": "Mode standard",
-    "advanced": "Mode avancé",
+    "idle": "Glissez votre PDF ici",
+    "choose": "Choisir un PDF",
+    "free": "Gratuit, sans inscription.",
+    "options": "Options",
+    "model": "Modèle",
     "language": "Langue",
     "speed": "Vitesse",
     "focus": "Type d'entités",
@@ -42,7 +37,6 @@
     "speed_accurate": "Précis",
     "focus_general": "Général",
     "focus_pii": "Données personnelles",
-    "selectedModel": "Modèle sélectionné",
     "learnMore": "En savoir plus",
     "reset": "Réinitialiser",
     "notPdf": "Rature lit uniquement les PDF pour l'instant. Depuis Word : Fichier > Enregistrer sous > PDF."
