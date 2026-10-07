@@ -1,6 +1,6 @@
 import path from "path";
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
+import { reactRouter } from '@react-router/dev/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 
@@ -12,7 +12,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    react(),
+    reactRouter(),
     tailwindcss(),
     viteStaticCopy({
 			targets: [
