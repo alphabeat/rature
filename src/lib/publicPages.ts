@@ -1,3 +1,5 @@
+export const SITE_URL = 'https://rature.fr';
+
 // Pages that are prerendered and indexed, in French at their path and in English under `/en`.
 // App pages (processing, document, settings) are not listed: they stay unprefixed.
 export const PUBLIC_PATHS = ['/', '/about', '/privacy-policy'] as const;

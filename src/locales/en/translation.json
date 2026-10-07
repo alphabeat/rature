@@ -178,6 +178,11 @@
     "renderError": "Unable to render this page.",
     "pageAlt": "Page {{page}}"
   },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This address doesn't match any Rature page.",
+    "back": "Back to home"
+  },
   "errors": {
     "noFile": "No file selected!"
   },
