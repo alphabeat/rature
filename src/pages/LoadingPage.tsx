@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useAnonymization } from '@/hooks/useAnonymization.ts';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 import { useNERWorker } from '@/hooks/useNERWorker.ts';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
 import { track } from '@/lib/analytics.ts';
@@ -18,6 +19,7 @@ const STEP_ICONS = [Cpu, BookOpen, ScanEye, CheckCircle];
 
 export function LoadingPage({ onComplete }: LoadingPageProps) {
   const { t, i18n } = useTranslation();
+  const localize = useLocalizedPath();
   const { modelName } = useAnonymization();
   const { downloadProgress, processingProgress, modelTokens, status: workerStatus, error, initialize, processText, terminate } = useNERWorker();
   const { setModelTokens, setNerEntities } = useAnonymization();
@@ -149,7 +151,7 @@ export function LoadingPage({ onComplete }: LoadingPageProps) {
   }, [stepIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!file) {
-    return <Navigate to="/" />;
+    return <Navigate to={localize('/')} />;
   }
 
   const StepIcon = STEP_ICONS[iconStep];

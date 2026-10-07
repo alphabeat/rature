@@ -2,9 +2,11 @@ import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 
 import { LanguageSwitcher } from "@/components/LanguageSwitcher.tsx";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath.ts";
 
 export function Footer() {
   const { t } = useTranslation();
+  const localize = useLocalizedPath();
 
   return (
     <footer className="sticky bottom-0 border-t border-border-theme py-8 bg-surface/30 backdrop-blur-md z-20">
@@ -28,7 +30,7 @@ export function Footer() {
         <p className="text-sm text-fg/80">•</p>
         <nav className="flex items-center gap-4">
           <Link
-            to="/privacy-policy"
+            to={localize('/privacy-policy')}
             className="text-sm text-fg/70 hover:text-fg transition-colors"
           >
             {t('footer.privacy')}

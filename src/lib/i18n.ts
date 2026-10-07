@@ -3,9 +3,22 @@ import { initReactI18next } from 'react-i18next';
 
 import fr from '@/locales/fr/translation.json' with { type: 'json' };
 import en from '@/locales/en/translation.json' with { type: 'json' };
+import { publicPage, type Lang } from '@/lib/publicPages.ts';
 
-// Always start in French so the client matches the prerendered HTML; root.tsx applies
-// a stored choice after hydration.
+function storedLang(): Lang {
+  try {
+    return localStorage.getItem('rature-language') === 'en' ? 'en' : 'fr';
+  } catch {
+    return 'fr';
+  }
+}
+
+// Public pages take their language from the URL, app pages from the stored choice.
+function initialLang(): Lang {
+  if (typeof window === 'undefined') return 'fr';
+  return publicPage(window.location.pathname)?.lang ?? storedLang();
+}
+
 i18n
   .use(initReactI18next)
   .init({
@@ -13,7 +26,7 @@ i18n
       fr: { translation: fr },
       en: { translation: en },
     },
-    lng: 'fr',
+    lng: initialLang(),
     fallbackLng: 'fr',
     supportedLngs: ['fr', 'en'],
     interpolation: {
@@ -22,12 +35,18 @@ i18n
   });
 
 i18n.on('languageChanged', (lng) => {
-  document.documentElement.lang = lng;
   try {
     localStorage.setItem('rature-language', lng);
   } catch {
     // storage unavailable: the choice lasts for this page only
   }
 });
+
+// Fixed-language instances for public pages, so each prerendered URL renders in its own
+// language regardless of the shared instance. Resources are shared and loaded synchronously.
+export const publicPageI18n: Record<Lang, typeof i18n> = {
+  fr: i18n.cloneInstance({ lng: 'fr' }),
+  en: i18n.cloneInstance({ lng: 'en' }),
+};
 
 export default i18n;

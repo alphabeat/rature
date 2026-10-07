@@ -6,9 +6,11 @@ import { Footer } from "@/components/home/Footer.tsx";
 import { Navbar } from "@/components/Navbar.tsx";
 import { RatureLogo } from "@/components/RatureLogo.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath.ts";
 
 export function AboutPage() {
   const { t } = useTranslation();
+  const localize = useLocalizedPath();
 
   return (
     <div className="flex flex-col justify-between flex-1 h-full">
@@ -53,7 +55,7 @@ export function AboutPage() {
           </p>
         </div>
         <div className="mb-6 p-8 text-center font-medium">
-          <Link to="/">
+          <Link to={localize('/')}>
             <Button size="lg">
               <Upload size={18} />
               {t('about.cta.button')} <RatureLogo /> {t('about.cta.buttonSuffix')}

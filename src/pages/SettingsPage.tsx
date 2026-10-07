@@ -12,6 +12,7 @@ import { Footer } from "@/components/home/Footer.tsx";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher.tsx";
 import { Navbar } from "@/components/Navbar.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath.ts";
 import { useTheme } from "@/hooks/useTheme.tsx";
 import { cn } from '@/lib/utils.ts';
 import { NER_MODELS, NER_MODELS_NAMES } from "@/models/utils.ts";
@@ -22,6 +23,7 @@ const italic = <span className="italic" />;
 export function SettingsPage() {
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation();
+  const localize = useLocalizedPath();
 
   const [analyticsEnabled, setAnalyticsEnabled] = useState(
     () => localStorage.getItem('umami.disabled') !== '1'
@@ -211,7 +213,7 @@ export function SettingsPage() {
                   <Trans
                     i18nKey="settings.privacy.stats.description2"
                     components={{
-                      policyLink: <Link to="/privacy-policy" className="underline underline-offset-4" />
+                      policyLink: <Link to={localize('/privacy-policy')} className="underline underline-offset-4" />
                     }}
                   />
                   <br />

@@ -9,7 +9,7 @@ import { track } from '@/lib/analytics.ts';
 import { validateFile } from '@/lib/pdf/validatePDF.ts';
 import { cn } from '@/lib/utils.ts';
 import {
-  DEFAULT_FEATURES,
+  defaultFeatures,
   LANGUAGE_OPTIONS,
   SPEED_OPTIONS,
   FOCUS_OPTIONS,
@@ -69,21 +69,22 @@ function FeatureChip<T extends string>({ option, selected, onSelect }: FeatureCh
 }
 
 export function DropZone({ onFileSelect }: DropZoneProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { modelName, setModel } = useAnonymization();
+  const defaults = defaultFeatures(i18n.language);
   const [isDragging, setIsDragging] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
-  const [features, setFeatures] = useState<ModelFeatures>(DEFAULT_FEATURES);
+  const [features, setFeatures] = useState<ModelFeatures>(defaults);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const resolvedModel = resolveModel(features);
   const modelMeta = NER_MODELS[resolvedModel];
 
   const isAdvanced =
-    features.language !== DEFAULT_FEATURES.language ||
-    features.speed !== DEFAULT_FEATURES.speed ||
-    features.focus !== DEFAULT_FEATURES.focus;
+    features.language !== defaults.language ||
+    features.speed !== defaults.speed ||
+    features.focus !== defaults.focus;
 
   const activeLanguage = LANGUAGE_OPTIONS.find(o => o.value === features.language)!;
   const activeSpeed = SPEED_OPTIONS.find(o => o.value === features.speed)!;
@@ -137,7 +138,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
 
   const resetFeatures = () => {
     setModel(NER_MODELS_NAMES[0]);
-    setFeatures(DEFAULT_FEATURES);
+    setFeatures(defaults);
   };
 
   const isActive = isDragging || isHovering;

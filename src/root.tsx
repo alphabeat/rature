@@ -1,7 +1,9 @@
 import { useEffect, type ReactNode } from 'react';
-import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteError } from 'react-router';
+import { I18nextProvider, useTranslation } from 'react-i18next';
+import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation, useRouteError } from 'react-router';
 import './index.css';
-import i18n from '@/lib/i18n.ts';
+import i18n, { publicPageI18n } from '@/lib/i18n.ts';
+import { publicPage } from '@/lib/publicPages.ts';
 
 import { appMeta } from '@/lib/seo.ts';
 import Providers from '@/providers/index.tsx';
@@ -14,8 +16,17 @@ const UMAMI_BEFORE_SEND = `window.umamiBeforeSend=function(type,payload){var n=n
 export const meta = () => appMeta;
 
 export function Layout({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  const { i18n: appI18n } = useTranslation();
+  const lang = publicPage(pathname)?.lang ?? appI18n.language;
+
+  // Hydration keeps the prerendered attribute (the SPA fallback is always `fr`), so sync it.
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,21 +57,22 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
-  // Pages are prerendered in French; apply a stored English choice only after hydration.
+  const { pathname } = useLocation();
+  const pageLang = publicPage(pathname)?.lang;
+
+  // A public page's language carries over to the app pages opened from it.
   useEffect(() => {
-    try {
-      if (localStorage.getItem('rature-language') === 'en') void i18n.changeLanguage('en');
-    } catch {
-      // storage unavailable: stay in French
-    }
-  }, []);
+    if (pageLang) void i18n.changeLanguage(pageLang);
+  }, [pageLang]);
 
   return (
-    <Providers>
-      <div className="flex flex-col min-h-full text-fg antialiased bg-linear-to-b from-gray-200 to-surface dark:from-surface dark:to-gray-900">
-        <Outlet />
-      </div>
-    </Providers>
+    <I18nextProvider i18n={pageLang ? publicPageI18n[pageLang] : i18n}>
+      <Providers>
+        <div className="flex flex-col min-h-full text-fg antialiased bg-linear-to-b from-gray-200 to-surface dark:from-surface dark:to-gray-900">
+          <Outlet />
+        </div>
+      </Providers>
+    </I18nextProvider>
   );
 }
 

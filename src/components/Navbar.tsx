@@ -2,18 +2,20 @@ import { Info, Moon, Settings, Sun, Upload } from 'lucide-react';
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
+import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 import { useTheme } from '@/hooks/useTheme.tsx';
 import { RatureLogo } from './RatureLogo.tsx';
 
 export function Navbar() {
   const { toggleTheme } = useTheme();
   const { t } = useTranslation();
+  const localize = useLocalizedPath();
 
   return (
     <header className="fixed top-8 left-1/2 -translate-x-1/2 z-50 px-4 shadow-card">
       <div className="flex items-center gap-2 border border-border-theme bg-surface/30 backdrop-blur-md px-4 py-2.5 shadow-lg">
         <Link
-          to="/"
+          to={localize('/')}
           className="h-14 flex items-center gap-2 mr-4 shrink-0 group"
         >
           <RatureLogo size="xl" />
@@ -21,7 +23,7 @@ export function Navbar() {
 
         <nav className="hidden md:flex items-center gap-1">
           <Link
-            to="/"
+            to={localize('/')}
             className="group p-3 h-full flex grow shrink-0 items-center justify-center gap-3 min-w-36 text-sm text-fg-muted hover:text-neutral-100 dark:hover:text-neutral-800 transition-colors hover:bg-neutral-800 dark:hover:bg-neutral-200"
           >
             <Upload size="24" className='shrink-0' />
@@ -35,7 +37,7 @@ export function Navbar() {
             <span className="relative font-medium hidden md:flex min-w-0 after:content-[''] after:absolute after:left-0 after:top-1/2 after:-translate-y-1/2 after:h-[1.5px] after:bg-current after:w-0 group-hover:after:w-full after:transition-[width] after:duration-500">{t('nav.settings')}</span>
           </Link>
           <Link
-            to="/about"
+            to={localize('/about')}
             className="group p-3 h-full flex grow shrink-0 items-center justify-center gap-3 min-w-36 text-sm text-fg-muted hover:text-neutral-100 dark:hover:text-neutral-800 transition-colors hover:bg-neutral-800 dark:hover:bg-neutral-200"
           >
             <Info size="24" className='shrink-0' />
