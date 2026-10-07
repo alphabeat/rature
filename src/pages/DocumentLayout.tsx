@@ -9,6 +9,7 @@ import { PageThumbnailPanel } from '@/components/workflow/PageThumbnailPanel.tsx
 import { Toolbar } from '@/components/workflow/Toolbar.tsx';
 import { useAnonymization } from '@/hooks/useAnonymization.ts';
 import { useDocument } from '@/hooks/useDocument.ts';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
 import { downloadPDFDocument } from '@/lib/pdf/exportPDF.ts';
 import { track } from '@/lib/analytics.ts';
@@ -18,6 +19,7 @@ import type { WorkflowMode } from '@/types/index.ts';
 function DocumentLayoutInner() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const localize = useLocalizedPath();
   const { nerEntities: entities, reset: resetEntities } = useAnonymization();
   const { file, pageCount, detectedImages, reset: resetPdfDocument } = usePdfProcessing();
   const {
@@ -46,16 +48,16 @@ function DocumentLayoutInner() {
       reset();
       resetEntities();
       resetPdfDocument();
-      navigate('/');
+      navigate(localize('/'));
     }
-  }, [t, reset, resetEntities, resetPdfDocument, navigate]);
+  }, [t, reset, resetEntities, resetPdfDocument, navigate, localize]);
 
   const handleExport = useCallback(() => {
     track('export-opened');
     setShowExport(true);
   }, [setShowExport]);
 
-  if (!file) return <Navigate to="/" />;
+  if (!file) return <Navigate to={localize('/')} />;
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">

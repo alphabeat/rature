@@ -1,7 +1,6 @@
 import { Globe, Languages, Zap, Scale, Target, ShieldCheck } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
-import i18n from '@/lib/i18n.ts';
 import type { NERModel } from '@/models/utils.ts';
 
 export type Language = 'english' | 'french' | 'multilingual';
@@ -14,11 +13,14 @@ export interface ModelFeatures {
   focus: Focus;
 }
 
-export const DEFAULT_FEATURES: ModelFeatures = {
-  language: i18n.language === 'fr' ? 'french' : 'english',
-  speed: 'balanced',
-  focus: 'pii',
-};
+// The default model matches the page language, so prerendered and hydrated markup agree.
+export function defaultFeatures(uiLanguage: string): ModelFeatures {
+  return {
+    language: uiLanguage === 'fr' ? 'french' : 'english',
+    speed: 'balanced',
+    focus: 'pii',
+  };
+}
 
 export function resolveModel(features: ModelFeatures): NERModel {
   const { language, speed, focus } = features;
