@@ -7,7 +7,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['build', '.react-router']),
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     plugins: {
@@ -27,4 +27,10 @@ export default defineConfig([
   tseslint.configs.recommended,
   reactHooks.configs.flat.recommended,
   reactRefresh.configs.vite,
+  {
+    rules: {
+      // React Router route modules export these next to the component.
+      'react-refresh/only-export-components': ['error', { allowConstantExport: true, allowExportNames: ['meta'] }],
+    },
+  },
 ]);
