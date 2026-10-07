@@ -1,8 +1,6 @@
 import type { MetaDescriptor } from 'react-router';
 
-import { localizedPath, publicPage, type Lang, type PublicPath } from '@/lib/publicPages.ts';
-
-export const SITE_URL = 'https://rature.fr';
+import { localizedPath, publicPage, SITE_URL, type Lang, type PublicPath } from '@/lib/publicPages.ts';
 
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
@@ -132,5 +130,11 @@ export function pageMeta(pathname: string): MetaDescriptor[] {
 // App routes hold an in-memory document: nothing to index there.
 export const appMeta: MetaDescriptor[] = [
   { title: 'Rature' },
+  { name: 'robots', content: 'noindex' },
+];
+
+// Served for every unknown URL (`404.html`).
+export const notFoundMeta: MetaDescriptor[] = [
+  { title: 'Page introuvable | Rature' },
   { name: 'robots', content: 'noindex' },
 ];

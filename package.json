@@ -8,6 +8,7 @@
     "dev": "bunx --bun react-router dev",
     "build": "tsc -b && bunx --bun react-router build",
     "lint": "eslint .",
+    "indexnow": "bun scripts/indexnow.ts",
     "preview": "vite preview --outDir build/client"
   },
   "dependencies": {

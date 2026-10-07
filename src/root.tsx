@@ -1,6 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
 import { I18nextProvider, useTranslation } from 'react-i18next';
-import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation, useRouteError } from 'react-router';
+import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation, useMatches, useRouteError } from 'react-router';
 import './index.css';
 import i18n, { publicPageI18n } from '@/lib/i18n.ts';
 import { publicPage } from '@/lib/publicPages.ts';
@@ -18,7 +18,9 @@ export const meta = () => appMeta;
 export function Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const { i18n: appI18n } = useTranslation();
-  const lang = publicPage(pathname)?.lang ?? appI18n.language;
+  // The 404 page is prerendered once, in French.
+  const notFound = useMatches().some((match) => match.id === 'routes/not-found');
+  const lang = publicPage(pathname)?.lang ?? (notFound ? 'fr' : appI18n.language);
 
   // Hydration keeps the prerendered attribute (the SPA fallback is always `fr`), so sync it.
   useEffect(() => {

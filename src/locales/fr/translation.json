@@ -178,6 +178,11 @@
     "renderError": "Impossible de rendre cette page.",
     "pageAlt": "Page {{page}}"
   },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "Cette adresse ne correspond à aucune page de Rature.",
+    "back": "Retour à l'accueil"
+  },
   "errors": {
     "noFile": "Aucun fichier sélectionné !"
   },

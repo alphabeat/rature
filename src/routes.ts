@@ -16,4 +16,5 @@ export default [
     route('image-edition', 'routes/document.image-edition.tsx'),
     route('preview', 'routes/document.preview.tsx'),
   ]),
+  route('*', 'routes/not-found.tsx'),
 ] satisfies RouteConfig;
