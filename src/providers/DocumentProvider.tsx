@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, type ReactNode } from 'react';
+import { useState, useCallback, type ReactNode } from 'react';
 import { useNavigate } from 'react-router';
 import { type PDFDocument } from 'mupdf';
 
@@ -22,16 +22,6 @@ export function DocumentProvider({ children }: { children: ReactNode }) {
   const [isRedacting, setIsRedacting] = useState(false);
   const [imageMethod, setImageMethod] = useState<ImageRedactionMethod>('pixels');
 
-  const entitiesRef = useRef(entities);
-  const currentPageRef = useRef(currentPage);
-  const detectedImagesRef = useRef(detectedImages);
-  const imageMethodRef = useRef(imageMethod);
-
-  entitiesRef.current = entities;
-  currentPageRef.current = currentPage;
-  detectedImagesRef.current = detectedImages;
-  imageMethodRef.current = imageMethod;
-
   const reset = useCallback(() => {
     setCurrentPage(1);
     setZoom(100);
@@ -51,8 +41,8 @@ export function DocumentProvider({ children }: { children: ReactNode }) {
       try {
         const doc = await redact(
           file,
-          entitiesRef.current,
-          currentPageRef.current - 1,
+          entities,
+          currentPage - 1,
           (partialDoc, processedPages) => {
             setRedactedDocument(partialDoc);
             setPendingPages(prev => {
@@ -62,8 +52,8 @@ export function DocumentProvider({ children }: { children: ReactNode }) {
             });
             setIsRedacting(false);
           },
-          detectedImagesRef.current,
-          imageMethodRef.current,
+          detectedImages,
+          imageMethod,
         );
         setRedactedDocument(doc);
         setPendingPages(new Set());
@@ -82,7 +72,7 @@ export function DocumentProvider({ children }: { children: ReactNode }) {
       setPendingPages(new Set());
       navigate('/document/edition', { replace: true });
     }
-  }, [file, navigate, pageCount, redact]);
+  }, [file, navigate, pageCount, redact, entities, currentPage, detectedImages, imageMethod]);
 
   return (
     <DocumentContext.Provider value={{
