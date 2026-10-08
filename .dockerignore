@@ -5,6 +5,5 @@ build
 .gitignore
 Dockerfile
 docker-compose.yml
-.env
 .vscode
 coverage
