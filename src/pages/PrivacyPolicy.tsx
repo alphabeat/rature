@@ -2,12 +2,14 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { Footer } from "@/components/home/Footer.tsx";
 import { Navbar } from "@/components/Navbar.tsx";
+import { WAITLIST_ENABLED } from "@/lib/waitlist.ts";
 
 const bold = <span className="font-bold" />;
 const githubLink = <a href="https://github.com/alphabeat/rature" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4" />;
 const hostLink = <a href="https://www.ovhcloud.com/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4" />;
 const mailLink = <a href="mailto:contact@rature.fr" className="underline underline-offset-4" />;
-const components = { bold, githubLink, hostLink, mailLink };
+const brevoLink = <a href="https://www.brevo.com/fr/legal/privacypolicy/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4" />;
+const components = { bold, githubLink, hostLink, mailLink, brevoLink };
 
 export function PrivacyPolicyPage() {
   const { t } = useTranslation();
@@ -54,6 +56,21 @@ export function PrivacyPolicyPage() {
           </ul>
           <p><Trans i18nKey="privacy.s3.p3" components={components} /></p>
         </div>
+        {WAITLIST_ENABLED && (
+          <>
+            <h4 className="font-bold text-lg mb-2">{t('privacy.s3.waitlist.title')}</h4>
+            <div className="flex flex-col gap-2 mb-6 pl-4">
+              <p><Trans i18nKey="privacy.s3.waitlist.p1" components={components} /></p>
+              <ul className="pl-4 flex flex-col gap-3">
+                <li>- <Trans i18nKey="privacy.s3.waitlist.li1" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.waitlist.li2" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.waitlist.li3" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.waitlist.li4" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.waitlist.li5" components={components} /></li>
+              </ul>
+            </div>
+          </>
+        )}
 
         <h3 className="font-bold text-2xl mb-2">{t('privacy.s4.title')}</h3>
         <div className="flex flex-col gap-2 mb-6 pl-4">

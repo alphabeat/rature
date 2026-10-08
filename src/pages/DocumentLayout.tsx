@@ -113,14 +113,16 @@ function DocumentLayoutInner() {
               }
               if (!doc || !file) {
                 track('export-failed', { reason: 'no-document' });
-                return;
+                return false;
               }
               downloadPDFDocument(doc, exportFileName, removeMetadata);
               track('document-downloaded', { pages: pageCount, entities: entities.filter(e => e.included).length });
+              return true;
             } catch (err) {
               console.error('Export failed:', err);
               toast.error(t('export.error'));
               track('export-failed', { reason: 'exception' });
+              return false;
             }
           }}
         />

@@ -562,7 +562,7 @@
   },
   "privacy": {
     "title": "Privacy policy",
-    "lastUpdated": "Last updated: 04/10/2026",
+    "lastUpdated": "Last updated: 08/10/2026",
     "s1": {
       "title": "1. Overview",
       "p1": "Rature is a tool for anonymizing PDF documents by masking sensitive information before sharing.",
@@ -579,7 +579,7 @@
     },
     "s3": {
       "title": "3. Data collected",
-      "p1": "Rature collects <bold>no personal data</bold>.",
+      "p1": "Rature collects <bold>no personal data</bold> when you use the tool.",
       "p2": "No element contained in the documents you use with the tool is transmitted, recorded, or analyzed by a server. The service may only measure <bold>anonymous technical information related to the application's operation</bold>, such as:",
       "li1": "<bold>Page views</bold> (e.g.: the pages consulted by visitors).",
       "li2": "<bold>Visitors</bold> (e.g.: device, browser and OS).",
@@ -587,7 +587,16 @@
       "li4": "<bold>Traffic source</bold> (e.g.: from where you've reached Rature).",
       "li5": "<bold>Technical errors</bold> (e.g.: model loading or analysis failure, for debugging).",
       "li6": "<bold>Usage events</bold> (e.g.: PDF selected, extension of a rejected file, analysis duration and number of detected items, export and download). File names and contents are never collected.",
-      "p3": "<bold>This information cannot in any way identify a user or a document.</bold>"
+      "p3": "<bold>This information cannot in any way identify a user or a document.</bold>",
+      "waitlist": {
+        "title": "3.1 Rature Pro waitlist (optional)",
+        "p1": "If you choose to join the Rature Pro waitlist, we collect <bold>your email address</bold> and, if you provide it, <bold>your profession</bold>. No document or document content is sent.",
+        "li1": "<bold>Purpose</bold>: notifying you when Rature Pro launches and, where relevant, asking you about your needs. This data is never sold or used for anything else.",
+        "li2": "<bold>Legal basis</bold>: your consent, which you can withdraw at any time.",
+        "li3": "<bold>Processor</bold>: <brevoLink>Brevo</brevoLink> (Sendinblue SAS, Paris), which hosts the list in the European Union.",
+        "li4": "<bold>Retention</bold>: until you unsubscribe, and at the latest 12 months after Rature Pro launches or the project is dropped.",
+        "li5": "<bold>Unsubscribe</bold>: through the link in every email, or by writing to <mailLink>contact@rature.fr</mailLink>."
+      }
     },
     "s4": {
       "title": "4. Cookies and trackers",
@@ -597,7 +606,7 @@
       "title": "5. Your rights",
       "s5_1": {
         "title": "5.1 Transparency commitment",
-        "p1": "Even though Rature collects no personally identifiable data, we are committed to respecting the principles of the <bold>General Data Protection Regulation (GDPR)</bold> and informing you of your rights. The following sections detail these rights, as well as the technical and organizational measures put in place to protect your data."
+        "p1": "Even though using Rature requires no personal data, we are committed to respecting the principles of the <bold>General Data Protection Regulation (GDPR)</bold> and informing you of your rights. The following sections detail these rights, as well as the technical and organizational measures put in place to protect your data."
       },
       "s5_2": {
         "title": "5.2 Your rights",
@@ -611,7 +620,7 @@
       },
       "s5_3": {
         "title": "5.3 How to exercise your rights?",
-        "p1": "Although Rature collects <bold>no personally identifiable data</bold>, you can contact us via:",
+        "p1": "To exercise your rights, you can contact us via:",
         "li1": "The project's GitHub repository: <githubLink>github.com/alphabeat/rature</githubLink>",
         "li2": "The dedicated email address: <mailLink>contact@rature.fr</mailLink>",
         "p2": "We are committed to responding to your request within <bold>one month</bold> (which may be extended by two months in complex cases)."
@@ -682,6 +691,45 @@
       "how2": "In the event of a <bold>substantial change</bold> (e.g.: change of hosting provider, addition of data collection), we will inform you via:",
       "how2a": "A <bold>banner on the site</bold> on your next visit.",
       "how2b": "An <bold>email</bold> if you have provided a contact address (e.g.: to contribute to the project)."
+    }
+  },
+  "waitlist": {
+    "cta": {
+      "nav": "Rature Pro",
+      "title": "Rature Pro: a whole case file in one review",
+      "badgePaid": "Paid plan",
+      "badgeSoon": "Coming soon",
+      "home": "Drop all your documents at once. Names you already redacted are found automatically in every new document.",
+      "export": "More documents to redact? With Rature Pro, process the whole case file at once, without selecting the same names again.",
+      "action": "Join the waitlist"
+    },
+    "title": "Join the Rature Pro waitlist",
+    "desc": "The paid plan for professionals who redact documents every day:",
+    "benefits": {
+      "batch": "<bold>Batch:</bold> drop a whole case file, approve it in a single review.",
+      "memory": "<bold>Memory:</bold> clients, parties and addresses are redacted automatically in every new document.",
+      "private": "<bold>Confidential:</bold> designed so your documents stay in your browser."
+    },
+    "note": "Waitlist members hear about pricing and launch first, with a launch price reserved for them.",
+    "email": "Email",
+    "emailPlaceholder": "you@firm.com",
+    "profession": "Profession (optional)",
+    "professionPlaceholder": "Choose",
+    "professions": {
+      "avocat": "Lawyer",
+      "dpo": "DPO",
+      "juriste": "In-house counsel",
+      "autre": "Other"
+    },
+    "consent": "Your email and profession are sent to Brevo, only to notify you of the launch. Unsubscribe at any time. <privacyLink>Privacy policy</privacyLink>",
+    "submit": "Sign me up",
+    "submitting": "Signing up…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "error": "Sign-up failed. Try again, or email us at contact@rature.fr.",
+    "success": {
+      "title": "You're on the list",
+      "desc": "You will be the first to hear when Rature Pro opens, along with your launch price."
     }
   }
 }

@@ -562,7 +562,7 @@
   },
   "privacy": {
     "title": "Politique de confidentialité",
-    "lastUpdated": "Dernière mise à jour : 04/10/2026",
+    "lastUpdated": "Dernière mise à jour : 08/10/2026",
     "s1": {
       "title": "1. Présentation",
       "p1": "Rature est un outil permettant d'anonymiser des documents PDF en masquant les informations sensibles avant leur partage.",
@@ -579,7 +579,7 @@
     },
     "s3": {
       "title": "3. Données collectées",
-      "p1": "Rature ne collecte <bold>aucune donnée personnelle</bold>.",
+      "p1": "Rature ne collecte <bold>aucune donnée personnelle</bold> lors de l'utilisation de l'outil.",
       "p2": "Aucun élément contenu dans les documents que vous utilisez avec l'outil n'est transmis, enregistré ou analysé par un serveur. Le service peut uniquement mesurer <bold>des informations techniques anonymes liées au fonctionnement de l'application</bold>, telles que :",
       "li1": "<bold>Pages vues</bold> (les pages que vous avez consulté).",
       "li2": "<bold>Visiteurs</bold> (appareil, navigateur et système d'exploitation).",
@@ -587,7 +587,16 @@
       "li4": "<bold>Provenance</bold> (depuis quel site vous avez atteint Rature).",
       "li5": "Les <bold>erreurs techniques</bold> (ex. : échec du chargement du modèle ou de l'analyse, pour le débogage).",
       "li6": "Les <bold>événements d'utilisation</bold> (ex. : sélection d'un PDF, extension d'un fichier refusé, durée de l'analyse et nombre d'éléments détectés, export et téléchargement). Le nom et le contenu des fichiers ne sont jamais collectés.",
-      "p3": "<bold>Ces informations ne permettent en aucun cas d'identifier un utilisateur ou un document.</bold>"
+      "p3": "<bold>Ces informations ne permettent en aucun cas d'identifier un utilisateur ou un document.</bold>",
+      "waitlist": {
+        "title": "3.1 Liste d'attente Rature Pro (facultative)",
+        "p1": "Si vous vous inscrivez volontairement à la liste d'attente Rature Pro, nous collectons <bold>votre adresse email</bold> et, si vous l'indiquez, <bold>votre profession</bold>. Aucun document ni contenu de document n'est transmis.",
+        "li1": "<bold>Finalité</bold> : vous prévenir du lancement de Rature Pro et, le cas échéant, vous proposer un échange sur vos besoins. Ces données ne sont ni revendues ni utilisées à d'autres fins.",
+        "li2": "<bold>Base légale</bold> : votre consentement, que vous pouvez retirer à tout moment.",
+        "li3": "<bold>Sous-traitant</bold> : <brevoLink>Brevo</brevoLink> (Sendinblue SAS, Paris), qui héberge la liste dans l'Union européenne.",
+        "li4": "<bold>Durée de conservation</bold> : jusqu'à votre désinscription, et au plus tard 12 mois après le lancement de Rature Pro ou l'abandon du projet.",
+        "li5": "<bold>Désinscription</bold> : via le lien présent dans chaque email, ou en écrivant à <mailLink>contact@rature.fr</mailLink>."
+      }
     },
     "s4": {
       "title": "4. Cookies et traceurs",
@@ -597,7 +606,7 @@
       "title": "5. Vos droits",
       "s5_1": {
         "title": "5.1 Engagement de transparence",
-        "p1": "Même si Rature ne collecte aucune donnée personnelle identifiable, nous nous engageons à respecter les principes du <bold>Règlement Général sur la Protection des Données (RGPD)</bold> et à vous informer de vos droits. Les sections suivantes détaillent ces droits, ainsi que les mesures techniques et organisationnelles mises en place pour protéger vos données."
+        "p1": "Même si l'utilisation de Rature ne nécessite aucune donnée personnelle, nous nous engageons à respecter les principes du <bold>Règlement Général sur la Protection des Données (RGPD)</bold> et à vous informer de vos droits. Les sections suivantes détaillent ces droits, ainsi que les mesures techniques et organisationnelles mises en place pour protéger vos données."
       },
       "s5_2": {
         "title": "5.2 Vos droits",
@@ -611,7 +620,7 @@
       },
       "s5_3": {
         "title": "5.3 Comment exercer vos droits ?",
-        "p1": "Bien que Rature ne collecte <bold>aucune donnée personnelle identifiable</bold>, vous pouvez nous contacter via :",
+        "p1": "Pour exercer vos droits, vous pouvez nous contacter via :",
         "li1": "Le dépôt GitHub du projet : <githubLink>github.com/alphabeat/rature</githubLink>",
         "li2": "L'adresse email dédiée : <mailLink>contact@rature.fr</mailLink>",
         "p2": "Nous nous engageons à répondre à votre demande sous <bold>un mois</bold> (délai pouvant être prolongé de deux mois en cas de complexité)."
@@ -682,6 +691,45 @@
       "how2": "En cas de <bold>modification substantielle</bold> (ex. : changement de prestataire d'hébergement, ajout d'une collecte de données), nous vous en informerons via :",
       "how2a": "Une <bold>bannière sur le site</bold> lors de votre prochaine visite.",
       "how2b": "Un <bold>email</bold> si vous avez fourni une adresse de contact (ex. : pour contribuer au projet)."
+    }
+  },
+  "waitlist": {
+    "cta": {
+      "nav": "Rature Pro",
+      "title": "Rature Pro : tout un dossier en une seule relecture",
+      "badgePaid": "Offre payante",
+      "badgeSoon": "Bientôt disponible",
+      "home": "Déposez toutes vos pièces d'un coup. Les noms déjà masqués sont retrouvés automatiquement sur chaque nouveau document.",
+      "export": "D'autres pièces à anonymiser ? Avec Rature Pro, traitez tout le dossier d'un coup, sans re-sélectionner les mêmes noms.",
+      "action": "Rejoindre la liste d'attente"
+    },
+    "title": "Rejoindre la liste d'attente Rature Pro",
+    "desc": "L'offre payante pour les professionnels qui anonymisent chaque jour :",
+    "benefits": {
+      "batch": "<bold>Par lot :</bold> déposez un dossier entier, validez en une seule relecture.",
+      "memory": "<bold>Mémoire :</bold> clients, parties et adresses sont masqués automatiquement sur chaque nouveau document.",
+      "private": "<bold>Confidentiel :</bold> conçu pour que vos documents restent dans votre navigateur."
+    },
+    "note": "Les inscrits seront informés en premier du tarif et de l'ouverture, avec un tarif de lancement qui leur est réservé.",
+    "email": "Email",
+    "emailPlaceholder": "vous@cabinet.fr",
+    "profession": "Profession (facultatif)",
+    "professionPlaceholder": "Choisir",
+    "professions": {
+      "avocat": "Avocat",
+      "dpo": "DPO",
+      "juriste": "Juriste",
+      "autre": "Autre"
+    },
+    "consent": "Votre email et votre profession sont transmis à Brevo, uniquement pour vous prévenir du lancement. Désinscription à tout moment. <privacyLink>Politique de confidentialité</privacyLink>",
+    "submit": "M'inscrire",
+    "submitting": "Inscription…",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "error": "L'inscription a échoué. Réessayez, ou écrivez-nous à contact@rature.fr.",
+    "success": {
+      "title": "C'est noté",
+      "desc": "Vous serez informé en premier de l'ouverture de Rature Pro et de votre tarif de lancement."
     }
   }
 }

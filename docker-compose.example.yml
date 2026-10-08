@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        VITE_BREVO_FORM_URL: ${VITE_BREVO_FORM_URL:-}
     container_name: rature
     restart: unless-stopped
     networks:
