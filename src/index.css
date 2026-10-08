@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+@custom-variant tall (@media (min-height: 800px));
 
 /* ─── Static design tokens ─────────────────────────────────────── */
 @theme {

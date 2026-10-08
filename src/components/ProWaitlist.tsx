@@ -81,7 +81,14 @@ function ProWaitlistInner({ source, className }: ProWaitlistProps) {
           {t('waitlist.cta.nav')}
         </button>
       ) : (
-        <div className={cn('relative w-full flex items-center gap-4 border border-accent/50 bg-card px-5 py-4 text-left shadow-lg', className)}>
+        // On the home page the drop zone is the main CTA, so the card stays secondary there.
+        <div
+          className={cn(
+            'relative w-full flex items-center gap-4 border px-5 py-4 text-left',
+            source === 'home' ? 'border-accent/40 bg-accent/5 dark:border-accent/50 dark:bg-accent/10' : 'border-accent/50 bg-card shadow-lg',
+            className,
+          )}
+        >
           <div className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-accent/10 text-accent">
             <Sparkles size={20} aria-hidden="true" />
           </div>
@@ -89,13 +96,20 @@ function ProWaitlistInner({ source, className }: ProWaitlistProps) {
             <span className="inline-block mb-1 px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase whitespace-nowrap bg-accent/10 text-accent">
               {t('waitlist.cta.badgePaid')}
             </span>
-            <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wider uppercase whitespace-nowrap bg-surface-subtle text-fg-muted">
+            <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wider uppercase whitespace-nowrap bg-amber-100 text-amber-800 dark:bg-amber-400/15 dark:text-amber-300">
               {t('waitlist.cta.badgeSoon')}
             </span>
             <p className="text-base font-bold text-fg">{t('waitlist.cta.title')}</p>
             <p className="text-sm text-fg-muted">{t(`waitlist.cta.${source}`)}</p>
           </div>
-          <Button onClick={() => handleOpenChange(true)} className="shrink-0">
+          <Button
+            variant={source === 'home' ? 'secondary' : 'primary'}
+            onClick={() => handleOpenChange(true)}
+            className={cn(
+              'shrink-0',
+              source === 'home' && 'border-accent/50 bg-accent/10 text-accent hover:bg-accent hover:text-accent-foreground',
+            )}
+          >
             {t('waitlist.cta.action')}
           </Button>
         </div>

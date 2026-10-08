@@ -155,7 +155,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         className={cn(
-          'relative flex flex-row items-center gap-12 px-12 py-6 cursor-pointer select-none overflow-hidden',
+          'relative flex flex-row items-center gap-8 px-8 py-6 cursor-pointer select-none overflow-hidden',
           'border-2 border-dashed transition-colors duration-300',
           isDragging
             ? 'border-accent bg-accent/10'
@@ -275,7 +275,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
           <div className="flex flex-col gap-3 px-4 pt-3 pb-4 border-x-2 border-b-2 border-dashed border-border-strong bg-black/5">
 
             <div className="flex items-center gap-3">
-              <p className="w-32 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
+              <p className="w-24 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
                 {t('dropzone.model')}
               </p>
               <div className="flex items-center gap-1.5 flex-wrap text-xs">
@@ -294,7 +294,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <p className="w-32 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
+              <p className="w-24 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
                 {t('dropzone.language')}
               </p>
               <div className="flex items-center gap-1.5 flex-wrap">
@@ -310,7 +310,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <p className="w-32 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
+              <p className="w-24 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
                 {t('dropzone.speed')}
               </p>
               <div className="flex items-center gap-1.5 flex-wrap">
@@ -326,7 +326,7 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <p className="w-32 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
+              <p className="w-24 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
                 {t('dropzone.focus')}
               </p>
               <div className="flex items-center gap-1.5 flex-wrap">

@@ -48,42 +48,46 @@ export function HomePage({ onFileSelect }: HomePageProps) {
         }}
       />
 
-      <section className="relative z-10 flex-1 mx-auto h-full w-full max-w-6xl px-6 pt-28 pb-12 flex flex-col gap-5 items-center">
+      <section className="relative z-10 flex-1 mx-auto h-full w-full max-w-6xl px-6 pt-32 tall:pt-44 pb-12 flex flex-col gap-12 tall:gap-16 items-center">
 
-        <h1
-          className="text-center tracking-tight leading-[1.05]"
-          style={{ animation: 'fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both' }}
-        >
-          <span className="block text-accent text-5xl lg:text-6xl font-extrabold">
-            {t('home.title')}
-          </span>{' '}
-          <span className="block text-3xl lg:text-4xl font-extrabold text-fg mt-1">
-            {t('home.subtitle')}
-          </span>
-        </h1>
+        <div className="w-full mb-4 grid gap-10 items-center lg:items-start lg:grid-cols-[1fr_auto] lg:gap-12">
+          <div className="flex flex-col gap-6 items-center text-center lg:items-start lg:text-left lg:pt-4">
+            <h1
+              className="tracking-tight leading-[1.05]"
+              style={{ animation: 'fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both' }}
+            >
+              <span className="block text-accent text-5xl lg:text-6xl font-extrabold">
+                {t('home.title')}
+              </span>{' '}
+              <span className="block text-3xl lg:text-4xl font-extrabold text-fg mt-1">
+                {t('home.subtitle')}
+              </span>
+            </h1>
 
-        <p
-          className="text-center text-base text-fg-muted leading-relaxed"
-          style={{ animation: 'fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both' }}
-        >
-          <Trans
-            i18nKey="home.description"
-            components={{
-              logo: <RatureLogo size="lg" />,
-              bold: <span className="font-bold text-fg" />,
-              accent: <span className="text-accent font-bold" />,
-              br: <br />,
+            <p
+              className="text-base text-fg-muted leading-relaxed"
+              style={{ animation: 'fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both' }}
+            >
+              <Trans
+                i18nKey="home.description"
+                components={{
+                  logo: <RatureLogo size="lg" />,
+                  bold: <span className="font-bold text-fg" />,
+                  accent: <span className="text-accent font-bold" />,
+                  br: <br />,
+                }}
+              />
+            </p>
+          </div>
+
+          <div
+            className="w-full max-w-xl lg:w-md mx-auto backdrop-blur-xs bg-card dark:bg-transparent shadow-2xl hover:shadow-xl transition-shadow duration-300"
+            style={{
+              animation: 'fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both',
             }}
-          />
-        </p>
-
-        <div
-          className="max-w-3xl w-full backdrop-blur-xs bg-transparent shadow-2xl hover:shadow-xl transition-shadow duration-300"
-          style={{
-            animation: 'fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both',
-          }}
-        >
-          <DropZone onFileSelect={handleFileSelected} />
+          >
+            <DropZone onFileSelect={handleFileSelected} />
+          </div>
         </div>
 
         <ul
@@ -101,7 +105,7 @@ export function HomePage({ onFileSelect }: HomePageProps) {
             return (
               <li
                 key={item.key}
-                className="flex items-center gap-2 text-sm font-medium text-fg-muted bg-surface-subtle border border-border-theme px-3 py-2"
+                className="flex items-center gap-2 text-sm font-medium text-fg-muted bg-card shadow-sm border border-border-theme px-3 py-2 dark:bg-surface-subtle dark:shadow-none"
               >
                 {'href' in item ? (
                   <a
