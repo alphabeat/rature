@@ -9,6 +9,10 @@ RUN bun install --frozen-lockfile
 
 COPY . .
 
+# Optional: Brevo form URL for the Rature Pro waitlist. Unset, the waitlist is not shown.
+ARG VITE_BREVO_FORM_URL=
+ENV VITE_BREVO_FORM_URL=$VITE_BREVO_FORM_URL
+
 RUN bunx --bun react-router build
 
 # PRODUCTION STAGE

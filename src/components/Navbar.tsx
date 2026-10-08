@@ -2,6 +2,7 @@ import { Info, Moon, Settings, Sun, Upload } from 'lucide-react';
 import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
+import { ProWaitlist } from '@/components/ProWaitlist.tsx';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 import { useTheme } from '@/hooks/useTheme.tsx';
 import { RatureLogo } from './RatureLogo.tsx';
@@ -12,7 +13,7 @@ export function Navbar() {
   const localize = useLocalizedPath();
 
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-4 shadow-card">
+    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-max px-4 shadow-card">
       <div className="flex items-center gap-2 border border-border-theme bg-surface/30 backdrop-blur-md px-3 py-1.5 shadow-lg">
         <Link
           to={localize('/')}
@@ -43,6 +44,10 @@ export function Navbar() {
             <Info size="24" className='shrink-0' />
             <span className="relative font-medium hidden md:flex min-w-0 after:content-[''] after:absolute after:left-0 after:top-1/2 after:-translate-y-1/2 after:h-[1.5px] after:bg-current after:w-0 group-hover:after:w-full after:transition-[width] after:duration-500">{t('nav.about')}</span>
           </Link>
+          <ProWaitlist
+            source="nav"
+            className="ml-2"
+          />
         </nav>
 
         <div className="h-10 w-0.5 bg-neutral-200 dark:bg-neutral-700 rounded-lg" />

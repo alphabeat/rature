@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { X, Download, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { ProWaitlist } from '@/components/ProWaitlist.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import type { GroupedEntity, ImageRedactionMethod } from '@/types/index.ts';
 
@@ -11,7 +12,8 @@ interface ExportModalProps {
   imageMethod: ImageRedactionMethod
   onImageMethodChange: (method: ImageRedactionMethod) => void
   onClose: () => void
-  onDownload: (opts: { removeMetadata: boolean; exportFileName: string }) => Promise<void>
+  // Resolves to true once the file is downloaded, false if the export failed.
+  onDownload: (opts: { removeMetadata: boolean; exportFileName: string }) => Promise<boolean>
 }
 
 type ReplaceMode = 'redacted' | 'pseudonym';
@@ -39,7 +41,8 @@ export function ExportModal({ entities, fileName, includedImageCount, imageMetho
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      // Escape already handled by a dialog on top (the Pro waitlist) must not close the modal too.
+      if (e.key === 'Escape' && !e.defaultPrevented) onClose();
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
@@ -51,8 +54,7 @@ export function ExportModal({ entities, fileName, includedImageCount, imageMetho
       // Use default file name if input is empty
       const fileName = effectiveFileName || t('export.defaultFileName');
 
-      await onDownload({ removeMetadata, exportFileName: fileName });
-      setDone(true);
+      if (await onDownload({ removeMetadata, exportFileName: fileName })) setDone(true);
     } finally {
       setIsDownloading(false);
     }
@@ -251,6 +253,10 @@ export function ExportModal({ entities, fileName, includedImageCount, imageMetho
                 {t('export.successDesc')}
               </p>
             </div>
+            <ProWaitlist
+              source="export"
+              className="rounded-xl mt-2"
+            />
             <Button variant="secondary" onClick={onClose}>
               {t('export.close')}
             </Button>

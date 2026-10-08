@@ -4,6 +4,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { DropZone } from '@/components/home/DropZone.tsx';
 import { Footer } from '@/components/home/Footer.tsx';
 import { Navbar } from '@/components/Navbar.tsx';
+import { ProWaitlist } from '@/components/ProWaitlist.tsx';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
 import { RatureLogo } from '@/components/RatureLogo.tsx';
 
@@ -116,6 +117,13 @@ export function HomePage({ onFileSelect }: HomePageProps) {
             );
           })}
         </ul>
+
+        <div
+          className="max-w-3xl w-full"
+          style={{ animation: 'fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both' }}
+        >
+          <ProWaitlist source="home" />
+        </div>
       </section>
 
       <div className="fixed inset-0 z-100 flex items-center justify-center bg-surface p-8 md:hidden">
