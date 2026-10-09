@@ -2,6 +2,7 @@ import { BookOpen, CheckCircle, Cpu, ExternalLink, HardDriveDownload, ScanEye } 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { AnalysisError, type AnalysisFailureStage } from '@/components/workflow/AnalysisError.tsx';
 import { useAnonymization } from '@/hooks/useAnonymization.ts';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 import { useNERWorker } from '@/hooks/useNERWorker.ts';
@@ -13,17 +14,18 @@ import { Navigate } from 'react-router';
 
 interface LoadingPageProps {
   onComplete: () => void;
+  onRetry: () => void;
 }
 
 const STEP_ICONS = [Cpu, BookOpen, ScanEye, CheckCircle];
 
-export function LoadingPage({ onComplete }: LoadingPageProps) {
+export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
   const { t, i18n } = useTranslation();
   const localize = useLocalizedPath();
   const { modelName } = useAnonymization();
   const { downloadProgress, processingProgress, modelTokens, status: workerStatus, error, initialize, processText, terminate } = useNERWorker();
   const { setModelTokens, setNerEntities } = useAnonymization();
-  const { file, pageCount, processingStatus: pdfProcessingStatus, processFile } = usePdfProcessing();
+  const { file, pageCount, processingStatus: pdfProcessingStatus, processFile, reset, setFile } = usePdfProcessing();
 
   const [progress, setProgress] = useState(10);
   const [stepIndex, setStepIndex] = useState(0);
@@ -31,7 +33,12 @@ export function LoadingPage({ onComplete }: LoadingPageProps) {
   const [iconStep, setIconStep] = useState(0);
   const [iconPhase, setIconPhase] = useState<'enter' | 'exit'>('enter');
   const [startedAt] = useState(() => performance.now());
+  const [failure, setFailure] = useState<{ stage: AnalysisFailureStage; message?: string } | null>(null);
   const cachedRef = useRef(false);
+
+  // Worker errors outside a job: init (model download) before the worker is ready, a crash after.
+  const workerFailureStage: AnalysisFailureStage = stepIndex === 0 ? 'model-download' : 'ner';
+  const failed = failure ?? (error ? { stage: workerFailureStage, message: error } : null);
 
   useEffect(() => {
     isModelCached(NER_MODELS[modelName].url).then((cached) => {
@@ -81,6 +88,7 @@ export function LoadingPage({ onComplete }: LoadingPageProps) {
     } catch (err) {
       console.error(err);
       track('analysis-failed', { stage: 'ner' });
+      setFailure({ stage: 'ner', message: err instanceof Error ? err.message : String(err) });
       return;
     }
 
@@ -103,7 +111,14 @@ export function LoadingPage({ onComplete }: LoadingPageProps) {
 
     updateStep(1);
 
-    const text = await processFile();
+    let text;
+    try {
+      text = await processFile();
+    } catch (err) {
+      track('analysis-failed', { stage: 'extract' });
+      setFailure({ stage: 'extract', message: err instanceof Error ? err.message : String(err) });
+      return;
+    }
 
     analyzeDocument(text.map((extract) => extract.text.replaceAll(/\n+/g, ' ')).join(CUSTOM_PAGE_SPLIT_TOKEN));
   }, [analyzeDocument, pdfProcessingStatus, processFile, updateStep]);
@@ -118,8 +133,8 @@ export function LoadingPage({ onComplete }: LoadingPageProps) {
   }, [pdfProcessingStatus, processDocument, stepIndex, workerStatus]);
 
   useEffect(() => {
-    if (error) track('analysis-failed', { stage: 'model-download' });
-  }, [error]);
+    if (error) track('analysis-failed', { stage: workerFailureStage });
+  }, [error]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     return () => {
@@ -152,6 +167,18 @@ export function LoadingPage({ onComplete }: LoadingPageProps) {
 
   if (!file) {
     return <Navigate to={localize('/')} />;
+  }
+
+  if (failed) {
+    const handleRetry = () => {
+      terminate();
+      // Back to 'idle' with the same file, so the remounted page extracts it again.
+      reset();
+      setFile(file);
+      onRetry();
+    };
+
+    return <AnalysisError stage={failed.stage} message={failed.message} onRetry={handleRetry} />;
   }
 
   const StepIcon = STEP_ICONS[iconStep];

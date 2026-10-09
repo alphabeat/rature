@@ -56,7 +56,25 @@
     "wordsAnalyzed": "~{{count}} words analyzed",
     "modelDownload": "Downloading model",
     "cachedNote": "Cached after first load",
-    "loadingFromCache": "Loading from cache..."
+    "loadingFromCache": "Loading from cache...",
+    "error": {
+      "model-download": {
+        "title": "The detection model could not be loaded",
+        "desc": "Rature downloads its model from huggingface.co the first time you use it. Your connection may have dropped, or your network blocks that site (common in law firms and companies). Try again, or from another network."
+      },
+      "extract": {
+        "title": "This PDF could not be read",
+        "desc": "The file may be password-protected, damaged, or not a real PDF. Try exporting it to PDF again from the original application."
+      },
+      "ner": {
+        "title": "The document analysis failed",
+        "desc": "Something went wrong while detecting personal data. Try again; if it keeps failing, close other tabs to free up memory."
+      },
+      "retry": "Try again",
+      "home": "Back to home",
+      "otherFile": "Choose another PDF",
+      "details": "Technical details"
+    }
   },
   "toolbar": {
     "back": "Redact another document",
