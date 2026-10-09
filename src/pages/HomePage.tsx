@@ -1,8 +1,12 @@
 import { Code2, CloudOff, MapPin } from 'lucide-react';
 import { Trans, useTranslation } from 'react-i18next';
 
+import { BeforeAfter } from '@/components/home/BeforeAfter.tsx';
 import { DropZone } from '@/components/home/DropZone.tsx';
+import { Faq } from '@/components/home/Faq.tsx';
 import { Footer } from '@/components/home/Footer.tsx';
+import { UseCases } from '@/components/home/UseCases.tsx';
+import { VerifySteps } from '@/components/home/VerifySteps.tsx';
 import { Navbar } from '@/components/Navbar.tsx';
 import { ProWaitlist } from '@/components/ProWaitlist.tsx';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
@@ -129,6 +133,13 @@ export function HomePage({ onFileSelect }: HomePageProps) {
           <ProWaitlist source="home" />
         </div>
       </section>
+
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-12 pb-24 flex flex-col gap-24">
+        <BeforeAfter />
+        <VerifySteps />
+        <UseCases />
+        <Faq />
+      </div>
 
       <div className="fixed inset-0 z-100 flex items-center justify-center bg-surface p-8 md:hidden">
         <div className="text-center max-w-sm">

@@ -17,6 +17,78 @@
     "mobile": {
       "title": "Desktop version recommended",
       "description": "is optimized for wide screen use. Please access the application from a computer."
+    },
+    "beforeAfter": {
+      "title": "What Rature removes from your documents",
+      "intro": "Rature finds the personal data, you review it, then the text is removed from the exported PDF. There is nothing left under the black boxes to copy or extract.",
+      "before": "Detected by Rature",
+      "after": "Exported PDF",
+      "redacted": "redacted",
+      "excerpt": "Between the undersigned: <per>Sarah Miller</per>, residing at <loc>12 Elm Street, Bristol BS1 4DJ</loc>, reachable on <phone>07700 900123</phone> and at <email>sarah.miller@example.com</email>, hereinafter “the Landlord”, and <per>James Carter</per>, residing at <loc>8 Station Road, Leeds LS1 4AP</loc>, hereinafter “the Tenant”."
+    },
+    "verify": {
+      "title": "How to check that nothing is uploaded",
+      "intro": "Don't take our word for it: you can check it yourself in a few minutes.",
+      "steps": {
+        "network": {
+          "title": "Watch the network traffic",
+          "desc": "Open the developer tools (F12), go to the Network tab, then analyse a document. You will see the model download from huggingface.co and cookieless analytics. No request contains your document."
+        },
+        "source": {
+          "title": "Read the code",
+          "desc": "Rature is open source, under the AGPL licence. The code that reads, analyses and redacts your documents is public on <github>GitHub</github>."
+        }
+      }
+    },
+    "useCases": {
+      "title": "When to redact a PDF",
+      "items": {
+        "ai": {
+          "title": "Before ChatGPT or Copilot",
+          "desc": "Have an AI summarise or analyse a file without handing it your clients' names."
+        },
+        "share": {
+          "title": "Before sharing with a colleague or an expert",
+          "desc": "Send a document without exposing the people named in it."
+        },
+        "gdpr": {
+          "title": "GDPR access requests",
+          "desc": "Give people the documents about them while hiding third parties' data."
+        },
+        "publish": {
+          "title": "Publishing a decision",
+          "desc": "Publish a decision, a report or a case study without identifying the parties."
+        }
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": {
+        "upload": {
+          "q": "Are my documents sent to a server?",
+          "a": "No. The PDF is read, analysed and redacted in your browser, on your computer. Rature has no server that receives files. Only the detection model is downloaded, from Hugging Face, the first time you use it."
+        },
+        "recover": {
+          "q": "Can the redacted text be recovered?",
+          "a": "No. Rature doesn't just draw a black box over the text: it removes the text from the exported PDF. Copy and paste or an extraction tool finds nothing under the redacted areas. The export can also strip the file's metadata (author, dates, original document properties)."
+        },
+        "free": {
+          "q": "Is Rature free?",
+          "a": "Yes, with no sign-up and no usage limit. The code is open source, under the AGPL licence. A paid plan, Rature Pro, is in the works for professionals who redact entire case files."
+        },
+        "detection": {
+          "q": "What does Rature detect, and can I fix mistakes?",
+          "a": "Rature finds names, addresses, emails, phone numbers, IDs and other personal data. Automatic detection can get things wrong: before exporting, you review the document, remove what shouldn't be redacted and add what was missed."
+        },
+        "chatgpt": {
+          "q": "Can I redact a document before giving it to ChatGPT?",
+          "a": "Yes, it's one of the main uses. Redact the PDF with Rature, check the result, then give the exported version to ChatGPT, Copilot or another assistant. Review it carefully: specific context (a job title, a place, a date) is sometimes enough to identify someone."
+        },
+        "firstLoad": {
+          "q": "Why is the first load slow?",
+          "a": "Detection relies on an AI model that runs in your browser. It weighs about 400 MB and is downloaded only once, then kept in the browser cache. Later analyses start much faster."
+        }
+      }
     }
   },
   "dropzone": {
