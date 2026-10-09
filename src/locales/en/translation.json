@@ -27,12 +27,12 @@
       "excerpt": "Between the undersigned: <per>Sarah Miller</per>, residing at <loc>12 Elm Street, Bristol BS1 4DJ</loc>, reachable on <phone>07700 900123</phone> and at <email>sarah.miller@example.com</email>, hereinafter “the Landlord”, and <per>James Carter</per>, residing at <loc>8 Station Road, Leeds LS1 4AP</loc>, hereinafter “the Tenant”."
     },
     "verify": {
-      "title": "How to check that nothing is uploaded",
-      "intro": "Don't take our word for it: you can check it yourself in a few minutes.",
+      "title": "Nothing is uploaded, and that can be checked",
+      "intro": "You don't have to take our word for it: others can check it for you.",
       "steps": {
         "network": {
-          "title": "Watch the network traffic",
-          "desc": "Open the developer tools (F12), go to the Network tab, then analyse a document. You will see the model download from huggingface.co and cookieless analytics. No request contains your document."
+          "title": "Your IT team can check it",
+          "desc": "In a few minutes, an IT person can watch what Rature exchanges with the internet during an analysis: the detection model download from huggingface.co and cookieless analytics. Your document is never sent."
         },
         "source": {
           "title": "Public code anyone can check",

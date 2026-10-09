@@ -27,12 +27,12 @@
       "excerpt": "Entre les soussignés : <per>Marie Dubois</per>, demeurant <loc>12 rue des Lilas, 69003 Lyon</loc>, joignable au <phone>06 12 34 56 78</phone> et à l'adresse <email>marie.dubois@example.com</email>, ci-après « la Bailleresse », et <per>Karim Benali</per>, demeurant <loc>8 avenue Jean Jaurès, 75019 Paris</loc>, ci-après « le Preneur »."
     },
     "verify": {
-      "title": "Comment vérifier que rien n'est envoyé",
-      "intro": "Ne nous croyez pas sur parole : vous pouvez le vérifier vous-même en quelques minutes.",
+      "title": "Rien n'est envoyé, et cela se vérifie",
+      "intro": "Vous n'avez pas à nous croire sur parole : d'autres peuvent le vérifier pour vous.",
       "steps": {
         "network": {
-          "title": "Regardez le trafic réseau",
-          "desc": "Ouvrez les outils de développement (F12), onglet Réseau, puis analysez un document. Vous verrez le téléchargement du modèle depuis huggingface.co et une mesure d'audience sans cookie. Aucune requête ne contient votre document."
+          "title": "Votre service informatique peut le contrôler",
+          "desc": "En quelques minutes, un informaticien peut observer ce que Rature échange avec internet pendant une analyse : le téléchargement du modèle de détection depuis huggingface.co et une mesure d'audience sans cookie. Votre document n'est jamais transmis."
         },
         "source": {
           "title": "Un code public, vérifiable par tous",
