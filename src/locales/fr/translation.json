@@ -14,9 +14,12 @@
       "openSource": "Code source ouvert (AGPL)",
       "madeInFrance": "Fait en France"
     },
-    "mobile": {
-      "title": "Version desktop recommandée",
-      "description": "est optimisé pour une utilisation sur écran large. Veuillez accéder à l'application depuis un ordinateur."
+    "mobileLink": {
+      "title": "Rature s'utilise sur ordinateur",
+      "desc": "L'analyse tourne entièrement dans votre navigateur, avec un modèle de détection et une relecture qui demandent un ordinateur. Envoyez-vous le lien pour l'ouvrir plus tard.",
+      "button": "M'envoyer le lien pour mon ordinateur",
+      "shareTitle": "Rature : anonymiser un PDF",
+      "shareText": "Anonymiser un PDF dans le navigateur, sans envoi de fichier :"
     },
     "beforeAfter": {
       "title": "Ce que Rature retire de vos documents",

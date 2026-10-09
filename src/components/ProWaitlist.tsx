@@ -84,7 +84,7 @@ function ProWaitlistInner({ source, className }: ProWaitlistProps) {
         // On the home page the drop zone is the main CTA, so the card stays secondary there.
         <div
           className={cn(
-            'relative w-full flex items-center gap-4 border px-5 py-4 text-left',
+            'relative w-full flex flex-col items-start gap-4 border px-5 py-4 text-left sm:flex-row sm:items-center',
             source === 'home' ? 'border-accent/40 bg-accent/5 dark:border-accent/50 dark:bg-accent/10' : 'border-accent/50 bg-card shadow-lg',
             className,
           )}
@@ -106,7 +106,7 @@ function ProWaitlistInner({ source, className }: ProWaitlistProps) {
             variant={source === 'home' ? 'secondary' : 'primary'}
             onClick={() => handleOpenChange(true)}
             className={cn(
-              'shrink-0',
+              'shrink-0 self-stretch sm:self-auto',
               source === 'home' && 'border-accent/50 bg-accent/10 text-accent hover:bg-accent hover:text-accent-foreground',
             )}
           >
