@@ -5,6 +5,7 @@ import { BeforeAfter } from '@/components/home/BeforeAfter.tsx';
 import { DropZone } from '@/components/home/DropZone.tsx';
 import { Faq } from '@/components/home/Faq.tsx';
 import { Footer } from '@/components/home/Footer.tsx';
+import { MobileSendLink } from '@/components/home/MobileSendLink.tsx';
 import { UseCases } from '@/components/home/UseCases.tsx';
 import { VerifySteps } from '@/components/home/VerifySteps.tsx';
 import { Navbar } from '@/components/Navbar.tsx';
@@ -84,8 +85,12 @@ export function HomePage({ onFileSelect }: HomePageProps) {
             </p>
           </div>
 
+          <div className="w-full max-w-xl mx-auto bg-card dark:bg-transparent shadow-2xl md:hidden">
+            <MobileSendLink />
+          </div>
+
           <div
-            className="w-full max-w-xl lg:w-md mx-auto backdrop-blur-xs bg-card dark:bg-transparent shadow-2xl hover:shadow-xl transition-shadow duration-300"
+            className="hidden md:block w-full max-w-xl lg:w-md mx-auto backdrop-blur-xs bg-card dark:bg-transparent shadow-2xl hover:shadow-xl transition-shadow duration-300"
             style={{
               animation: 'fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both',
             }}
@@ -139,16 +144,6 @@ export function HomePage({ onFileSelect }: HomePageProps) {
         <VerifySteps />
         <UseCases />
         <Faq />
-      </div>
-
-      <div className="fixed inset-0 z-100 flex items-center justify-center bg-surface p-8 md:hidden">
-        <div className="text-center max-w-sm">
-          <p className="text-3xl mb-4">🖥️</p>
-          <h2 className="text-xl font-bold text-fg mb-2">{t('home.mobile.title')}</h2>
-          <p className="text-sm text-fg-muted">
-            <span className="bg-neutral-800 text-neutral-100 px-2 py-1 font-bold [font-variant:small-caps]">rature</span> {t('home.mobile.description')}
-          </p>
-        </div>
       </div>
 
       <Footer />

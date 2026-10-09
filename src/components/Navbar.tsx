@@ -13,7 +13,7 @@ export function Navbar() {
   const localize = useLocalizedPath();
 
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-max px-4 shadow-card">
+    <header className="absolute md:fixed top-4 left-1/2 -translate-x-1/2 z-50 w-max px-4 shadow-card">
       <div className="flex items-center gap-2 border border-border-theme bg-surface/30 backdrop-blur-md px-3 py-1.5 shadow-lg">
         <Link
           to={localize('/')}

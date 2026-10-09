@@ -14,9 +14,12 @@
       "openSource": "Open source (AGPL)",
       "madeInFrance": "Made in France"
     },
-    "mobile": {
-      "title": "Desktop version recommended",
-      "description": "is optimized for wide screen use. Please access the application from a computer."
+    "mobileLink": {
+      "title": "Rature runs on a computer",
+      "desc": "The analysis runs entirely in your browser, with a detection model and a review step that need a computer. Send yourself the link to open it later.",
+      "button": "Send me the link for my computer",
+      "shareTitle": "Rature: redact a PDF",
+      "shareText": "Redact a PDF in your browser, with no file uploaded:"
     },
     "beforeAfter": {
       "title": "What Rature removes from your documents",
