@@ -56,7 +56,25 @@
     "wordsAnalyzed": "~{{count}} mots analysés",
     "modelDownload": "Téléchargement du modèle",
     "cachedNote": "Mis en cache après le premier chargement",
-    "loadingFromCache": "Chargement depuis le cache..."
+    "loadingFromCache": "Chargement depuis le cache...",
+    "error": {
+      "model-download": {
+        "title": "Le modèle de détection n'a pas pu être chargé",
+        "desc": "Rature télécharge son modèle depuis huggingface.co au premier usage. Votre connexion a peut-être été coupée, ou votre réseau bloque ce site (fréquent en cabinet ou en entreprise). Réessayez, ou depuis un autre réseau."
+      },
+      "extract": {
+        "title": "Ce PDF n'a pas pu être lu",
+        "desc": "Le fichier est peut-être protégé par un mot de passe, endommagé, ou n'est pas un vrai PDF. Essayez de l'exporter à nouveau en PDF depuis le logiciel d'origine."
+      },
+      "ner": {
+        "title": "L'analyse du document a échoué",
+        "desc": "Une erreur est survenue pendant la détection des données personnelles. Réessayez ; si le problème persiste, fermez les autres onglets pour libérer de la mémoire."
+      },
+      "retry": "Réessayer",
+      "home": "Retour à l'accueil",
+      "otherFile": "Choisir un autre PDF",
+      "details": "Détails techniques"
+    }
   },
   "toolbar": {
     "back": "Anonymiser un autre document",

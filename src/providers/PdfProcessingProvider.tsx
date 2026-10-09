@@ -1,6 +1,5 @@
 import type { PDFDocument } from "mupdf";
 import { useState, type ReactNode } from "react";
-import { toast } from "sonner";
 
 import { PdfProcessingContext, type TextExtract, type PDFProcessingStatus } from "@/context/pdfProcessing.tsx";
 import type { DetectedImage } from "@/types/index.ts";
@@ -42,10 +41,9 @@ export function PdfProcessingProvider({ children }: PdfProcessingProviderProps) 
       return extracted;
     } catch (error) {
       setStatus("error");
-      toast.error(error instanceof Error ? error.message : "Failed to process PDF");
       console.error("Processing error:", error);
 
-      return [];
+      throw error;
     }
   };
 
