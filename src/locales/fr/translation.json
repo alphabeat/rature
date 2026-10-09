@@ -35,8 +35,8 @@
           "desc": "Ouvrez les outils de développement (F12), onglet Réseau, puis analysez un document. Vous verrez le téléchargement du modèle depuis huggingface.co et une mesure d'audience sans cookie. Aucune requête ne contient votre document."
         },
         "source": {
-          "title": "Lisez le code",
-          "desc": "Rature est open source, sous licence AGPL. Le code qui lit, analyse et anonymise vos documents est public sur <github>GitHub</github>."
+          "title": "Un code public, vérifiable par tous",
+          "desc": "Rature est open source, sous licence AGPL. Le code qui traite vos documents est publié sur <github>GitHub</github> : n'importe quel développeur ou expert en sécurité peut le relire et confirmer qu'il n'envoie rien."
         }
       }
     },

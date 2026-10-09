@@ -35,8 +35,8 @@
           "desc": "Open the developer tools (F12), go to the Network tab, then analyse a document. You will see the model download from huggingface.co and cookieless analytics. No request contains your document."
         },
         "source": {
-          "title": "Read the code",
-          "desc": "Rature is open source, under the AGPL licence. The code that reads, analyses and redacts your documents is public on <github>GitHub</github>."
+          "title": "Public code anyone can check",
+          "desc": "Rature is open source, under the AGPL licence. The code that processes your documents is published on <github>GitHub</github>: any developer or security expert can read it and confirm that it sends nothing."
         }
       }
     },

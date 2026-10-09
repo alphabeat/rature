@@ -1,12 +1,8 @@
-import { Code2, Network } from 'lucide-react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { HomeSection } from '@/components/home/HomeSection.tsx';
 
-const STEPS = [
-  { icon: Network, key: 'network' },
-  { icon: Code2, key: 'source' },
-] as const;
+const STEPS = ['network', 'source'] as const;
 
 export function VerifySteps() {
   const { t } = useTranslation();
@@ -14,7 +10,7 @@ export function VerifySteps() {
   return (
     <HomeSection id="verify" title={t('home.verify.title')} intro={t('home.verify.intro')}>
       <ol className="w-full grid gap-6 md:grid-cols-2">
-        {STEPS.map(({ icon: Icon, key }, index) => (
+        {STEPS.map((key, index) => (
           <li
             key={key}
             className="flex flex-col gap-3 bg-card border border-border-theme shadow-sm p-6 dark:bg-surface-subtle dark:shadow-none"
@@ -23,7 +19,6 @@ export function VerifySteps() {
               <span className="flex items-center justify-center w-8 h-8 shrink-0 rounded-full bg-accent/10 text-sm font-bold text-accent">
                 {index + 1}
               </span>
-              <Icon size={18} className="text-accent shrink-0" aria-hidden="true" />
               <h3 className="text-base font-bold text-fg">{t(`home.verify.steps.${key}.title`)}</h3>
             </div>
             <p className="text-sm text-fg-muted leading-relaxed">

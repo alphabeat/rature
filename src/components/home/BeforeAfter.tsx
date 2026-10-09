@@ -1,4 +1,4 @@
-import { Children, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { HomeSection } from '@/components/home/HomeSection.tsx';
@@ -17,16 +17,13 @@ function Highlight({ className, children }: { className: string; children?: Reac
   return <span className={`px-0.5 ${className}`}>{children}</span>;
 }
 
-// Draws a bar the length of the entity without rendering its text, like the exported PDF.
+// Same text and box as the highlight, painted over, so both columns wrap identically.
+// The excerpt is fictional; the text stays unselectable and hidden from screen readers.
 function Redacted({ label, children }: { label: string; children?: ReactNode }) {
-  const length = Children.toArray(children).join('').length;
   return (
-    <span
-      role="img"
-      aria-label={label}
-      className="inline-block align-middle h-[1.1em] bg-fg"
-      style={{ width: `${length}ch` }}
-    />
+    <span role="img" aria-label={label} className="px-0.5 border-b-2 border-transparent bg-fg text-transparent select-none">
+      {children}
+    </span>
   );
 }
 
