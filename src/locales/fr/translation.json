@@ -17,6 +17,78 @@
     "mobile": {
       "title": "Version desktop recommandée",
       "description": "est optimisé pour une utilisation sur écran large. Veuillez accéder à l'application depuis un ordinateur."
+    },
+    "beforeAfter": {
+      "title": "Ce que Rature retire de vos documents",
+      "intro": "Rature repère les données personnelles, vous relisez, puis le texte est retiré du PDF exporté. Sous les rectangles noirs, il ne reste rien à copier ni à extraire.",
+      "before": "Détecté par Rature",
+      "after": "PDF exporté",
+      "redacted": "masqué",
+      "excerpt": "Entre les soussignés : <per>Marie Dubois</per>, demeurant <loc>12 rue des Lilas, 69003 Lyon</loc>, joignable au <phone>06 12 34 56 78</phone> et à l'adresse <email>marie.dubois@example.com</email>, ci-après « la Bailleresse », et <per>Karim Benali</per>, demeurant <loc>8 avenue Jean Jaurès, 75019 Paris</loc>, ci-après « le Preneur »."
+    },
+    "verify": {
+      "title": "Rien n'est envoyé, et cela se vérifie",
+      "intro": "Vous n'avez pas à nous croire sur parole : d'autres peuvent le vérifier pour vous.",
+      "steps": {
+        "network": {
+          "title": "Votre service informatique peut le contrôler",
+          "desc": "En quelques minutes, un informaticien peut observer ce que Rature échange avec internet pendant une analyse : le téléchargement du modèle de détection depuis huggingface.co et une mesure d'audience sans cookie. Votre document n'est jamais transmis."
+        },
+        "source": {
+          "title": "Un code public, vérifiable par tous",
+          "desc": "Rature est open source, sous licence AGPL. Le code qui traite vos documents est publié sur <github>GitHub</github> : n'importe quel développeur ou expert en sécurité peut le relire et confirmer qu'il n'envoie rien."
+        }
+      }
+    },
+    "useCases": {
+      "title": "Quand anonymiser un PDF",
+      "items": {
+        "ai": {
+          "title": "Avant ChatGPT ou Copilot",
+          "desc": "Faites résumer ou analyser un dossier par une IA sans lui confier les noms de vos clients."
+        },
+        "share": {
+          "title": "Avant de partager avec un confrère ou un expert",
+          "desc": "Transmettez une pièce sans exposer les personnes qui y figurent."
+        },
+        "gdpr": {
+          "title": "Demande d'accès RGPD",
+          "desc": "Communiquez à une personne les documents qui la concernent en occultant les données des tiers."
+        },
+        "publish": {
+          "title": "Publication d'une décision",
+          "desc": "Publiez une décision, un rapport ou un cas pratique sans identifier les parties."
+        }
+      }
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "items": {
+        "upload": {
+          "q": "Mes documents sont-ils envoyés sur un serveur ?",
+          "a": "Non. Le PDF est lu, analysé et anonymisé dans votre navigateur, sur votre ordinateur. Rature n'a aucun serveur qui reçoit des fichiers. Seul le modèle de détection est téléchargé, depuis Hugging Face, à la première utilisation."
+        },
+        "recover": {
+          "q": "Le texte masqué peut-il être récupéré ?",
+          "a": "Non. Rature ne pose pas un simple rectangle noir par-dessus le texte : il retire le texte du PDF exporté. Un copier-coller ou un outil d'extraction ne retrouve rien sous les zones masquées. L'export propose aussi de supprimer les métadonnées du fichier (auteur, dates, propriétés du document d'origine)."
+        },
+        "free": {
+          "q": "Rature est-il gratuit ?",
+          "a": "Oui, sans inscription ni limite d'usage. Le code est ouvert, sous licence AGPL. Une offre payante, Rature Pro, est en préparation pour les professionnels qui anonymisent des dossiers entiers."
+        },
+        "detection": {
+          "q": "Quelles informations sont détectées, et puis-je corriger ?",
+          "a": "Rature repère les noms, adresses, emails, numéros de téléphone, identifiants et autres données personnelles. La détection automatique peut se tromper : avant l'export, vous relisez le document, retirez ce qui ne doit pas être masqué et ajoutez ce qui a été oublié."
+        },
+        "chatgpt": {
+          "q": "Puis-je anonymiser un document avant de le donner à ChatGPT ?",
+          "a": "Oui, c'est l'un des usages principaux. Anonymisez le PDF avec Rature, vérifiez le résultat, puis donnez la version exportée à ChatGPT, Copilot ou un autre assistant. Relisez avec attention : un contexte précis (une fonction, un lieu, une date) suffit parfois à identifier quelqu'un."
+        },
+        "firstLoad": {
+          "q": "Pourquoi le premier chargement est-il long ?",
+          "a": "La détection repose sur un modèle d'IA qui tourne dans votre navigateur. Il pèse environ 400 Mo et n'est téléchargé qu'une fois, puis conservé dans le cache du navigateur. Les analyses suivantes démarrent beaucoup plus vite."
+        }
+      }
     }
   },
   "dropzone": {
