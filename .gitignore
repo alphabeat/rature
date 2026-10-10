@@ -25,5 +25,6 @@ build
 *.sw?
 
 CLAUDE.md
+AGENTS.md
 .claude
 .worktrees
