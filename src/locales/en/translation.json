@@ -824,5 +824,10 @@
       "title": "You're on the list",
       "desc": "You will be the first to hear when Rature Pro opens, along with your launch price."
     }
+  },
+  "languageSuggestion": {
+    "message": "This page is available in English.",
+    "switch": "View in English",
+    "dismiss": "Dismiss"
   }
 }

@@ -42,6 +42,23 @@ i18n.on('languageChanged', (lng) => {
   }
 });
 
+// Set once the visitor picks a language (switcher or suggestion banner): stop suggesting one.
+export function rememberLanguageChoice(): void {
+  try {
+    localStorage.setItem('rature-language-chosen', '1');
+  } catch {
+    // storage unavailable: the suggestion may show again on the next page
+  }
+}
+
+export function languageChosen(): boolean {
+  try {
+    return localStorage.getItem('rature-language-chosen') === '1';
+  } catch {
+    return false;
+  }
+}
+
 // Fixed-language instances for public pages, so each prerendered URL renders in its own
 // language regardless of the shared instance. Resources are shared and loaded synchronously.
 export const publicPageI18n: Record<Lang, typeof i18n> = {

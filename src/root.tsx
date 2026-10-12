@@ -6,6 +6,7 @@ import i18n, { publicPageI18n } from '@/lib/i18n.ts';
 import { publicPage } from '@/lib/publicPages.ts';
 
 import { appMeta } from '@/lib/seo.ts';
+import { LanguageSuggestion } from '@/components/LanguageSuggestion.tsx';
 import Providers from '@/providers/index.tsx';
 
 // Runs before paint so prerendered pages don't flash light for dark-mode users.
@@ -73,6 +74,7 @@ export default function App() {
         <div className="flex flex-col min-h-full text-fg antialiased bg-linear-to-b from-gray-200 to-surface dark:from-surface dark:to-gray-900">
           <Outlet />
         </div>
+        <LanguageSuggestion />
       </Providers>
     </I18nextProvider>
   );

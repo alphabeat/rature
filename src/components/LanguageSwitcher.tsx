@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router';
 
+import { rememberLanguageChoice } from '@/lib/i18n.ts';
 import { localizedPath, publicPage } from '@/lib/publicPages.ts';
 import { cn } from '@/lib/utils.ts';
 import { Button } from '@/components/ui/button.tsx';
@@ -22,6 +23,7 @@ export function LanguageSwitcher({ variant = 'compact', className }: LanguageSwi
   const currentLang = i18n.language.startsWith('fr') ? 'fr' : 'en';
 
   const handleSwitch = (code: string) => {
+    rememberLanguageChoice();
     void i18n.changeLanguage(code);
   };
 
@@ -76,6 +78,7 @@ export function LanguageSwitcher({ variant = 'compact', className }: LanguageSwi
             key={lang.code}
             to={localizedPath(page.path, lang.code)}
             hrefLang={lang.code}
+            onClick={rememberLanguageChoice}
             aria-current={currentLang === lang.code ? 'page' : undefined}
             aria-label={lang.name}
             className={className}
