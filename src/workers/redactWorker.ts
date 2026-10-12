@@ -25,6 +25,13 @@ function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+// NER text has line breaks as spaces, so an entity that wraps on the page ("rue des\nTanneurs",
+// "Marc-\nAntoine") comes back as "rue des Tanneurs", "Marc- Antoine" or "Marc-Antoine".
+// Match any whitespace run, and optional whitespace after a hyphen.
+function entityPattern(text: string): string {
+  return text.trim().split(/\s+/).map(escapeRegex).join('\\s+').replace(/-(?:\\s\+)?/g, '-\\s*');
+}
+
 interface CharEntry {
   char: string;
   quad: Quad | null; // null for synthetic chars (\n)
@@ -99,7 +106,7 @@ function processPage(
     const flatText = chars.map(c => c.char).join('');
 
     for (const text of uniqueTexts) {
-      const regex = new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegex(text)}(?![\\p{L}\\p{N}])`, 'giu');
+      const regex = new RegExp(`(?<![\\p{L}\\p{N}])${entityPattern(text)}(?![\\p{L}\\p{N}])`, 'giu');
       let match;
       while ((match = regex.exec(flatText)) !== null) {
         const matchChars = chars.slice(match.index, match.index + match[0].length);
