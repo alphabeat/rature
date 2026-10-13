@@ -99,6 +99,8 @@
     "idle": "Drop your PDF here",
     "choose": "Choose a PDF",
     "free": "Free, no sign-up.",
+    "sample": "Try a sample document",
+    "sampleError": "Could not load the sample. Please try again.",
     "options": "Options",
     "model": "Model",
     "language": "Language",
@@ -154,6 +156,8 @@
   "toolbar": {
     "back": "Redact another document",
     "confirmBack": "Are you sure? All changes will be lost.",
+    "sampleNotice": "Fictional sample document.",
+    "sampleOwnDocument": "Anonymize my own document",
     "export": "Export PDF",
     "textEdition": "Text Edition",
     "imageEdition": "Image Edition",

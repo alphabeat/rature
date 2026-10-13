@@ -4,6 +4,7 @@ import { Navigate, Outlet, useMatch, useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 
+import { Button } from '@/components/ui/button.tsx';
 import { ExportModal } from '@/components/workflow/ExportModal.tsx';
 import { PageThumbnailPanel } from '@/components/workflow/PageThumbnailPanel.tsx';
 import { Toolbar } from '@/components/workflow/Toolbar.tsx';
@@ -21,7 +22,7 @@ function DocumentLayoutInner() {
   const navigate = useNavigate();
   const localize = useLocalizedPath();
   const { nerEntities: entities, reset: resetEntities } = useAnonymization();
-  const { file, pageCount, detectedImages, reset: resetPdfDocument } = usePdfProcessing();
+  const { file, isSample, pageCount, detectedImages, reset: resetPdfDocument } = usePdfProcessing();
   const {
     currentPage,
     setCurrentPage,
@@ -51,6 +52,15 @@ function DocumentLayoutInner() {
       navigate(localize('/'));
     }
   }, [t, reset, resetEntities, resetPdfDocument, navigate, localize]);
+
+  // Nothing to lose on the sample, so no confirmation.
+  const handleOwnDocument = useCallback(() => {
+    track('sample-own-document');
+    reset();
+    resetEntities();
+    resetPdfDocument();
+    navigate(localize('/'));
+  }, [reset, resetEntities, resetPdfDocument, navigate, localize]);
 
   const handleExport = useCallback(() => {
     track('export-opened');
@@ -85,6 +95,14 @@ function DocumentLayoutInner() {
           {mode === 'image-edition' && t('toolbar.imageEditionDesc')}
           {mode === 'preview' && t('toolbar.previewDesc')}
         </span>
+        {isSample && (
+          <div className="ml-auto self-center flex items-center gap-3">
+            <span className="text-xs text-fg-muted">{t('toolbar.sampleNotice')}</span>
+            <Button size="sm" onClick={handleOwnDocument}>
+              {t('toolbar.sampleOwnDocument')}
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-1 overflow-hidden">
@@ -116,7 +134,7 @@ function DocumentLayoutInner() {
                 return false;
               }
               downloadPDFDocument(doc, exportFileName, removeMetadata);
-              track('document-downloaded', { pages: pageCount, entities: entities.filter(e => e.included).length });
+              track('document-downloaded', { pages: pageCount, entities: entities.filter(e => e.included).length, sample: isSample });
               return true;
             } catch (err) {
               console.error('Export failed:', err);
