@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, ExternalLink, FileUp, RotateCcw, Upload } from 'lucide-react';
+import { ChevronDown, ExternalLink, FileUp, Loader2, RotateCcw, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button.tsx';
@@ -40,6 +40,7 @@ function fileExtension(name: string): string {
 
 interface DropZoneProps {
   onFileSelect: (file: File) => void;
+  onSampleSelect: () => Promise<void>;
 }
 
 interface FeatureChipProps<T extends string> {
@@ -68,13 +69,14 @@ function FeatureChip<T extends string>({ option, selected, onSelect }: FeatureCh
   );
 }
 
-export function DropZone({ onFileSelect }: DropZoneProps) {
+export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
   const { t, i18n } = useTranslation();
-  const { modelName, setModel } = useAnonymization();
+  const { setModel } = useAnonymization();
   const defaults = defaultFeatures(i18n.language);
   const [isDragging, setIsDragging] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
+  const [isSampleLoading, setIsSampleLoading] = useState(false);
   const [features, setFeatures] = useState<ModelFeatures>(defaults);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -114,11 +116,10 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
     e.target.value = '';
   };
 
+  // Push the options' model only when they change, so the sample's model is not overwritten.
   useEffect(() => {
-    if (modelName === resolvedModel) return;
-
     setModel(resolvedModel);
-  }, [modelName, resolvedModel, setModel]);
+  }, [resolvedModel]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setLanguage = (language: Language) => {
     setFeatures(f => ({ ...f, language }));
@@ -142,6 +143,14 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
   const openPicker = () => {
     track('picker-opened');
     inputRef.current?.click();
+  };
+
+  const openSample = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isSampleLoading) return;
+    setIsSampleLoading(true);
+    await onSampleSelect();
+    setIsSampleLoading(false);
   };
 
   return (
@@ -245,7 +254,18 @@ export function DropZone({ onFileSelect }: DropZoneProps) {
             <Upload size={20} aria-hidden="true" />
             {t('dropzone.choose')}
           </Button>
-          <p className="text-xs text-fg-muted">{t('dropzone.free')}</p>
+          <p className="text-xs text-fg-muted">
+            {t('dropzone.free')}{' '}
+            <button
+              type="button"
+              onClick={openSample}
+              disabled={isSampleLoading}
+              className="inline-flex items-center gap-1 font-semibold text-accent underline underline-offset-2 hover:text-accent/70 transition-colors cursor-pointer disabled:cursor-wait"
+            >
+              {isSampleLoading && <Loader2 size={11} className="animate-spin" aria-hidden="true" />}
+              {t('dropzone.sample')}
+            </button>
+          </p>
         </div>
       </div>
 

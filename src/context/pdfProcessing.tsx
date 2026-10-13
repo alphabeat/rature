@@ -14,19 +14,21 @@ interface PdfProcessingContextValue {
   detectedImages: DetectedImage[];
   extractedText: TextExtract[];
   file: File | null;
+  isSample: boolean;
   pageCount: number;
   pdfDocument: PDFDocument | null;
   processingStatus: PDFProcessingStatus;
-  processFile: () => Promise<TextExtract[]>;
+  processFile: (file?: File) => Promise<TextExtract[]>;
   reset: () => void;
   setDetectedImages: (images: DetectedImage[]) => void;
-  setFile: (file: File) => void;
+  setFile: (file: File, isSample?: boolean) => void;
 }
 
 export const PdfProcessingContext = createContext<PdfProcessingContextValue>({
   detectedImages: [],
   extractedText: [],
   file: null,
+  isSample: false,
   pageCount: 0,
   pdfDocument: null,
   processingStatus: 'idle',

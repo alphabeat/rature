@@ -9,6 +9,7 @@ export const meta = ({ location }: MetaArgs) => pageMeta(location.pathname);
 export default function Home() {
   const navigate = useNavigate();
   const handleFileSelected = useCallback(() => navigate('/processing'), [navigate]);
+  const handleSampleOpen = useCallback(() => navigate('/document/edition'), [navigate]);
 
-  return <HomePage onFileSelect={handleFileSelected} />;
+  return <HomePage onFileSelect={handleFileSelected} onSampleOpen={handleSampleOpen} />;
 }

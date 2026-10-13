@@ -99,6 +99,8 @@
     "idle": "Glissez votre PDF ici",
     "choose": "Choisir un PDF",
     "free": "Gratuit, sans inscription.",
+    "sample": "Essayer avec un exemple",
+    "sampleError": "Impossible de charger l'exemple. Réessayez.",
     "options": "Options",
     "model": "Modèle",
     "language": "Langue",
@@ -154,6 +156,8 @@
   "toolbar": {
     "back": "Anonymiser un autre document",
     "confirmBack": "Êtes-vous sûr ? Tous les changements seront perdus.",
+    "sampleNotice": "Document d'exemple fictif.",
+    "sampleOwnDocument": "Anonymiser mon propre document",
     "export": "Exporter le PDF",
     "textEdition": "Édition du texte",
     "imageEdition": "Édition des images",
