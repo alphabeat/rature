@@ -21,8 +21,8 @@ export interface Guide {
   description: string;
   ogTitle: string;
   heading: string;
-  // Share image in `public/guides/` (1200x630) and its alt text; the site default when absent.
-  ogImage?: { file: string; alt: string };
+  // Imported share image URL (1200x630) and its alt text; the site default when absent.
+  ogImage?: { src: string; alt: string };
   breadcrumb: string;
   readingTime: number;
   // Title and one line shown on the hub and in "À lire aussi".

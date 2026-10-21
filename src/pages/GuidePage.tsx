@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import { GuideCard } from '@/components/guides/GuideCard.tsx';
-import { GuideCta } from '@/components/guides/GuideCta.tsx';
 import { Inline } from '@/components/guides/GuideBlocks.tsx';
 import { Footer } from '@/components/home/Footer.tsx';
 import { Navbar } from '@/components/Navbar.tsx';
@@ -93,8 +92,6 @@ export function GuidePage({ guide }: { guide: Guide }) {
             {guide.sources.map((source) => <li key={source}><Inline text={source} /></li>)}
           </ol>
         </section>
-
-        <GuideCta />
 
         <section aria-labelledby="a-lire-aussi" className="flex flex-col gap-4">
           <h2 id="a-lire-aussi" className={H2_CLASS}>{t('guides.related')}</h2>

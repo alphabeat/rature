@@ -78,6 +78,7 @@ function hubJsonLd() {
         name: HUB.heading,
         description: HUB.description,
         url: `${SITE_URL}${HUB.path}`,
+        inLanguage: 'fr',
         hasPart: GUIDES.map((guide) => ({ '@type': 'Article', headline: guide.heading, url: `${SITE_URL}${guide.path}` })),
       },
       breadcrumbList(HUB_CRUMB),
@@ -90,7 +91,7 @@ export function hubMeta(): MetaDescriptor[] {
 }
 
 export function guideMeta(guide: Guide): MetaDescriptor[] {
-  const ogImage = guide.ogImage && { url: `${SITE_URL}/guides/${guide.ogImage.file}`, alt: guide.ogImage.alt };
+  const ogImage = guide.ogImage && { url: `${SITE_URL}${guide.ogImage.src}`, alt: guide.ogImage.alt };
   return head({
     path: guide.path,
     lang: 'fr',

@@ -133,7 +133,7 @@ export function Figure({ name, alt, caption }: { name: FigureName; alt: string; 
   return (
     <figure className={cn('flex flex-col gap-2 mx-auto w-full', size.maxWidth)}>
       <img
-        src={`/guides/${name}.webp`}
+        src={size.src}
         alt={alt}
         width={size.width}
         height={size.height}

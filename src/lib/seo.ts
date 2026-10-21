@@ -137,7 +137,8 @@ export function head({ path, lang, title, description, ogTitle = title, ogDescri
     { name: 'twitter:title', content: ogTitle },
     { name: 'twitter:description', content: ogDescription },
     { name: 'twitter:image', content: ogImage.url },
-    ...(jsonLd ? [{ 'script:ld+json': { ...jsonLd, inLanguage: lang } }] : []),
+    // A key next to `@graph` would turn the graph into a named one: graph nodes set their own language.
+    ...(jsonLd ? [{ 'script:ld+json': '@graph' in jsonLd ? jsonLd : { ...jsonLd, inLanguage: lang } }] : []),
   ];
 }
 

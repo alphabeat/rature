@@ -12,6 +12,9 @@ export const GUIDE_PATHS = [
   '/guides/anonymisation-vs-pseudonymisation',
 ] as const;
 
+// Published and last updated, for every guide (pages, JSON-LD and sitemap).
+export const GUIDES_DATE = '2026-10-21';
+
 export type TranslatedPath = (typeof PUBLIC_PATHS)[number];
 export type GuidePath = (typeof GUIDE_PATHS)[number];
 export type PublicPath = TranslatedPath | GuidePath;

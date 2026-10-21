@@ -1,3 +1,4 @@
+import ogImage from '@/assets/guides/og-verifier-caviardage.png';
 import { Callout, Figure, P, PdfDownload, Quote, Steps, Table, Ul } from '@/components/guides/GuideBlocks.tsx';
 import { GuideCta } from '@/components/guides/GuideCta.tsx';
 import type { Guide, GuideStep } from '@/guides/types.ts';
@@ -32,7 +33,7 @@ export const verifierCaviardagePdf: Guide = {
   ogTitle: 'Sous un faux caviardage Word, ChatGPT a relu 17 données sur 17',
   heading: 'Comment vérifier qu\'un PDF est vraiment caviardé ?',
   ogImage: {
-    file: 'og-verifier-caviardage.png',
+    src: ogImage,
     alt: 'Sous un faux caviardage Word, ChatGPT a relu 17 données sur 17. L\'export Rature : 0 sur 17.',
   },
   breadcrumb: 'Vérifier un caviardage PDF',

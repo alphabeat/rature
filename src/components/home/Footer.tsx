@@ -5,7 +5,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher.tsx";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath.ts";
 
 export function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const localize = useLocalizedPath();
 
   return (
@@ -29,12 +29,15 @@ export function Footer() {
         </a>
         <p className="text-sm text-fg/80">•</p>
         <nav className="flex items-center gap-4">
-          <Link
-            to="/guides"
-            className="text-sm text-fg/70 hover:text-fg transition-colors"
-          >
-            {t('guides.nav')}
-          </Link>
+          {/* Guides are French-only: opening one would switch the app to French. */}
+          {i18n.language !== 'en' && (
+            <Link
+              to="/guides"
+              className="text-sm text-fg/70 hover:text-fg transition-colors"
+            >
+              {t('guides.nav')}
+            </Link>
+          )}
           <Link
             to={localize('/privacy-policy')}
             className="text-sm text-fg/70 hover:text-fg transition-colors"

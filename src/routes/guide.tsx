@@ -1,22 +1,20 @@
 import { useLocation, type MetaArgs } from 'react-router';
 
-import { GUIDES } from '@/guides/index.ts';
+import { findGuide } from '@/guides/index.ts';
 import { guideMeta } from '@/guides/meta.ts';
+import { notFoundMeta } from '@/lib/seo.ts';
 import { GuidePage } from '@/pages/GuidePage.tsx';
+import NotFoundRoute from '@/routes/not-found.tsx';
 
-function guideAt(pathname: string) {
-  return GUIDES.find((g) => g.path === pathname.replace(/\/+$/, ''));
-}
-
+// `:slug` also matches unknown guides, which get the splat route's 404 page.
 export const meta = ({ location }: MetaArgs) => {
-  const guide = guideAt(location.pathname);
-  return guide ? guideMeta(guide) : [];
+  const guide = findGuide(location.pathname);
+  return guide ? guideMeta(guide) : notFoundMeta;
 };
 
 export default function Guide() {
   const { pathname } = useLocation();
-  const guide = guideAt(pathname);
-  if (!guide) throw new Response('Not Found', { status: 404 });
+  const guide = findGuide(pathname);
 
-  return <GuidePage guide={guide} />;
+  return guide ? <GuidePage guide={guide} /> : <NotFoundRoute />;
 }

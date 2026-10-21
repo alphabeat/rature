@@ -4,13 +4,17 @@ import type { Guide } from '@/guides/types.ts';
 import { verifierCaviardagePdf } from '@/guides/verifier-caviardage-pdf.tsx';
 import type { GuidePath } from '@/lib/publicPages.ts';
 
-// Published and last updated, for every guide.
-export const GUIDES_DATE = '2026-10-21';
+export { GUIDES_DATE } from '@/lib/publicPages.ts';
 
 export const GUIDES: Guide[] = [anonymiserPdfAvantChatgpt, verifierCaviardagePdf, anonymisationVsPseudonymisation];
 
+// The guide a URL points to (trailing slashes ignored), or undefined.
+export function findGuide(pathname: string): Guide | undefined {
+  return GUIDES.find((g) => g.path === pathname.replace(/\/+$/, ''));
+}
+
 export function guideByPath(path: string): Guide {
-  const guide = GUIDES.find((g) => g.path === path);
+  const guide = findGuide(path);
   if (!guide) throw new Error(`Unknown guide: ${path}`);
   return guide;
 }
