@@ -28,7 +28,14 @@ export function Footer() {
           {t('footer.source')}
         </a>
         <p className="text-sm text-fg/80">•</p>
-        <nav className="flex items-center gap-4">
+        <nav className="flex items-center gap-3">
+          <Link
+            to={localize('/guides')}
+            className="text-sm text-fg/70 hover:text-fg transition-colors"
+          >
+            {t('guides.nav')}
+          </Link>
+          <p className="text-sm text-fg/80">•</p>
           <Link
             to={localize('/privacy-policy')}
             className="text-sm text-fg/70 hover:text-fg transition-colors"

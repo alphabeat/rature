@@ -73,7 +73,7 @@
         },
         "recover": {
           "q": "Le texte masqué peut-il être récupéré ?",
-          "a": "Non. Rature ne pose pas un simple rectangle noir par-dessus le texte : il retire le texte du PDF exporté. Un copier-coller ou un outil d'extraction ne retrouve rien sous les zones masquées. L'export propose aussi de supprimer les métadonnées du fichier (auteur, dates, propriétés du document d'origine)."
+          "a": "Non. Rature ne pose pas un simple rectangle noir par-dessus le texte : il retire le texte du PDF exporté. Un copier-coller ou un outil d'extraction ne retrouve rien sous les zones masquées. L'export propose aussi de supprimer les métadonnées du fichier (auteur, dates, propriétés du document d'origine). <guide>Comment vérifier un caviardage</guide>."
         },
         "free": {
           "q": "Rature est-il gratuit ?",
@@ -85,7 +85,7 @@
         },
         "chatgpt": {
           "q": "Puis-je anonymiser un document avant de le donner à ChatGPT ?",
-          "a": "Oui, c'est l'un des usages principaux. Anonymisez le PDF avec Rature, vérifiez le résultat, puis donnez la version exportée à ChatGPT, Copilot ou un autre assistant. Relisez avec attention : un contexte précis (une fonction, un lieu, une date) suffit parfois à identifier quelqu'un."
+          "a": "Oui, c'est l'un des usages principaux. Anonymisez le PDF avec Rature, vérifiez le résultat, puis donnez la version exportée à ChatGPT, Copilot ou un autre assistant. Relisez avec attention : un contexte précis (une fonction, un lieu, une date) suffit parfois à identifier quelqu'un. <guide>Voir la méthode en 5 étapes</guide>."
         },
         "firstLoad": {
           "q": "Pourquoi le premier chargement est-il long ?",
@@ -121,6 +121,26 @@
   "footer": {
     "source": "Code source",
     "privacy": "Politique de confidentialité"
+  },
+  "guides": {
+    "nav": "Guides",
+    "breadcrumb": "Fil d'Ariane",
+    "breadcrumbHome": "Accueil",
+    "updated": "Mis à jour le {{date}}",
+    "by": "Par",
+    "authorRole": "créateur de Rature",
+    "readingTime": "{{count}} min de lecture",
+    "summary": "En bref",
+    "toc": "Sommaire",
+    "faq": "Questions fréquentes",
+    "sources": "Sources",
+    "related": "À lire aussi",
+    "readGuide": "Lire le guide",
+    "cta": {
+      "title": "Anonymisez votre PDF, sans l'envoyer",
+      "text": "Détection automatique, relecture, export sans le texte. Dans votre navigateur, gratuit et sans inscription."
+    },
+    "download": "Télécharger le PDF du test"
   },
   "loading": {
     "title": "Analyse en cours",
