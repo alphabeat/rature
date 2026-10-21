@@ -4,8 +4,8 @@ import type { Guide } from '@/guides/types.ts';
 
 export const anonymisationVsPseudonymisation: Guide = {
   path: '/guides/anonymisation-vs-pseudonymisation',
-  title: 'Anonymisation ou pseudonymisation : différence et exemples (RGPD) | Rature',
-  description: 'L\'anonymisation est irréversible et sort les données du RGPD. La pseudonymisation est réversible : les données restent personnelles. Définitions CNIL et exemples sur un contrat.',
+  title: 'Anonymisation vs pseudonymisation : la différence | Rature',
+  description: 'L\'anonymisation est irréversible et sort les données du RGPD ; la pseudonymisation est réversible, les données restent personnelles. Définitions CNIL, exemples.',
   ogTitle: 'Anonymisation ou pseudonymisation : la différence, exemples à l\'appui',
   heading: 'Anonymisation ou pseudonymisation : quelle différence ?',
   breadcrumb: 'Anonymisation ou pseudonymisation',

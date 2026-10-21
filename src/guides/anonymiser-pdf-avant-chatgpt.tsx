@@ -27,7 +27,7 @@ const steps: GuideStep[] = [
 
 export const anonymiserPdfAvantChatgpt: Guide = {
   path: '/guides/anonymiser-pdf-avant-chatgpt',
-  title: 'Anonymiser un PDF avant ChatGPT : la méthode en 5 étapes | Rature',
+  title: 'Anonymiser un PDF avant ChatGPT en 5 étapes | Rature',
   description: 'Retirez noms, adresses et IBAN d\'un PDF avant de le donner à ChatGPT, sans l\'envoyer sur un serveur. 5 étapes testées, avec les règles du CNB et de la CNIL.',
   ogTitle: 'Anonymiser un PDF avant de le donner à ChatGPT',
   heading: 'Comment anonymiser un PDF avant de le donner à ChatGPT ?',

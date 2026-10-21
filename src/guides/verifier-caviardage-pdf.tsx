@@ -27,8 +27,8 @@ const steps: GuideStep[] = [
 
 export const verifierCaviardagePdf: Guide = {
   path: '/guides/verifier-caviardage-pdf',
-  title: 'Vérifier qu\'un PDF est bien caviardé : 5 tests en 2 minutes | Rature',
-  description: 'Un rectangle noir ne supprime pas le texte. 5 tests simples pour vérifier un caviardage PDF, et notre test : ChatGPT a relu 17 données sur 17 sous un faux caviardage Word.',
+  title: 'Vérifier un caviardage PDF : 5 tests en 2 minutes | Rature',
+  description: 'Un rectangle noir ne supprime pas le texte. 5 tests pour vérifier un caviardage PDF, et notre test : ChatGPT a relu 17 données sur 17 sous un faux caviardage.',
   ogTitle: 'Sous un faux caviardage Word, ChatGPT a relu 17 données sur 17',
   heading: 'Comment vérifier qu\'un PDF est vraiment caviardé ?',
   ogImage: {
