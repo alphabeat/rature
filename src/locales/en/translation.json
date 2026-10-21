@@ -41,7 +41,8 @@
           "title": "Public code anyone can check",
           "desc": "Rature is open source, under the AGPL licence. The code that processes your documents is published on <github>GitHub</github>: any developer or security expert can read it and confirm that it sends nothing."
         }
-      }
+      },
+      "test": "In our test, ChatGPT read 17 of 17 items hidden under a fake Word redaction, and 0 in the Rature export. <guide>See the full test</guide>."
     },
     "useCases": {
       "title": "When to redact a PDF",

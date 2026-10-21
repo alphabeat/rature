@@ -1,11 +1,14 @@
 import { Trans, useTranslation } from 'react-i18next';
+import { Link } from 'react-router';
 
 import { HomeSection } from '@/components/home/HomeSection.tsx';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 
 const STEPS = ['network', 'source'] as const;
 
 export function VerifySteps() {
   const { t } = useTranslation();
+  const localize = useLocalizedPath();
 
   return (
     <HomeSection id="verify" title={t('home.verify.title')} intro={t('home.verify.intro')}>
@@ -39,6 +42,19 @@ export function VerifySteps() {
           </li>
         ))}
       </ol>
+      <p className="w-full max-w-3xl text-sm text-fg-muted leading-relaxed">
+        <Trans
+          i18nKey="home.verify.test"
+          components={{
+            guide: (
+              <Link
+                to={localize('/guides/verifier-caviardage-pdf')}
+                className="text-accent underline underline-offset-4 hover:text-accent-hover"
+              />
+            ),
+          }}
+        />
+      </p>
     </HomeSection>
   );
 }
