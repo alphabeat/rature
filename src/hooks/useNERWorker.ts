@@ -61,6 +61,7 @@ export type NERWorkerMessage =
   | {
     type: "error";
     jobId: string;
+    name?: string;
     message: string;
   };
 
@@ -144,7 +145,9 @@ export function useNERWorker() {
       case "error": {
         const errorJob = pendingJobsRef.current.get(event.data.jobId);
         if (errorJob) {
-          errorJob.reject(new Error(event.data.message));
+          const jobError = new Error(event.data.message);
+          if (event.data.name) jobError.name = event.data.name;
+          errorJob.reject(jobError);
           pendingJobsRef.current.delete(event.data.jobId);
         } else {
           setError(event.data.message);

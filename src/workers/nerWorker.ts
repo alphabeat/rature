@@ -56,6 +56,7 @@ async function initializePipeline(modelName: NERModel = 'bertBaseNer', preferred
     console.error(error);
     self.postMessage({
       type: "error",
+      name: error instanceof Error ? error.name : typeof error,
       message: `Failed to initialize: ${error}`,
     });
   }
@@ -96,6 +97,7 @@ async function processText(text: string, jobId: string) {
     self.postMessage({
       type: "error",
       jobId,
+      name: error instanceof Error ? error.name : typeof error,
       message: `Processing failed: ${error}`,
     });
   }

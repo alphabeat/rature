@@ -33,3 +33,22 @@ export function track(event: string, data?: EventData): void {
     // analytics must never break the export flow
   }
 }
+
+function bucket(value: number, edges: number[]): string {
+  const i = edges.findIndex((edge) => value < edge);
+  if (i === -1) return `${edges[edges.length - 1]}+`;
+  return i === 0 ? `<${edges[0]}` : `${edges[i - 1]}-${edges[i]}`;
+}
+
+/**
+ * Coarse context for `analysis-failed`: the error class name and size buckets, never the message,
+ * which can contain document text.
+ */
+export function failureDetail(err: unknown, pages: number, textLength?: number): EventData {
+  const detail: EventData = {
+    error: (err instanceof Error ? err.name : typeof err).slice(0, 40),
+    pages: pages > 0 ? bucket(pages, [2, 6, 21, 51]) : 'unknown',
+  };
+  if (textLength !== undefined) detail.chars = bucket(textLength, [5_000, 20_000, 100_000, 500_000]);
+  return detail;
+}
