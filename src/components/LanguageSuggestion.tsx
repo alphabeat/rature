@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router';
 
 import { track } from '@/lib/analytics.ts';
 import i18n, { languageChosen, rememberLanguageChoice } from '@/lib/i18n.ts';
-import { localizedPath, publicPage, type Lang } from '@/lib/publicPages.ts';
+import { isGuidePath, localizedPath, publicPage, type Lang } from '@/lib/publicPages.ts';
 
 const noopSubscribe = () => () => {};
 
@@ -24,7 +24,7 @@ export function LanguageSuggestion() {
   const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
   const [dismissed, setDismissed] = useState(false);
 
-  if (!hydrated || !page || dismissed || languageChosen()) return null;
+  if (!hydrated || !page || isGuidePath(page.path) || dismissed || languageChosen()) return null;
   const target = browserLang();
   if (target === page.lang) return null;
 

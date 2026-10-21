@@ -4,6 +4,8 @@ export default [
   index('routes/home.tsx'),
   route('about', 'routes/about.tsx'),
   route('privacy-policy', 'routes/privacy-policy.tsx'),
+  route('guides', 'routes/guides.tsx'),
+  route('guides/:slug', 'routes/guide.tsx'),
   ...prefix('en', [
     index('routes/home.tsx', { id: 'en/home' }),
     route('about', 'routes/about.tsx', { id: 'en/about' }),

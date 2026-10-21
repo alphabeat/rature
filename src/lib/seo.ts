@@ -1,8 +1,8 @@
 import type { MetaDescriptor } from 'react-router';
 
-import { localizedPath, publicPage, SITE_URL, type Lang, type PublicPath } from '@/lib/publicPages.ts';
+import { isGuidePath, localizedPath, publicPage, SITE_URL, type Lang, type TranslatedPath } from '@/lib/publicPages.ts';
 
-const OG_IMAGE = `${SITE_URL}/og-image.png`;
+export const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 const OG_LOCALE: Record<Lang, string> = { fr: 'fr_FR', en: 'en_US' };
 
@@ -34,7 +34,7 @@ function softwareApplication(description: string, audienceType: string, featureL
 }
 
 // One entry per public page, both languages side by side so they can't drift.
-const PAGES: Record<PublicPath, Record<Lang, PageCopy>> = {
+const PAGES: Record<TranslatedPath, Record<Lang, PageCopy>> = {
   '/': {
     fr: {
       title: 'Anonymiser un PDF gratuitement, sans envoi de fichier | Rature',
@@ -91,13 +91,24 @@ const PAGES: Record<PublicPath, Record<Lang, PageCopy>> = {
   },
 };
 
-// Meta for a public page, in the language of the URL being rendered.
-export function pageMeta(pathname: string): MetaDescriptor[] {
-  const page = publicPage(pathname);
-  if (!page) return appMeta;
+export type HeadOptions = {
+  // The French path; the English URL, when there is one, is `localizedPath(path, 'en')`.
+  path: string;
+  lang: Lang;
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  // French-only pages have no language alternates.
+  alternates?: boolean;
+  ogType?: 'website' | 'article';
+  // Replaces the default share image (absolute URL, 1200x630) and its alt text.
+  ogImage?: { url: string; alt: string };
+  ogExtra?: MetaDescriptor[];
+  jsonLd?: Record<string, unknown>;
+};
 
-  const { path, lang } = page;
-  const { title, description, ogTitle = title, ogDescription = description, jsonLd } = PAGES[path][lang];
+export function head({ path, lang, title, description, ogTitle = title, ogDescription = description, alternates = true, ogType = 'website', ogImage = { url: OG_IMAGE, alt: OG_IMAGE_ALT[lang] }, ogExtra = [], jsonLd }: HeadOptions): MetaDescriptor[] {
   const url = `${SITE_URL}${localizedPath(path, lang)}`;
   const altLang: Lang = lang === 'fr' ? 'en' : 'fr';
 
@@ -105,26 +116,38 @@ export function pageMeta(pathname: string): MetaDescriptor[] {
     { title },
     { name: 'description', content: description },
     { tagName: 'link', rel: 'canonical', href: url },
-    { tagName: 'link', rel: 'alternate', hrefLang: 'fr', href: `${SITE_URL}${path}` },
-    { tagName: 'link', rel: 'alternate', hrefLang: 'en', href: `${SITE_URL}${localizedPath(path, 'en')}` },
-    { tagName: 'link', rel: 'alternate', hrefLang: 'x-default', href: `${SITE_URL}${path}` },
-    { property: 'og:type', content: 'website' },
+    ...(alternates ? [
+      { tagName: 'link', rel: 'alternate', hrefLang: 'fr', href: `${SITE_URL}${path}` },
+      { tagName: 'link', rel: 'alternate', hrefLang: 'en', href: `${SITE_URL}${localizedPath(path, 'en')}` },
+      { tagName: 'link', rel: 'alternate', hrefLang: 'x-default', href: `${SITE_URL}${path}` },
+    ] : []),
+    { property: 'og:type', content: ogType },
+    ...ogExtra,
     { property: 'og:title', content: ogTitle },
     { property: 'og:description', content: ogDescription },
     { property: 'og:url', content: url },
     { property: 'og:locale', content: OG_LOCALE[lang] },
-    { property: 'og:locale:alternate', content: OG_LOCALE[altLang] },
+    ...(alternates ? [{ property: 'og:locale:alternate', content: OG_LOCALE[altLang] }] : []),
     { property: 'og:site_name', content: 'Rature' },
-    { property: 'og:image', content: OG_IMAGE },
+    { property: 'og:image', content: ogImage.url },
     { property: 'og:image:width', content: '1200' },
     { property: 'og:image:height', content: '630' },
-    { property: 'og:image:alt', content: OG_IMAGE_ALT[lang] },
+    { property: 'og:image:alt', content: ogImage.alt },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: ogTitle },
     { name: 'twitter:description', content: ogDescription },
-    { name: 'twitter:image', content: OG_IMAGE },
+    { name: 'twitter:image', content: ogImage.url },
     ...(jsonLd ? [{ 'script:ld+json': { ...jsonLd, inLanguage: lang } }] : []),
   ];
+}
+
+// Meta for a public page, in the language of the URL being rendered.
+export function pageMeta(pathname: string): MetaDescriptor[] {
+  const page = publicPage(pathname);
+  if (!page || isGuidePath(page.path)) return appMeta;
+
+  const { path, lang } = page;
+  return head({ path, lang, ...PAGES[path][lang] });
 }
 
 // App routes hold an in-memory document: nothing to index there.

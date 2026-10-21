@@ -1,6 +1,5 @@
 import { Code2, CloudOff, MapPin } from 'lucide-react';
 import { Trans, useTranslation } from 'react-i18next';
-import { toast } from 'sonner';
 
 import { BeforeAfter } from '@/components/home/BeforeAfter.tsx';
 import { DropZone } from '@/components/home/DropZone.tsx';
@@ -11,15 +10,8 @@ import { UseCases } from '@/components/home/UseCases.tsx';
 import { VerifySteps } from '@/components/home/VerifySteps.tsx';
 import { Navbar } from '@/components/Navbar.tsx';
 import { ProWaitlist } from '@/components/ProWaitlist.tsx';
-import { useAnonymization } from '@/hooks/useAnonymization.ts';
-import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
+import { useDropZoneHandlers } from '@/hooks/useDropZoneHandlers.ts';
 import { RatureLogo } from '@/components/RatureLogo.tsx';
-import { track } from '@/lib/analytics.ts';
-
-interface HomePageProps {
-  onFileSelect: () => void;
-  onSampleOpen: () => void;
-}
 
 const TRUST = [
   { icon: CloudOff, key: 'home.trust.noUpload' },
@@ -27,34 +19,9 @@ const TRUST = [
   { icon: MapPin, key: 'home.trust.madeInFrance' },
 ] as const;
 
-export function HomePage({ onFileSelect, onSampleOpen }: HomePageProps) {
+export function HomePage() {
   const { t } = useTranslation();
-  const { setFile, processFile, reset } = usePdfProcessing();
-  const { setModel, setModelTokens, setNerEntities } = useAnonymization();
-
-  const handleFileSelected = (file: File) => {
-    setFile(file);
-    onFileSelect();
-  };
-
-  // The sample ships with precomputed entities, so it skips the model download and the NER step.
-  const handleSampleSelected = async () => {
-    try {
-      const { fetchSample } = await import('@/lib/sample.ts');
-      const { file, modelName, modelTokens, entities } = await fetchSample();
-      setFile(file, true);
-      await processFile(file);
-      setModel(modelName);
-      setModelTokens(modelTokens);
-      setNerEntities(entities);
-      track('sample-opened');
-      onSampleOpen();
-    } catch (err) {
-      console.error(err);
-      reset();
-      toast.error(t('dropzone.sampleError'));
-    }
-  };
+  const { handleFileSelected, handleSampleSelected } = useDropZoneHandlers();
 
   return (
     <div className="flex flex-col justify-between flex-1 h-full">

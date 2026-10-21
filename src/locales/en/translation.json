@@ -122,6 +122,26 @@
     "source": "Source code",
     "privacy": "Privacy policy"
   },
+  "guides": {
+    "nav": "Guides",
+    "breadcrumb": "Breadcrumb",
+    "breadcrumbHome": "Home",
+    "updated": "Updated {{date}}",
+    "by": "By",
+    "authorRole": "creator of Rature",
+    "readingTime": "{{count}} min read",
+    "summary": "In short",
+    "toc": "Contents",
+    "faq": "Frequently asked questions",
+    "sources": "Sources",
+    "related": "Read next",
+    "readGuide": "Read the guide",
+    "cta": {
+      "title": "Redact your PDF without uploading it",
+      "text": "Automatic detection, review, export without the text. In your browser, free, no sign-up."
+    },
+    "download": "Download the test PDF"
+  },
   "loading": {
     "title": "Analysis in progress",
     "step0": "Loading detection model...",

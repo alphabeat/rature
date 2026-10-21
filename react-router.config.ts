@@ -3,7 +3,10 @@ import { join } from 'node:path';
 
 import type { Config } from '@react-router/dev/config';
 
-import { localizedPath, PRERENDER_PATHS, PUBLIC_PATHS, SITE_URL } from './src/lib/publicPages.ts';
+import { GUIDE_PATHS, localizedPath, PRERENDER_PATHS, PUBLIC_PATHS, SITE_URL } from './src/lib/publicPages.ts';
+
+// Same as `GUIDES_DATE` in `src/guides/index.ts`, which this config cannot import (JSX).
+const GUIDES_LASTMOD = '2026-10-21';
 
 // Rendered by the splat route, then moved to `404.html` for nginx's `error_page`.
 const NOT_FOUND_PATH = '/404';
@@ -19,9 +22,11 @@ function sitemap(): string {
     return [path, localizedPath(path, 'en')].map((loc) => `  <url>\n    <loc>${SITE_URL}${loc}</loc>\n${alternates}\n  </url>`);
   });
 
+  const guides = GUIDE_PATHS.map((path) => `  <url>\n    <loc>${SITE_URL}${path}</loc>\n    <lastmod>${GUIDES_LASTMOD}</lastmod>\n  </url>`);
+
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${urls.join('\n')}
+${[...urls, ...guides].join('\n')}
 </urlset>
 `;
 }
