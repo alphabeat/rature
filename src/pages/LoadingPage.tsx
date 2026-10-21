@@ -7,7 +7,7 @@ import { useAnonymization } from '@/hooks/useAnonymization.ts';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 import { useNERWorker } from '@/hooks/useNERWorker.ts';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
-import { track } from '@/lib/analytics.ts';
+import { failureDetail, track } from '@/lib/analytics.ts';
 import { isModelCached } from '@/lib/cache.ts';
 import { CUSTOM_PAGE_SPLIT_TOKEN, NER_MODELS } from '@/models/utils.ts';
 import { Navigate } from 'react-router';
@@ -87,7 +87,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
       ({ entities } = await processText(text));
     } catch (err) {
       console.error(err);
-      track('analysis-failed', { stage: 'ner' });
+      track('analysis-failed', { stage: 'ner', ...failureDetail(err, pageCount, text.length) });
       setFailure({ stage: 'ner', message: err instanceof Error ? err.message : String(err) });
       return;
     }
@@ -104,7 +104,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
     setModelTokens(modelTokens);
 
     setTimeout(() => finalize(), 500);
-  }, [finalize, modelTokens, processText, setModelTokens, setNerEntities, startedAt, updateStep]);
+  }, [finalize, modelTokens, pageCount, processText, setModelTokens, setNerEntities, startedAt, updateStep]);
 
   const processDocument = useCallback(async () => {
     if (pdfProcessingStatus !== 'idle') return;
@@ -115,13 +115,13 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
     try {
       text = await processFile();
     } catch (err) {
-      track('analysis-failed', { stage: 'extract' });
+      track('analysis-failed', { stage: 'extract', ...failureDetail(err, pageCount) });
       setFailure({ stage: 'extract', message: err instanceof Error ? err.message : String(err) });
       return;
     }
 
     analyzeDocument(text.map((extract) => extract.text.replaceAll(/\n+/g, ' ')).join(CUSTOM_PAGE_SPLIT_TOKEN));
-  }, [analyzeDocument, pdfProcessingStatus, processFile, updateStep]);
+  }, [analyzeDocument, pageCount, pdfProcessingStatus, processFile, updateStep]);
 
   const workerMemo = useMemo(() => initialize(modelName), [initialize, modelName]);
 
@@ -133,7 +133,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
   }, [pdfProcessingStatus, processDocument, stepIndex, workerStatus]);
 
   useEffect(() => {
-    if (error) track('analysis-failed', { stage: workerFailureStage });
+    if (error) track('analysis-failed', { stage: workerFailureStage, ...failureDetail(error, pageCount) });
   }, [error]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
