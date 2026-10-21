@@ -41,7 +41,8 @@
           "title": "Un code public, vérifiable par tous",
           "desc": "Rature est open source, sous licence AGPL. Le code qui traite vos documents est publié sur <github>GitHub</github> : n'importe quel développeur ou expert en sécurité peut le relire et confirmer qu'il n'envoie rien."
         }
-      }
+      },
+      "test": "Dans notre test, ChatGPT a relu 17 données sur 17 cachées sous un faux caviardage Word, et 0 dans l'export Rature. <guide>Voir le test complet</guide>."
     },
     "useCases": {
       "title": "Quand anonymiser un PDF",
