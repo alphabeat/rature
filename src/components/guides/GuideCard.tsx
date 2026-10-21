@@ -3,14 +3,16 @@ import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import type { Guide } from '@/guides/types.ts';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 
 export function GuideCard({ guide }: { guide: Guide }) {
   const { t } = useTranslation();
+  const localize = useLocalizedPath();
 
   return (
     <li className="flex">
       <Link
-        to={guide.path}
+        to={localize(guide.path)}
         className="group flex flex-col gap-3 w-full bg-card border border-border-theme shadow-sm p-6 hover:border-accent transition-colors dark:bg-surface-subtle dark:shadow-none"
       >
         <h3 className="text-lg font-bold text-fg group-hover:text-accent transition-colors">{guide.card.title}</h3>

@@ -73,7 +73,7 @@
         },
         "recover": {
           "q": "Can the redacted text be recovered?",
-          "a": "No. Rature doesn't just draw a black box over the text: it removes the text from the exported PDF. Copy and paste or an extraction tool finds nothing under the redacted areas. The export can also strip the file's metadata (author, dates, original document properties)."
+          "a": "No. Rature doesn't just draw a black box over the text: it removes the text from the exported PDF. Copy and paste or an extraction tool finds nothing under the redacted areas. The export can also strip the file's metadata (author, dates, original document properties). <guide>How to check a redaction</guide>."
         },
         "free": {
           "q": "Is Rature free?",
@@ -85,7 +85,7 @@
         },
         "chatgpt": {
           "q": "Can I redact a document before giving it to ChatGPT?",
-          "a": "Yes, it's one of the main uses. Redact the PDF with Rature, check the result, then give the exported version to ChatGPT, Copilot or another assistant. Review it carefully: specific context (a job title, a place, a date) is sometimes enough to identify someone."
+          "a": "Yes, it's one of the main uses. Redact the PDF with Rature, check the result, then give the exported version to ChatGPT, Copilot or another assistant. Review it carefully: specific context (a job title, a place, a date) is sometimes enough to identify someone. <guide>See the 5-step method</guide>."
         },
         "firstLoad": {
           "q": "Why is the first load slow?",

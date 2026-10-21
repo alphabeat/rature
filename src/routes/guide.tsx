@@ -8,13 +8,13 @@ import NotFoundRoute from '@/routes/not-found.tsx';
 
 // `:slug` also matches unknown guides, which get the splat route's 404 page.
 export const meta = ({ location }: MetaArgs) => {
-  const guide = findGuide(location.pathname);
-  return guide ? guideMeta(guide) : notFoundMeta;
+  const found = findGuide(location.pathname);
+  return found ? guideMeta(found.guide, found.lang) : notFoundMeta;
 };
 
 export default function Guide() {
   const { pathname } = useLocation();
-  const guide = findGuide(pathname);
+  const found = findGuide(pathname);
 
-  return guide ? <GuidePage guide={guide} /> : <NotFoundRoute />;
+  return found ? <GuidePage guide={found.guide} lang={found.lang} /> : <NotFoundRoute />;
 }

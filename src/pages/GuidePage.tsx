@@ -8,12 +8,17 @@ import { Footer } from '@/components/home/Footer.tsx';
 import { Navbar } from '@/components/Navbar.tsx';
 import { GUIDES_DATE, guideByPath } from '@/guides/index.ts';
 import type { Guide } from '@/guides/types.ts';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
+import type { Lang } from '@/lib/publicPages.ts';
 
 const H2_CLASS = 'text-3xl font-extrabold tracking-tight text-fg scroll-mt-32';
 
-export function GuidePage({ guide }: { guide: Guide }) {
+const DATE_LOCALE: Record<Lang, string> = { fr: 'fr-FR', en: 'en-US' };
+
+export function GuidePage({ guide, lang }: { guide: Guide; lang: Lang }) {
   const { t } = useTranslation();
-  const date = new Date(GUIDES_DATE).toLocaleDateString('fr-FR', { dateStyle: 'long', timeZone: 'UTC' });
+  const localize = useLocalizedPath();
+  const date = new Date(GUIDES_DATE).toLocaleDateString(DATE_LOCALE[lang], { dateStyle: 'long', timeZone: 'UTC' });
   const toc = [
     ...guide.sections,
     { id: 'questions-frequentes', title: t('guides.faq') },
@@ -28,16 +33,16 @@ export function GuidePage({ guide }: { guide: Guide }) {
         <header className="flex flex-col gap-4">
           <nav aria-label={t('guides.breadcrumb')}>
             <ol className="flex flex-wrap items-center gap-2 text-sm text-fg-muted">
-              <li><Link to="/" className="hover:text-fg transition-colors">{t('guides.breadcrumbHome')}</Link></li>
+              <li><Link to={localize('/')} className="hover:text-fg transition-colors">{t('guides.breadcrumbHome')}</Link></li>
               <li aria-hidden="true">&gt;</li>
-              <li><Link to="/guides" className="hover:text-fg transition-colors">{t('guides.nav')}</Link></li>
+              <li><Link to={localize('/guides')} className="hover:text-fg transition-colors">{t('guides.nav')}</Link></li>
               <li aria-hidden="true">&gt;</li>
               <li aria-current="page">{guide.breadcrumb}</li>
             </ol>
           </nav>
           <h1 className="text-4xl font-extrabold tracking-tight leading-[1.1] text-fg">{guide.heading}</h1>
           <p className="text-sm text-fg-muted">
-            {t('guides.by')} <Link to="/about" className="underline underline-offset-4 hover:text-fg">Julien Kilo</Link>, {t('guides.authorRole')}
+            {t('guides.by')} <Link to={localize('/about')} className="underline underline-offset-4 hover:text-fg">Julien Kilo</Link>, {t('guides.authorRole')}
             {' · '}
             <time dateTime={GUIDES_DATE}>{t('guides.updated', { date })}</time>
             {' · '}
@@ -96,7 +101,7 @@ export function GuidePage({ guide }: { guide: Guide }) {
         <section aria-labelledby="a-lire-aussi" className="flex flex-col gap-4">
           <h2 id="a-lire-aussi" className={H2_CLASS}>{t('guides.related')}</h2>
           <ul className="grid gap-4 sm:grid-cols-2">
-            {guide.related.map((path) => <GuideCard key={path} guide={guideByPath(path)} />)}
+            {guide.related.map((path) => <GuideCard key={path} guide={guideByPath(path, lang)} />)}
           </ul>
         </section>
       </main>

@@ -92,15 +92,13 @@ const PAGES: Record<TranslatedPath, Record<Lang, PageCopy>> = {
 };
 
 export type HeadOptions = {
-  // The French path; the English URL, when there is one, is `localizedPath(path, 'en')`.
+  // The French path; the English URL is `localizedPath(path, 'en')`.
   path: string;
   lang: Lang;
   title: string;
   description: string;
   ogTitle?: string;
   ogDescription?: string;
-  // French-only pages have no language alternates.
-  alternates?: boolean;
   ogType?: 'website' | 'article';
   // Replaces the default share image (absolute URL, 1200x630) and its alt text.
   ogImage?: { url: string; alt: string };
@@ -108,7 +106,7 @@ export type HeadOptions = {
   jsonLd?: Record<string, unknown>;
 };
 
-export function head({ path, lang, title, description, ogTitle = title, ogDescription = description, alternates = true, ogType = 'website', ogImage = { url: OG_IMAGE, alt: OG_IMAGE_ALT[lang] }, ogExtra = [], jsonLd }: HeadOptions): MetaDescriptor[] {
+export function head({ path, lang, title, description, ogTitle = title, ogDescription = description, ogType = 'website', ogImage = { url: OG_IMAGE, alt: OG_IMAGE_ALT[lang] }, ogExtra = [], jsonLd }: HeadOptions): MetaDescriptor[] {
   const url = `${SITE_URL}${localizedPath(path, lang)}`;
   const altLang: Lang = lang === 'fr' ? 'en' : 'fr';
 
@@ -116,18 +114,16 @@ export function head({ path, lang, title, description, ogTitle = title, ogDescri
     { title },
     { name: 'description', content: description },
     { tagName: 'link', rel: 'canonical', href: url },
-    ...(alternates ? [
-      { tagName: 'link', rel: 'alternate', hrefLang: 'fr', href: `${SITE_URL}${path}` },
-      { tagName: 'link', rel: 'alternate', hrefLang: 'en', href: `${SITE_URL}${localizedPath(path, 'en')}` },
-      { tagName: 'link', rel: 'alternate', hrefLang: 'x-default', href: `${SITE_URL}${path}` },
-    ] : []),
+    { tagName: 'link', rel: 'alternate', hrefLang: 'fr', href: `${SITE_URL}${path}` },
+    { tagName: 'link', rel: 'alternate', hrefLang: 'en', href: `${SITE_URL}${localizedPath(path, 'en')}` },
+    { tagName: 'link', rel: 'alternate', hrefLang: 'x-default', href: `${SITE_URL}${path}` },
     { property: 'og:type', content: ogType },
     ...ogExtra,
     { property: 'og:title', content: ogTitle },
     { property: 'og:description', content: ogDescription },
     { property: 'og:url', content: url },
     { property: 'og:locale', content: OG_LOCALE[lang] },
-    ...(alternates ? [{ property: 'og:locale:alternate', content: OG_LOCALE[altLang] }] : []),
+    { property: 'og:locale:alternate', content: OG_LOCALE[altLang] },
     { property: 'og:site_name', content: 'Rature' },
     { property: 'og:image', content: ogImage.url },
     { property: 'og:image:width', content: '1200' },

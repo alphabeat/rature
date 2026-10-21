@@ -10,6 +10,8 @@ export default [
     index('routes/home.tsx', { id: 'en/home' }),
     route('about', 'routes/about.tsx', { id: 'en/about' }),
     route('privacy-policy', 'routes/privacy-policy.tsx', { id: 'en/privacy-policy' }),
+    route('guides', 'routes/guides.tsx', { id: 'en/guides' }),
+    route('guides/:slug', 'routes/guide.tsx', { id: 'en/guide' }),
   ]),
   route('settings', 'routes/settings.tsx'),
   route('processing', 'routes/processing.tsx'),

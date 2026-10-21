@@ -3,11 +3,13 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import { HomeSection } from '@/components/home/HomeSection.tsx';
+import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
+import type { GuidePath } from '@/lib/publicPages.ts';
 
 const QUESTIONS = ['upload', 'recover', 'free', 'detection', 'chatgpt', 'firstLoad'] as const;
 
-// French answers end with a link to a guide (`<guide>` tag); the English ones have none.
-const GUIDE_LINKS: Partial<Record<(typeof QUESTIONS)[number], string>> = {
+// Some answers end with a link to a guide (`<guide>` tag).
+const GUIDE_LINKS: Partial<Record<(typeof QUESTIONS)[number], GuidePath>> = {
   recover: '/guides/verifier-caviardage-pdf',
   chatgpt: '/guides/anonymiser-pdf-avant-chatgpt',
 };
@@ -15,6 +17,7 @@ const GUIDE_LINKS: Partial<Record<(typeof QUESTIONS)[number], string>> = {
 // Native <details> so every answer is in the prerendered HTML and works without JS.
 export function Faq() {
   const { t } = useTranslation();
+  const localize = useLocalizedPath();
 
   return (
     <HomeSection id="faq" title={t('home.faq.title')}>
@@ -31,7 +34,7 @@ export function Faq() {
             <p className="px-6 pb-5 text-sm text-fg-muted leading-relaxed">
               <Trans
                 i18nKey={`home.faq.items.${key}.a`}
-                components={{ guide: <Link to={GUIDE_LINKS[key] ?? '/guides'} className="text-accent underline underline-offset-4 hover:text-accent-hover" /> }}
+                components={{ guide: <Link to={localize(GUIDE_LINKS[key] ?? '/guides')} className="text-accent underline underline-offset-4 hover:text-accent-hover" /> }}
               />
             </p>
           </details>
