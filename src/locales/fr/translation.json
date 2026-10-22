@@ -121,7 +121,8 @@
   },
   "footer": {
     "source": "Code source",
-    "privacy": "Politique de confidentialité"
+    "privacy": "Politique de confidentialité",
+    "legal": "Mentions légales"
   },
   "guides": {
     "nav": "Guides",
@@ -809,6 +810,26 @@
       "how2": "En cas de <bold>modification substantielle</bold> (ex. : changement de prestataire d'hébergement, ajout d'une collecte de données), nous vous en informerons via :",
       "how2a": "Une <bold>bannière sur le site</bold> lors de votre prochaine visite.",
       "how2b": "Un <bold>email</bold> si vous avez fourni une adresse de contact (ex. : pour contribuer au projet)."
+    }
+  },
+  "legal": {
+    "title": "Mentions légales",
+    "lastUpdated": "Dernière mise à jour : 22/10/2026",
+    "publisher": {
+      "title": "Éditeur du site",
+      "p1": "Rature est un service en ligne gratuit, édité à titre non professionnel par <authorLink>Julien Kilo</authorLink>, personne physique. Conformément à l'article 6, III, 2° de la loi du 21 juin 2004 pour la confiance dans l'économie numérique, les coordonnées complètes de l'éditeur ont été communiquées à l'hébergeur et peuvent être transmises sur réquisition de l'autorité judiciaire.",
+      "contact": "📧 <bold>Contact</bold> : <mailLink>contact@rature.fr</mailLink>"
+    },
+    "host": {
+      "title": "Hébergeur",
+      "provider": "🏢 <bold>OVH SAS</bold>",
+      "address": "📍 2 rue Kellermann, 59100 Roubaix, France",
+      "phone": "📞 09 72 10 10 07",
+      "website": "🔗 <hostLink>www.ovhcloud.com</hostLink>"
+    },
+    "data": {
+      "title": "Données personnelles",
+      "p1": "Le traitement des documents s'effectue uniquement dans votre navigateur. Le détail de la mesure d'audience et de vos droits figure dans la <privacyLink>politique de confidentialité</privacyLink>."
     }
   },
   "waitlist": {

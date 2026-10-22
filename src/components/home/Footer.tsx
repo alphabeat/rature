@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { LanguageSwitcher } from "@/components/LanguageSwitcher.tsx";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath.ts";
+import { AUTHOR_LINKEDIN_URL, AUTHOR_NAME } from "@/lib/author.ts";
 
 export function Footer() {
   const { t } = useTranslation();
@@ -14,9 +15,14 @@ export function Footer() {
       <div className="mx-auto max-w-300 px-6 flex flex-wrap items-center justify-center gap-3">
         <p className="text-sm text-fg/70">
           © {new Date().getFullYear()}{' '}
-          <span className="text-sm text-fg/70 hover:text-fg transition-colors">
-            Julien Kilo
-          </span>
+          <a
+            href={AUTHOR_LINKEDIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-fg/70 hover:text-fg transition-colors"
+          >
+            {AUTHOR_NAME}
+          </a>
         </p>
         <p className="text-sm text-fg/80">•</p>
         <a
@@ -41,6 +47,13 @@ export function Footer() {
             className="text-sm text-fg/70 hover:text-fg transition-colors"
           >
             {t('footer.privacy')}
+          </Link>
+          <p className="text-sm text-fg/80">•</p>
+          <Link
+            to={localize('/legal-notice')}
+            className="text-sm text-fg/70 hover:text-fg transition-colors"
+          >
+            {t('footer.legal')}
           </Link>
         </nav>
         <p className="text-sm text-fg/80">•</p>

@@ -3,6 +3,7 @@ import type { MetaDescriptor } from 'react-router';
 import { GUIDES, GUIDES_DATE, HUB } from '@/guides/index.ts';
 import { plainText } from '@/guides/inline.ts';
 import type { Guide } from '@/guides/types.ts';
+import { AUTHOR_LINKEDIN_URL, AUTHOR_NAME } from '@/lib/author.ts';
 import { localizedPath, SITE_URL, type Lang } from '@/lib/publicPages.ts';
 import { head, OG_IMAGE } from '@/lib/seo.ts';
 
@@ -36,9 +37,9 @@ function guideJsonLd(guide: Guide, lang: Lang, image: string) {
         dateModified: GUIDES_DATE,
         author: {
           '@type': 'Person',
-          name: 'Julien Kilo',
+          name: AUTHOR_NAME,
           url: `${SITE_URL}${localizedPath('/about', lang)}`,
-          sameAs: 'https://github.com/alphabeat',
+          sameAs: ['https://github.com/alphabeat', AUTHOR_LINKEDIN_URL],
         },
         publisher: {
           '@type': 'Organization',

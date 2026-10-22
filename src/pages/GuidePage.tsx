@@ -9,6 +9,7 @@ import { Navbar } from '@/components/Navbar.tsx';
 import { GUIDES_DATE, guideByPath } from '@/guides/index.ts';
 import type { Guide } from '@/guides/types.ts';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
+import { AUTHOR_LINKEDIN_URL, AUTHOR_NAME } from '@/lib/author.ts';
 import type { Lang } from '@/lib/publicPages.ts';
 
 const H2_CLASS = 'text-3xl font-extrabold tracking-tight text-fg scroll-mt-32';
@@ -42,7 +43,7 @@ export function GuidePage({ guide, lang }: { guide: Guide; lang: Lang }) {
           </nav>
           <h1 className="text-4xl font-extrabold tracking-tight leading-[1.1] text-fg">{guide.heading}</h1>
           <p className="text-sm text-fg-muted">
-            {t('guides.by')} <Link to={localize('/about')} className="underline underline-offset-4 hover:text-fg">Julien Kilo</Link>, {t('guides.authorRole')}
+            {t('guides.by')} <a href={AUTHOR_LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-fg">{AUTHOR_NAME}</a>, {t('guides.authorRole')}
             {' · '}
             <time dateTime={GUIDES_DATE}>{t('guides.updated', { date })}</time>
             {' · '}
