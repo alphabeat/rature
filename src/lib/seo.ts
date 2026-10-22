@@ -89,6 +89,16 @@ const PAGES: Record<TranslatedPath, Record<Lang, PageCopy>> = {
       description: 'Rature processes your documents only in your browser: no file is uploaded. Details on the anonymous audience measurement and your rights.',
     },
   },
+  '/legal-notice': {
+    fr: {
+      title: 'Mentions légales | Rature',
+      description: 'Mentions légales de Rature : éditeur, hébergeur et contact.',
+    },
+    en: {
+      title: 'Legal notice | Rature',
+      description: 'Legal notice for Rature: publisher, hosting provider and contact.',
+    },
+  },
 };
 
 export type HeadOptions = {

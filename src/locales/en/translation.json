@@ -121,7 +121,8 @@
   },
   "footer": {
     "source": "Source code",
-    "privacy": "Privacy policy"
+    "privacy": "Privacy policy",
+    "legal": "Legal notice"
   },
   "guides": {
     "nav": "Guides",
@@ -809,6 +810,26 @@
       "how2": "In the event of a <bold>substantial change</bold> (e.g.: change of hosting provider, addition of data collection), we will inform you via:",
       "how2a": "A <bold>banner on the site</bold> on your next visit.",
       "how2b": "An <bold>email</bold> if you have provided a contact address (e.g.: to contribute to the project)."
+    }
+  },
+  "legal": {
+    "title": "Legal notice",
+    "lastUpdated": "Last updated: 22/10/2026",
+    "publisher": {
+      "title": "Site publisher",
+      "p1": "Rature is a free online service, published on a non-professional basis by <authorLink>Julien Kilo</authorLink>, an individual. In accordance with article 6, III, 2 of the French law of 21 June 2004 on trust in the digital economy (LCEN), the publisher's full contact details have been provided to the hosting provider and can be disclosed upon request by the judicial authority.",
+      "contact": "📧 <bold>Contact</bold>: <mailLink>contact@rature.fr</mailLink>"
+    },
+    "host": {
+      "title": "Hosting provider",
+      "provider": "🏢 <bold>OVH SAS</bold>",
+      "address": "📍 2 rue Kellermann, 59100 Roubaix, France",
+      "phone": "📞 +33 9 72 10 10 07",
+      "website": "🔗 <hostLink>www.ovhcloud.com</hostLink>"
+    },
+    "data": {
+      "title": "Personal data",
+      "p1": "Documents are processed only in your browser. Details on audience measurement and your rights are in the <privacyLink>privacy policy</privacyLink>."
     }
   },
   "waitlist": {
