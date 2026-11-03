@@ -2,6 +2,7 @@ import type { PDFDocument } from "mupdf";
 import { useState, type ReactNode } from "react";
 
 import { PdfProcessingContext, type TextExtract, type PDFProcessingStatus } from "@/context/pdfProcessing.tsx";
+import type { ExtractionProgress } from "@/lib/pdf/processPDF.ts";
 import type { DetectedImage } from "@/types/index.ts";
 
 type PdfProcessingProviderProps = {
@@ -23,7 +24,7 @@ export function PdfProcessingProvider({ children }: PdfProcessingProviderProps) 
   };
 
   // Takes the file directly when it was set in the same tick, before state has updated.
-  const processFile = async (fileToProcess = file) => {
+  const processFile = async (fileToProcess = file, onProgress?: ExtractionProgress, signal?: AbortSignal) => {
     if (!fileToProcess) {
       throw new Error('You must set the file first');
     }
@@ -32,7 +33,9 @@ export function PdfProcessingProvider({ children }: PdfProcessingProviderProps) 
 
     try {
       const { default: uploadPDF } = await import('@/lib/pdf/uploadPDF.tsx');
-      const result = await uploadPDF(fileToProcess);
+      const result = await uploadPDF(fileToProcess, onProgress, signal);
+      // A cancelled run must not overwrite the state of the next document.
+      signal?.throwIfAborted();
 
       const extracted = result.pages.map(({ pageNumber, text }) => ({
         page: pageNumber,
@@ -47,6 +50,7 @@ export function PdfProcessingProvider({ children }: PdfProcessingProviderProps) 
 
       return extracted;
     } catch (error) {
+      if (signal?.aborted) throw error;
       setStatus("error");
       console.error("Processing error:", error);
 

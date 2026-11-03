@@ -40,14 +40,26 @@ function bucket(value: number, edges: number[]): string {
   return i === 0 ? `<${edges[0]}` : `${edges[i - 1]}-${edges[i]}`;
 }
 
+export function pagesBucket(pages: number): string {
+  return pages > 0 ? bucket(pages, [2, 6, 21, 51]) : 'unknown';
+}
+
+/** File size in MB, bucketed. */
+export function sizeBucket(bytes: number): string {
+  return bucket(bytes / 1_048_576, [1, 5, 20, 50, 100]);
+}
+
 /**
  * Coarse context for `analysis-failed`: the error class name and size buckets, never the message,
  * which can contain document text.
  */
 export function failureDetail(err: unknown, pages: number, textLength?: number): EventData {
+  const name = err instanceof Error || (typeof err === 'object' && err !== null && 'name' in err && typeof err.name === 'string')
+    ? (err as { name: string }).name
+    : typeof err;
   const detail: EventData = {
-    error: (err instanceof Error ? err.name : typeof err).slice(0, 40),
-    pages: pages > 0 ? bucket(pages, [2, 6, 21, 51]) : 'unknown',
+    error: name.slice(0, 40),
+    pages: pagesBucket(pages),
   };
   if (textLength !== undefined) detail.chars = bucket(textLength, [5_000, 20_000, 100_000, 500_000]);
   return detail;

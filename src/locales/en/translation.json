@@ -156,6 +156,11 @@
     "modelDownload": "Downloading model",
     "cachedNote": "Cached after first load",
     "loadingFromCache": "Loading from cache...",
+    "reading": "Reading the document",
+    "stalled": {
+      "title": "This is taking longer than expected",
+      "desc": "Nothing has moved for a minute. If the page stays stuck, try again. Closing other tabs frees up memory."
+    },
     "error": {
       "model-download": {
         "title": "The detection model could not be loaded",

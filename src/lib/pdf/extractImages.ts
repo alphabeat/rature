@@ -1,4 +1,4 @@
-import { Device, Matrix, type Image, type PDFPage, type Rect } from "mupdf";
+import { Device, Matrix, type Image, type PDFPage, type Pixmap, type Rect } from "mupdf";
 
 import type { DetectedImage } from "@/types/index.ts";
 
@@ -40,9 +40,11 @@ function computeImageFingerprint(image: Image): string {
   hash = fnv1aHashInt(hash, h);
 
   // Decode the image to a pixmap and sample pixels at regular intervals
-  // to create an ~8x8 effective thumbnail hash
+  // to create an ~8x8 effective thumbnail hash. The pixmap lives in the mupdf heap and is
+  // freed right away: on a long scan, waiting for GC fills the heap (malloc failed).
+  let pixmap: Pixmap | null = null;
   try {
-    const pixmap = image.toPixmap();
+    pixmap = image.toPixmap();
     const pixels = pixmap.getPixels();
     const pw = pixmap.getWidth();
     const ph = pixmap.getHeight();
@@ -62,6 +64,8 @@ function computeImageFingerprint(image: Image): string {
     }
   } catch {
     // If pixmap extraction fails, fall back to dimensions-only hash
+  } finally {
+    pixmap?.destroy();
   }
 
   return hash.toString(36);
@@ -92,6 +96,7 @@ export function extractPageImages(page: PDFPage, pageIndex: number): DetectedIma
 
   page.run(device, Matrix.identity);
   device.close();
+  device.destroy();
   return images;
 }
 
@@ -111,16 +116,20 @@ export function extractImageThumbnails(page: PDFPage, pageIndex: number): Map<st
       if (rectWidth < MIN_IMAGE_DIMENSION || rectHeight < MIN_IMAGE_DIMENSION) return;
 
       const id = `img-${pageIndex}-${index++}`;
+      let pixmap: Pixmap | null = null;
       try {
-        const pixmap = image.toPixmap();
+        pixmap = image.toPixmap();
         thumbnails.set(id, pixmap.asPNG());
       } catch {
         // skip if pixmap extraction fails
+      } finally {
+        pixmap?.destroy();
       }
     },
   });
 
   page.run(device, Matrix.identity);
   device.close();
+  device.destroy();
   return thumbnails;
 }

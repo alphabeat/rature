@@ -100,6 +100,9 @@ function handlePDFError(error: unknown): PDFExtractionResult {
   };
 
   if (error instanceof Error) {
+    // Keep mupdf's message (e.g. "malloc (...) failed") for the error details.
+    response.error = `Failed to process PDF: ${error.message}`;
+
     if (error.message.includes("password") || error.message.includes("encrypted")) {
       response.error = "Password-protected PDFs are not supported";
 
@@ -115,15 +118,20 @@ function handlePDFError(error: unknown): PDFExtractionResult {
   return response;
 }
 
+export type ExtractionProgress = (pagesDone: number, pageCount: number) => void;
+
 export async function extractTextFromPDF(
-  fileBuffer: ArrayBuffer
+  fileBuffer: ArrayBuffer,
+  onProgress?: ExtractionProgress,
+  signal?: AbortSignal,
 ): Promise<PDFExtractionResult> {
+  let doc: PDFDocument | null = null;
   try {
     // Convert ArrayBuffer to Buffer
     const buffer = Buffer.from(fileBuffer);
 
     // Open PDF document
-    const doc = PDFDocument.openDocument(buffer, "application/pdf") as PDFDocument;
+    doc = PDFDocument.openDocument(buffer, "application/pdf") as PDFDocument;
 
     // Get page count
     const pageCount = doc.countPages();
@@ -151,6 +159,11 @@ export async function extractTextFromPDF(
       // Extract images from this page
       const pageImages = extractPageImages(page, i);
       detectedImages.push(...pageImages);
+
+      // Yield between pages: mupdf is synchronous, and a long scan would otherwise freeze the tab.
+      onProgress?.(i + 1, pageCount);
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      signal?.throwIfAborted();
     }
 
     // Extract metadata
@@ -165,6 +178,11 @@ export async function extractTextFromPDF(
       metadata,
     };
   } catch (error) {
+    // Cancelled (the user left the page): free the document and let the caller ignore it.
+    if (signal?.aborted) {
+      doc?.destroy();
+      throw error;
+    }
     return handlePDFError(error);
   }
 }
