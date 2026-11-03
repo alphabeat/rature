@@ -14,6 +14,8 @@ export function useDropZoneHandlers() {
   const { setModel, setModelTokens, setNerEntities } = useAnonymization();
 
   const handleFileSelected = (file: File) => {
+    // A previous document leaves the status at 'complete'; start the new one from 'idle'.
+    reset();
     setFile(file);
     navigate('/processing');
   };

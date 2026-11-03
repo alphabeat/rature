@@ -156,6 +156,11 @@
     "modelDownload": "Téléchargement du modèle",
     "cachedNote": "Mis en cache après le premier chargement",
     "loadingFromCache": "Chargement depuis le cache...",
+    "reading": "Lecture du document",
+    "stalled": {
+      "title": "C'est plus long que prévu",
+      "desc": "Rien n'a avancé depuis une minute. Si la page reste bloquée, réessayez. Fermer d'autres onglets libère de la mémoire."
+    },
     "error": {
       "model-download": {
         "title": "Le modèle de détection n'a pas pu être chargé",

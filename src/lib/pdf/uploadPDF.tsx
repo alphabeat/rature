@@ -1,6 +1,6 @@
-import { extractTextFromPDF } from "@/lib/pdf/processPDF.ts";
+import { extractTextFromPDF, type ExtractionProgress } from "@/lib/pdf/processPDF.ts";
 
-const uploadPDF = async (file: File) => {
+const uploadPDF = async (file: File, onProgress?: ExtractionProgress, signal?: AbortSignal) => {
   if (!file || !(file instanceof File)) {
     throw new Error("No PDF file provided");
   }
@@ -12,10 +12,10 @@ const uploadPDF = async (file: File) => {
   const arrayBuffer = await file.arrayBuffer();
 
   try {
-    const result = await extractTextFromPDF(arrayBuffer);
+    const result = await extractTextFromPDF(arrayBuffer, onProgress, signal);
 
     if (!result.success) {
-      throw new Error("Failed to process PDF");
+      throw new Error(result.error ?? "Failed to process PDF");
     }
 
     return {

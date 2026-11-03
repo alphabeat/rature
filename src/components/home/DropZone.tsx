@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button.tsx';
 import { useAnonymization } from '@/hooks/useAnonymization.ts';
-import { track } from '@/lib/analytics.ts';
+import { sizeBucket, track } from '@/lib/analytics.ts';
 import { validateFile } from '@/lib/pdf/validatePDF.ts';
 import { cn } from '@/lib/utils.ts';
 import {
@@ -92,7 +92,7 @@ export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
   const handleFile = useCallback(
     (file: File, method: 'drop' | 'picker') => {
       if (validateFile(file).valid) {
-        track('pdf-selected', { method });
+        track('pdf-selected', { method, mb: sizeBucket(file.size) });
         onFileSelect(file);
       } else {
         toast.error(t('dropzone.notPdf'));

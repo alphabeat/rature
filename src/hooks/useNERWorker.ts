@@ -71,6 +71,7 @@ export function useNERWorker() {
   const [backend, setBackend] = useState<"webgpu" | "wasm" | null>(null);
   const [modelTokens, setModelTokens] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [errorName, setErrorName] = useState<string | null>(null);
   const [downloadProgress, setDownloadProgress] = useState<DownloadProgress | null>(null);
   const [processingProgress, setProcessingProgress] = useState<ProcessingProgress | null>(null);
   const modelNameRef = useRef<NERModel | null>(null);
@@ -151,6 +152,7 @@ export function useNERWorker() {
           pendingJobsRef.current.delete(event.data.jobId);
         } else {
           setError(event.data.message);
+          setErrorName(event.data.name ?? null);
           setStatus("error");
         }
         break;
@@ -160,6 +162,7 @@ export function useNERWorker() {
 
   const handleWorkerErrors = (err: ErrorEvent) => {
     setError(`Worker error: ${err.message}`);
+    setErrorName("WorkerError");
     setStatus("error");
   };
 
@@ -214,6 +217,7 @@ export function useNERWorker() {
     backend,
     downloadProgress,
     error,
+    errorName,
     modelTokens,
     processingProgress,
     status,

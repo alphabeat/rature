@@ -1,6 +1,7 @@
 import type { PDFDocument } from "mupdf";
 import { createContext } from "react";
 
+import type { ExtractionProgress } from "@/lib/pdf/processPDF.ts";
 import type { DetectedImage } from "@/types/index.ts";
 
 export type PDFProcessingStatus = "idle" | "processing" | "complete" | "error";
@@ -18,7 +19,7 @@ interface PdfProcessingContextValue {
   pageCount: number;
   pdfDocument: PDFDocument | null;
   processingStatus: PDFProcessingStatus;
-  processFile: (file?: File) => Promise<TextExtract[]>;
+  processFile: (file?: File | null, onProgress?: ExtractionProgress, signal?: AbortSignal) => Promise<TextExtract[]>;
   reset: () => void;
   setDetectedImages: (images: DetectedImage[]) => void;
   setFile: (file: File, isSample?: boolean) => void;
