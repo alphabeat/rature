@@ -51,10 +51,11 @@ export function GuidePage({ guide, lang }: { guide: Guide; lang: Lang }) {
           </p>
         </header>
 
-        <aside className="flex flex-col gap-3 border-l-4 border-accent bg-card shadow-sm p-5 dark:bg-surface-subtle dark:shadow-none">
-          <p className="text-sm font-bold uppercase tracking-wider text-accent">{t('guides.summary')}</p>
+        {/* A <section>, not an <aside>: text extractors drop asides, and this is the guide's most quoted passage. */}
+        <section aria-labelledby="en-bref" className="flex flex-col gap-3 border-l-4 border-accent bg-card shadow-sm p-5 dark:bg-surface-subtle dark:shadow-none">
+          <h2 id="en-bref" className="text-sm font-bold uppercase tracking-wider text-accent">{t('guides.summary')}</h2>
           {guide.summary}
-        </aside>
+        </section>
 
         <nav aria-labelledby="sommaire" className="flex flex-col gap-3 border border-border-theme bg-card shadow-sm p-5 dark:bg-surface-subtle dark:shadow-none">
           <p id="sommaire" className="text-sm font-bold uppercase tracking-wider text-fg-muted">{t('guides.toc')}</p>
