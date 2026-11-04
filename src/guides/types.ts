@@ -31,8 +31,6 @@ export interface Guide {
   summary: ReactNode;
   sections: GuideSection[];
   faq: { q: string; a: string }[];
-  // Present when the guide has numbered steps: they also become the HowTo JSON-LD.
-  howTo?: { name: string; steps: GuideStep[] };
   sources: string[];
   related: [GuidePath, GuidePath];
 }

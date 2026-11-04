@@ -6,7 +6,7 @@ import { HomeSection } from '@/components/home/HomeSection.tsx';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 import type { GuidePath } from '@/lib/publicPages.ts';
 
-const QUESTIONS = ['upload', 'recover', 'free', 'detection', 'chatgpt', 'firstLoad'] as const;
+const QUESTIONS = ['online', 'upload', 'recover', 'free', 'detection', 'chatgpt', 'firstLoad'] as const;
 
 // Some answers end with a link to a guide (`<guide>` tag).
 const GUIDE_LINKS: Partial<Record<(typeof QUESTIONS)[number], GuidePath>> = {

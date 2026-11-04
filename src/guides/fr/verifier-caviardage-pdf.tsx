@@ -183,7 +183,6 @@ export const verifierCaviardagePdf: Guide = {
       a: 'Conservez le résultat des tests : copier-coller sans donnée masquée, recherche infructueuse, liste d\'images et métadonnées vides. Avec Rature, le code est public, ce qui permet de vérifier la méthode.',
     },
   ],
-  howTo: { name: 'Comment vérifier qu\'un PDF est vraiment caviardé', steps },
   sources: [
     'Rature, test de faux caviardage du 12 octobre 2026 : conversations ChatGPT [sur le PDF Word](https://chatgpt.com/share/6accb905-a63c-83ed-98d7-64af315dcd52) et [sur l\'export Rature](https://chatgpt.com/share/6accbbd1-d4cc-83ed-bb7e-cecf54875b41).',
     'Jamie Dupree, [Manafort legal team botches redactions](https://www.ajc.com/blog/jamie-dupree/manafort-legal-team-botches-redactions-reveals-campaign-contacts-with-russian/iyGwxLTb04zd3cnxzb4MOL/), Atlanta Journal-Constitution, 8 janvier 2019.',

@@ -189,7 +189,6 @@ export const anonymizePdfBeforeChatgpt: Guide = {
       a: 'No. Rature removes the text from the file, it does not draw a box over it. Copy and paste or an extraction tool finds nothing under the hidden areas.',
     },
   ],
-  howTo: { name: 'How to anonymize a PDF before giving it to ChatGPT', steps },
   sources: [
     'Conseil national des barreaux (French national bar council), [Guide pratique : utilisation des systèmes d\'intelligence artificielle générative](https://cnb.avocat.fr/medias/cnb-guidepratique-utilisation-systemes-iag-2024-68f7b1d86e4570.98487114.pdf), 1st edition, September 2024 (in French).',
     'CNIL, [Les questions-réponses de la CNIL sur l\'utilisation d\'un système d\'IA générative](https://www.cnil.fr/fr/les-questions-reponses-de-la-cnil-sur-lutilisation-dun-systeme-dia-generative), 18 July 2024 (in French).',

@@ -8,9 +8,10 @@
   "home": {
     "title": "Redact your PDFs",
     "subtitle": "before you share them",
-    "description": "Before you send them to ChatGPT, a colleague or an expert,<br /><logo /> finds and removes names, addresses, emails, phone numbers and IDs.<br />Everything runs <bold>in your browser</bold>: <accent>no file is uploaded</accent>.",
+    "description": "Before you send them to opposing counsel, an expert or ChatGPT,<br /><logo /> finds and removes names, addresses, emails, phone numbers and IDs.<br />Everything runs <bold>in your browser</bold>: <accent>no file is uploaded</accent>.",
     "trust": {
       "noUpload": "No file uploaded",
+      "free": "Free, no sign-up",
       "openSource": "Open source (AGPL)",
       "madeInFrance": "Made in France"
     },
@@ -28,6 +29,23 @@
       "after": "Exported PDF",
       "redacted": "redacted",
       "excerpt": "Between the undersigned: <per>Sarah Miller</per>, residing at <loc>12 Elm Street, Bristol BS1 4DJ</loc>, reachable on <phone>07700 900123</phone> and at <email>sarah.miller@example.com</email>, hereinafter “the Landlord”, and <per>James Carter</per>, residing at <loc>8 Station Road, Leeds LS1 4AP</loc>, hereinafter “the Tenant”."
+    },
+    "howItWorks": {
+      "title": "Redact a PDF in 3 steps",
+      "steps": {
+        "drop": {
+          "title": "Drop the PDF",
+          "desc": "Drag the file in or choose it. It is read in your browser, with nothing uploaded."
+        },
+        "review": {
+          "title": "Review the detections",
+          "desc": "Rature highlights names, addresses, emails and IDs. Remove what should stay, add what was missed."
+        },
+        "export": {
+          "title": "Export without the text",
+          "desc": "The redacted text is removed from the exported PDF, not just covered. The metadata can be stripped too."
+        }
+      }
     },
     "verify": {
       "title": "Nothing is uploaded, and that can be checked",
@@ -65,9 +83,17 @@
         }
       }
     },
+    "guides": {
+      "title": "Practical guides",
+      "intro": "Methods tested on real files, with their sources."
+    },
     "faq": {
       "title": "Frequently asked questions",
       "items": {
+        "online": {
+          "q": "Can I redact a PDF online without uploading it?",
+          "a": "Yes. Rature opens online, like any website, but the PDF is never uploaded: it is read and redacted on your computer, in the browser. Most online tools send the file to their servers. Here, only the detection model is downloaded, the first time you use it."
+        },
         "upload": {
           "q": "Are my documents sent to a server?",
           "a": "No. The PDF is read, analysed and redacted in your browser, on your computer. Rature has no server that receives files. Only the detection model is downloaded, from Hugging Face, the first time you use it."
@@ -86,13 +112,17 @@
         },
         "chatgpt": {
           "q": "Can I redact a document before giving it to ChatGPT?",
-          "a": "Yes, it's one of the main uses. Redact the PDF with Rature, check the result, then give the exported version to ChatGPT, Copilot or another assistant. Review it carefully: specific context (a job title, a place, a date) is sometimes enough to identify someone. <guide>See the 5-step method</guide>."
+          "a": "Yes, it's one of the main uses. Redact the PDF with Rature, check the result, then give the exported version to ChatGPT, Copilot or another assistant. Review it carefully: specific context (a job title, a place, a date) is sometimes enough to identify someone. <guide>How to redact a PDF before ChatGPT</guide>."
         },
         "firstLoad": {
           "q": "Why is the first load slow?",
           "a": "Detection relies on an AI model that runs in your browser. It weighs about 400 MB and is downloaded only once, then kept in the browser cache. Later analyses start much faster."
         }
       }
+    },
+    "closing": {
+      "title": "Your PDF stays on your computer. Redact it now.",
+      "definition": "Rature (rature.fr) is a free, open source tool that redacts PDFs in the browser."
     }
   },
   "dropzone": {
@@ -626,6 +656,7 @@
   },
   "about": {
     "title": "About",
+    "definition": "Rature (rature.fr) is a free, open source tool that redacts PDFs in the browser.",
     "observation": {
       "title": "The problem",
       "description": "Using AI tools often involves sharing documents containing sensitive information: names, addresses, emails, or client data."
@@ -682,6 +713,10 @@
       "nonDevNote": "Not a developer?",
       "nonDevContrib": "<fiderLink>Suggest improvements</fiderLink> and we will review the feasibility!",
       "philosophy": "We believe that privacy tools must be <bold>open and verifiable to be trustworthy</bold>."
+    },
+    "team": {
+      "title": "Who makes Rature",
+      "desc": "Rature is designed and built in France by Julien Kilo, a software engineer for more than ten years. Find him on <site>julienkilo.com</site>, <linkedin>LinkedIn</linkedin> and <github>GitHub</github>. Questions or feedback: <email>contact@rature.fr</email>."
     }
   },
   "privacy": {

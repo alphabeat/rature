@@ -19,8 +19,3 @@ export function parseInline(text: string): InlineToken[] {
   if (last < text.length) tokens.push({ type: 'text', value: text.slice(last) });
   return tokens;
 }
-
-// The text without markup, for JSON-LD.
-export function plainText(text: string): string {
-  return parseInline(text).map((token) => token.value).join('');
-}

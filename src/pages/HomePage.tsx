@@ -1,10 +1,13 @@
-import { Code2, CloudOff, MapPin } from 'lucide-react';
+import { Code2, CloudOff, Gift, MapPin } from 'lucide-react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { BeforeAfter } from '@/components/home/BeforeAfter.tsx';
+import { ClosingCta } from '@/components/home/ClosingCta.tsx';
 import { DropZone } from '@/components/home/DropZone.tsx';
 import { Faq } from '@/components/home/Faq.tsx';
 import { Footer } from '@/components/home/Footer.tsx';
+import { HomeGuides } from '@/components/home/HomeGuides.tsx';
+import { HowItWorks } from '@/components/home/HowItWorks.tsx';
 import { MobileSendLink } from '@/components/home/MobileSendLink.tsx';
 import { UseCases } from '@/components/home/UseCases.tsx';
 import { VerifySteps } from '@/components/home/VerifySteps.tsx';
@@ -12,10 +15,12 @@ import { Navbar } from '@/components/Navbar.tsx';
 import { ProWaitlist } from '@/components/ProWaitlist.tsx';
 import { useDropZoneHandlers } from '@/hooks/useDropZoneHandlers.ts';
 import { RatureLogo } from '@/components/RatureLogo.tsx';
+import { REPO_URL } from '@/lib/author.ts';
 
 const TRUST = [
   { icon: CloudOff, key: 'home.trust.noUpload' },
-  { icon: Code2, key: 'home.trust.openSource', href: 'https://github.com/alphabeat/rature' },
+  { icon: Gift, key: 'home.trust.free' },
+  { icon: Code2, key: 'home.trust.openSource', href: REPO_URL },
   { icon: MapPin, key: 'home.trust.madeInFrance' },
 ] as const;
 
@@ -121,20 +126,20 @@ export function HomePage() {
             );
           })}
         </ul>
-
-        <div
-          className="max-w-3xl w-full"
-          style={{ animation: 'fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both' }}
-        >
-          <ProWaitlist source="home" />
-        </div>
       </section>
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-12 pb-24 flex flex-col gap-24">
+        <HowItWorks />
         <BeforeAfter />
         <VerifySteps />
         <UseCases />
+        <HomeGuides />
         <Faq />
+        {/* Below the proof and the FAQ: the free tool comes first. */}
+        <div className="max-w-3xl w-full mx-auto">
+          <ProWaitlist source="home" />
+        </div>
+        <ClosingCta />
       </div>
 
       <Footer />

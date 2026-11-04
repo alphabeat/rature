@@ -1,9 +1,8 @@
 import type { MetaDescriptor } from 'react-router';
 
 import { GUIDES, GUIDES_DATE, HUB } from '@/guides/index.ts';
-import { plainText } from '@/guides/inline.ts';
 import type { Guide } from '@/guides/types.ts';
-import { AUTHOR_LINKEDIN_URL, AUTHOR_NAME } from '@/lib/author.ts';
+import { entityNodes, PERSON_REF, WEBSITE_REF } from '@/lib/entities.ts';
 import { localizedPath, SITE_URL, type Lang } from '@/lib/publicPages.ts';
 import { head, OG_IMAGE } from '@/lib/seo.ts';
 
@@ -35,17 +34,9 @@ function guideJsonLd(guide: Guide, lang: Lang, image: string) {
         description: guide.description,
         datePublished: GUIDES_DATE,
         dateModified: GUIDES_DATE,
-        author: {
-          '@type': 'Person',
-          name: AUTHOR_NAME,
-          url: `${SITE_URL}${localizedPath('/about', lang)}`,
-          sameAs: ['https://github.com/alphabeat', AUTHOR_LINKEDIN_URL],
-        },
-        publisher: {
-          '@type': 'Organization',
-          name: 'Rature',
-          logo: { '@type': 'ImageObject', url: `${SITE_URL}/android-chrome-512x512.png` },
-        },
+        author: PERSON_REF,
+        publisher: PERSON_REF,
+        isPartOf: WEBSITE_REF,
         mainEntityOfPage: { '@type': 'WebPage', '@id': url },
         inLanguage: lang,
         image,
@@ -59,16 +50,7 @@ function guideJsonLd(guide: Guide, lang: Lang, image: string) {
           acceptedAnswer: { '@type': 'Answer', text: a },
         })),
       },
-      ...(guide.howTo ? [{
-        '@type': 'HowTo',
-        name: guide.howTo.name,
-        step: guide.howTo.steps.map((step, index) => ({
-          '@type': 'HowToStep',
-          position: index + 1,
-          name: step.title,
-          text: plainText(step.text),
-        })),
-      }] : []),
+      ...entityNodes(lang),
     ],
   };
 }
@@ -83,9 +65,12 @@ function hubJsonLd(lang: Lang) {
         description: HUB[lang].description,
         url: `${SITE_URL}${localizedPath('/guides', lang)}`,
         inLanguage: lang,
+        isPartOf: WEBSITE_REF,
+        publisher: PERSON_REF,
         hasPart: GUIDES[lang].map((guide) => ({ '@type': 'Article', headline: guide.heading, url: `${SITE_URL}${localizedPath(guide.path, lang)}` })),
       },
       breadcrumbList(lang, HUB_CRUMB[lang]),
+      ...entityNodes(lang),
     ],
   };
 }

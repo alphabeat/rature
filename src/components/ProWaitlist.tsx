@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Check, CheckCircle, Sparkles } from 'lucide-react';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -41,9 +41,20 @@ function ProWaitlistInner({ source, className }: ProWaitlistProps) {
   const [profession, setProfession] = useState<Profession | ''>('');
   const [status, setStatus] = useState<Status>('idle');
 
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Fires once the card is actually on screen: on the home page it sits below the fold.
+  // The navbar button is on every public page, so its views would just mirror page views.
   useEffect(() => {
-    // The navbar button is on every public page, so its views would just mirror page views.
-    if (source !== 'nav') track('waitlist-viewed', { source });
+    const card = cardRef.current;
+    if (source === 'nav' || !card) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      track('waitlist-viewed', { source });
+      observer.disconnect();
+    }, { threshold: 0.5 });
+    observer.observe(card);
+    return () => observer.disconnect();
   }, [source]);
 
   const handleOpenChange = (next: boolean) => {
@@ -83,6 +94,7 @@ function ProWaitlistInner({ source, className }: ProWaitlistProps) {
       ) : (
         // On the home page the drop zone is the main CTA, so the card stays secondary there.
         <div
+          ref={cardRef}
           className={cn(
             'relative w-full flex flex-col items-start gap-4 border px-5 py-4 text-left sm:flex-row sm:items-center',
             source === 'home' ? 'border-accent/40 bg-accent/5 dark:border-accent/50 dark:bg-accent/10' : 'border-accent/50 bg-card shadow-lg',

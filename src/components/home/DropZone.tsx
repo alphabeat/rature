@@ -31,6 +31,9 @@ const TEXT_LINES = [
   { width: '73%' },
 ];
 
+// Lets the home page's closing call to action open the same file picker.
+export const PDF_INPUT_ID = 'pdf-input';
+
 function fileExtension(name: string): string {
   const dot = name.lastIndexOf('.');
   if (dot < 0) return 'none';
@@ -175,6 +178,7 @@ export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
       >
         <input
           ref={inputRef}
+          id={PDF_INPUT_ID}
           type="file"
           accept="application/pdf,.pdf"
           className="sr-only"

@@ -1,5 +1,6 @@
 import type { MetaDescriptor } from 'react-router';
 
+import { entityNodes, webApplication } from '@/lib/entities.ts';
 import { isGuidePath, localizedPath, publicPage, SITE_URL, type Lang, type TranslatedPath } from '@/lib/publicPages.ts';
 
 export const OG_IMAGE = `${SITE_URL}/og-image.png`;
@@ -7,8 +8,8 @@ export const OG_IMAGE = `${SITE_URL}/og-image.png`;
 const OG_LOCALE: Record<Lang, string> = { fr: 'fr_FR', en: 'en_US' };
 
 const OG_IMAGE_ALT: Record<Lang, string> = {
-  fr: 'Rature : anonymisez vos PDF, sans serveur, confidentialité totale.',
-  en: 'Rature: anonymize your PDFs, no server, full privacy.',
+  fr: 'Rature : anonymisez vos PDF dans le navigateur, aucun fichier n\'est envoyé.',
+  en: 'Rature: redact your PDFs in the browser, no file is uploaded.',
 };
 
 type PageCopy = {
@@ -19,17 +20,10 @@ type PageCopy = {
   jsonLd?: Record<string, unknown>;
 };
 
-function softwareApplication(description: string, audienceType: string, featureList: string[]) {
+function homeJsonLd(lang: Lang, description: string, audienceType: string, featureList: string[]) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
-    name: 'Rature',
-    description,
-    applicationCategory: 'SecurityApplication',
-    operatingSystem: 'Web',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
-    audience: { '@type': 'Audience', audienceType },
-    featureList,
+    '@graph': [...entityNodes(lang), webApplication(lang, description, audienceType, featureList)],
   };
 }
 
@@ -41,7 +35,8 @@ const PAGES: Record<TranslatedPath, Record<Lang, PageCopy>> = {
       description: 'Anonymisez un PDF avant de le partager ou de le confier à ChatGPT. Détection automatique des données personnelles, dans votre navigateur. Gratuit et open source.',
       ogTitle: 'Rature | Anonymisez vos PDF avant de les confier à une IA',
       ogDescription: 'Outil d\'anonymisation de documents PDF, 100% local. Aucune donnée ne quitte votre navigateur. Idéal pour juristes, DPO et avocats.',
-      jsonLd: softwareApplication(
+      jsonLd: homeJsonLd(
+        'fr',
         'Outil d\'anonymisation de documents PDF fonctionnant 100% dans le navigateur. Aucune donnée ne quitte votre poste.',
         'Juristes, DPO, Avocats, Professionnels de la conformité, Consultants',
         [
@@ -57,7 +52,8 @@ const PAGES: Record<TranslatedPath, Record<Lang, PageCopy>> = {
       description: 'Redact a PDF before sharing it or giving it to ChatGPT. Personal data is detected automatically, in your browser. Free and open source.',
       ogTitle: 'Rature | Anonymize your PDFs before handing them to an AI',
       ogDescription: 'PDF anonymization tool that runs 100% locally. No data leaves your browser. Built for lawyers, DPOs and compliance teams.',
-      jsonLd: softwareApplication(
+      jsonLd: homeJsonLd(
+        'en',
         'PDF anonymization tool that runs 100% in the browser. No data leaves your device.',
         'Lawyers, DPOs, Legal professionals, Compliance professionals, Consultants',
         [

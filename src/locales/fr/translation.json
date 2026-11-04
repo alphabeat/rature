@@ -8,9 +8,10 @@
   "home": {
     "title": "Anonymisez vos PDF",
     "subtitle": "avant de les partager",
-    "description": "Avant de les envoyer à ChatGPT, à un confrère ou à un expert,<br /><logo /> détecte et masque noms, adresses, emails, téléphones et identifiants.<br />Tout se passe <bold>dans votre navigateur</bold> : <accent>aucun fichier n'est envoyé</accent>.",
+    "description": "Avant de les envoyer à ChatGPT, à un confrère ou à un expert,<br /><logo /> détecte et retire noms, adresses, emails, téléphones et identifiants.<br />Tout se passe <bold>dans votre navigateur</bold> : <accent>aucun fichier n'est envoyé</accent>.",
     "trust": {
       "noUpload": "Aucun envoi de fichier",
+      "free": "Gratuit, sans inscription",
       "openSource": "Code source ouvert (AGPL)",
       "madeInFrance": "Fait en France"
     },
@@ -28,6 +29,23 @@
       "after": "PDF exporté",
       "redacted": "masqué",
       "excerpt": "Entre les soussignés : <per>Marie Dubois</per>, demeurant <loc>12 rue des Lilas, 69003 Lyon</loc>, joignable au <phone>06 12 34 56 78</phone> et à l'adresse <email>marie.dubois@example.com</email>, ci-après « la Bailleresse », et <per>Karim Benali</per>, demeurant <loc>8 avenue Jean Jaurès, 75019 Paris</loc>, ci-après « le Preneur »."
+    },
+    "howItWorks": {
+      "title": "Anonymiser un PDF en 3 étapes",
+      "steps": {
+        "drop": {
+          "title": "Déposez le PDF",
+          "desc": "Glissez le fichier ou choisissez-le. Il est lu dans votre navigateur, sans envoi."
+        },
+        "review": {
+          "title": "Relisez les détections",
+          "desc": "Rature surligne noms, adresses, emails et identifiants. Retirez ce qui doit rester, ajoutez ce qui manque."
+        },
+        "export": {
+          "title": "Exportez sans le texte",
+          "desc": "Le texte masqué est retiré du PDF exporté, pas seulement recouvert. Les métadonnées peuvent aussi être supprimées."
+        }
+      }
     },
     "verify": {
       "title": "Rien n'est envoyé, et cela se vérifie",
@@ -65,9 +83,17 @@
         }
       }
     },
+    "guides": {
+      "title": "Guides pratiques",
+      "intro": "Des méthodes testées sur de vrais fichiers, avec leurs sources."
+    },
     "faq": {
       "title": "Questions fréquentes",
       "items": {
+        "online": {
+          "q": "Peut-on anonymiser un PDF en ligne sans l'envoyer ?",
+          "a": "Oui. Rature s'ouvre en ligne, comme n'importe quel site, mais le PDF n'est jamais téléversé : il est lu et anonymisé sur votre ordinateur, dans le navigateur. La plupart des outils en ligne envoient le fichier sur leurs serveurs. Ici, seul le modèle de détection est téléchargé, à la première utilisation."
+        },
         "upload": {
           "q": "Mes documents sont-ils envoyés sur un serveur ?",
           "a": "Non. Le PDF est lu, analysé et anonymisé dans votre navigateur, sur votre ordinateur. Rature n'a aucun serveur qui reçoit des fichiers. Seul le modèle de détection est téléchargé, depuis Hugging Face, à la première utilisation."
@@ -86,13 +112,17 @@
         },
         "chatgpt": {
           "q": "Puis-je anonymiser un document avant de le donner à ChatGPT ?",
-          "a": "Oui, c'est l'un des usages principaux. Anonymisez le PDF avec Rature, vérifiez le résultat, puis donnez la version exportée à ChatGPT, Copilot ou un autre assistant. Relisez avec attention : un contexte précis (une fonction, un lieu, une date) suffit parfois à identifier quelqu'un. <guide>Voir la méthode en 5 étapes</guide>."
+          "a": "Oui, c'est l'un des usages principaux. Anonymisez le PDF avec Rature, vérifiez le résultat, puis donnez la version exportée à ChatGPT, Copilot ou un autre assistant. Relisez avec attention : un contexte précis (une fonction, un lieu, une date) suffit parfois à identifier quelqu'un. <guide>Comment anonymiser un PDF avant ChatGPT</guide>."
         },
         "firstLoad": {
           "q": "Pourquoi le premier chargement est-il long ?",
           "a": "La détection repose sur un modèle d'IA qui tourne dans votre navigateur. Il pèse environ 400 Mo et n'est téléchargé qu'une fois, puis conservé dans le cache du navigateur. Les analyses suivantes démarrent beaucoup plus vite."
         }
       }
+    },
+    "closing": {
+      "title": "Votre PDF reste sur votre ordinateur. Anonymisez-le maintenant.",
+      "definition": "Rature (rature.fr) est un outil gratuit et open source qui anonymise les PDF dans le navigateur."
     }
   },
   "dropzone": {
@@ -626,6 +656,7 @@
   },
   "about": {
     "title": "À propos de",
+    "definition": "Rature (rature.fr) est un outil gratuit et open source qui anonymise les PDF dans le navigateur.",
     "observation": {
       "title": "Le constat",
       "description": "Utiliser des outils IA implique souvent de partager des documents contenant des informations sensibles : noms, prénoms, adresses, emails ou encore des données client."
@@ -682,6 +713,10 @@
       "nonDevNote": "Vous n'êtes pas développeur ?",
       "nonDevContrib": "<fiderLink>Suggérez-nous des améliorations</fiderLink> et nous examinerons la faisabilité !",
       "philosophy": "Nous sommes convaincus que les outils de confidentialité doivent être <bold>ouverts et vérifiables pour être dignes de confiance</bold>."
+    },
+    "team": {
+      "title": "Qui fait Rature",
+      "desc": "Rature est conçu et développé en France par Julien Kilo, ingénieur logiciel depuis plus de dix ans. Retrouvez-le sur <site>julienkilo.com</site>, <linkedin>LinkedIn</linkedin> et <github>GitHub</github>. Une question ou une remarque : <email>contact@rature.fr</email>."
     }
   },
   "privacy": {

@@ -55,6 +55,14 @@ export function Footer() {
           >
             {t('footer.legal')}
           </Link>
+          <p className="text-sm text-fg/80">•</p>
+          {/* Moved out of the top nav: the page is noindex and only useful once a model is cached. */}
+          <Link
+            to="/settings"
+            className="text-sm text-fg/70 hover:text-fg transition-colors"
+          >
+            {t('nav.settings')}
+          </Link>
         </nav>
         <p className="text-sm text-fg/80">•</p>
         <LanguageSwitcher />
