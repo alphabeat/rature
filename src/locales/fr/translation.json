@@ -656,6 +656,7 @@
   },
   "about": {
     "title": "À propos de",
+    "definition": "Rature (rature.fr) est un outil gratuit et open source qui anonymise les PDF dans le navigateur.",
     "observation": {
       "title": "Le constat",
       "description": "Utiliser des outils IA implique souvent de partager des documents contenant des informations sensibles : noms, prénoms, adresses, emails ou encore des données client."
@@ -712,6 +713,10 @@
       "nonDevNote": "Vous n'êtes pas développeur ?",
       "nonDevContrib": "<fiderLink>Suggérez-nous des améliorations</fiderLink> et nous examinerons la faisabilité !",
       "philosophy": "Nous sommes convaincus que les outils de confidentialité doivent être <bold>ouverts et vérifiables pour être dignes de confiance</bold>."
+    },
+    "team": {
+      "title": "Qui fait Rature",
+      "desc": "Rature est conçu et développé en France par Julien Kilo, ingénieur logiciel depuis plus de dix ans. Retrouvez-le sur <site>julienkilo.com</site>, <linkedin>LinkedIn</linkedin> et <github>GitHub</github>. Une question ou une remarque : <email>contact@rature.fr</email>."
     }
   },
   "privacy": {

@@ -656,6 +656,7 @@
   },
   "about": {
     "title": "About",
+    "definition": "Rature (rature.fr) is a free, open source tool that redacts PDFs in the browser.",
     "observation": {
       "title": "The problem",
       "description": "Using AI tools often involves sharing documents containing sensitive information: names, addresses, emails, or client data."
@@ -712,6 +713,10 @@
       "nonDevNote": "Not a developer?",
       "nonDevContrib": "<fiderLink>Suggest improvements</fiderLink> and we will review the feasibility!",
       "philosophy": "We believe that privacy tools must be <bold>open and verifiable to be trustworthy</bold>."
+    },
+    "team": {
+      "title": "Who makes Rature",
+      "desc": "Rature is designed and built in France by Julien Kilo, a software engineer for more than ten years. Find him on <site>julienkilo.com</site>, <linkedin>LinkedIn</linkedin> and <github>GitHub</github>. Questions or feedback: <email>contact@rature.fr</email>."
     }
   },
   "privacy": {

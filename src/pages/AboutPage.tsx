@@ -7,6 +7,7 @@ import { Navbar } from "@/components/Navbar.tsx";
 import { RatureLogo } from "@/components/RatureLogo.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath.ts";
+import { AUTHOR_GITHUB_URL, AUTHOR_LINKEDIN_URL, AUTHOR_SITE_LINK } from "@/lib/author.ts";
 
 export function AboutPage() {
   const { t } = useTranslation();
@@ -17,10 +18,11 @@ export function AboutPage() {
       <Navbar />
 
       <section className="flex-1 mx-auto h-full w-full max-w-200 px-6 pt-40 pb-16">
-        <h1 className="flex items-baseline justify-center gap-3 text-center text-4xl font-extrabold tracking-tight leading-[1.1] mb-8">
-          <span>{t('about.title')}</span>
+        <h1 className="flex items-baseline justify-center gap-3 text-center text-4xl font-extrabold tracking-tight leading-[1.1] mb-6">
+          <span>{t('about.title')}</span>{' '}
           <RatureLogo size="xl" />
         </h1>
+        <p className="mb-8 text-center text-lg font-medium">{t('about.definition')}</p>
         <div className="mb-6">
           <h3 className="font-bold text-2xl mb-2">{t('about.observation.title')}</h3>
           <p className="pb-4 pl-4">
@@ -142,6 +144,20 @@ export function AboutPage() {
             <Trans
               i18nKey="about.openSource.philosophy"
               components={{ bold: <span className="font-medium" /> }}
+            />
+          </p>
+        </div>
+        <div className="mb-6">
+          <h2 className="font-bold text-2xl mb-2">{t('about.team.title')}</h2>
+          <p className="pl-4">
+            <Trans
+              i18nKey="about.team.desc"
+              components={{
+                email: <a href="mailto:contact@rature.fr" className="underline underline-offset-4" />,
+                site: <a href={AUTHOR_SITE_LINK} target="_blank" rel="noopener" className="underline underline-offset-4" />,
+                linkedin: <a href={AUTHOR_LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4" />,
+                github: <a href={AUTHOR_GITHUB_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4" />,
+              }}
             />
           </p>
         </div>
