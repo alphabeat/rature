@@ -183,7 +183,6 @@ export const checkPdfRedaction: Guide = {
       a: 'Keep the test results: a copy and paste without hidden data, a search with no match, and empty image lists and metadata. With Rature, the code is public, so the method can be checked.',
     },
   ],
-  howTo: { name: 'How to check that a PDF is really redacted', steps },
   sources: [
     'Rature, fake redaction test of 12 October 2026: ChatGPT conversations [on the Word PDF](https://chatgpt.com/share/6accb905-a63c-83ed-98d7-64af315dcd52) and [on the Rature export](https://chatgpt.com/share/6accbbd1-d4cc-83ed-bb7e-cecf54875b41) (in French).',
     'Jamie Dupree, [Manafort legal team botches redactions](https://www.ajc.com/blog/jamie-dupree/manafort-legal-team-botches-redactions-reveals-campaign-contacts-with-russian/iyGwxLTb04zd3cnxzb4MOL/), Atlanta Journal-Constitution, 8 January 2019.',

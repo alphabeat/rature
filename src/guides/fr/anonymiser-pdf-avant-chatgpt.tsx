@@ -189,7 +189,6 @@ export const anonymiserPdfAvantChatgpt: Guide = {
       a: 'Non. Rature retire le texte du fichier, il ne pose pas un rectangle par-dessus. Un copier-coller ou un outil d\'extraction ne retrouve rien sous les zones masquées.',
     },
   ],
-  howTo: { name: 'Comment anonymiser un PDF avant de le donner à ChatGPT', steps },
   sources: [
     'Conseil national des barreaux, [Guide pratique : utilisation des systèmes d\'intelligence artificielle générative](https://cnb.avocat.fr/medias/cnb-guidepratique-utilisation-systemes-iag-2024-68f7b1d86e4570.98487114.pdf), 1re édition, septembre 2024.',
     'CNIL, [Les questions-réponses de la CNIL sur l\'utilisation d\'un système d\'IA générative](https://www.cnil.fr/fr/les-questions-reponses-de-la-cnil-sur-lutilisation-dun-systeme-dia-generative), 18 juillet 2024.',
