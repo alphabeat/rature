@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { X, Download, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ProWaitlist } from '@/components/ProWaitlist.tsx';
+import { ContactPrompt } from '@/components/workflow/ContactPrompt.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import { track } from '@/lib/analytics.ts';
+import { claimContactPrompt } from '@/lib/contactPrompt.ts';
 import type { GroupedEntity, ImageRedactionMethod } from '@/types/index.ts';
 
 interface ExportModalProps {
@@ -24,6 +27,13 @@ export function ExportModal({ entities, fileName, includedImageCount, imageMetho
   const [removeMetadata, setRemoveMetadata] = useState(true);
   const [done, setDone] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [showContact, setShowContact] = useState(false);
+  // Closing the modal while the contact prompt is shown and unclicked counts as a dismissal.
+  const contactPending = useRef(false);
+
+  useEffect(() => () => {
+    if (contactPending.current) track('contact-prompt-dismissed');
+  }, []);
 
   const originalBaseName = fileName.replace(/\.pdf$/i, '');
   const [exportFileName, setExportFileName] = useState(() => t('export.defaultFileName'));
@@ -54,7 +64,14 @@ export function ExportModal({ entities, fileName, includedImageCount, imageMetho
       // Use default file name if input is empty
       const fileName = effectiveFileName || t('export.defaultFileName');
 
-      if (await onDownload({ removeMetadata, exportFileName: fileName })) setDone(true);
+      if (await onDownload({ removeMetadata, exportFileName: fileName })) {
+        if (claimContactPrompt()) {
+          contactPending.current = true;
+          track('contact-prompt-shown');
+          setShowContact(true);
+        }
+        setDone(true);
+      }
     } finally {
       setIsDownloading(false);
     }
@@ -253,10 +270,14 @@ export function ExportModal({ entities, fileName, includedImageCount, imageMetho
                 {t('export.successDesc')}
               </p>
             </div>
-            <ProWaitlist
-              source="export"
-              className="rounded-xl mt-2"
-            />
+            {showContact ? (
+              <ContactPrompt onContact={() => { contactPending.current = false; }} />
+            ) : (
+              <ProWaitlist
+                source="export"
+                className="rounded-xl mt-2"
+              />
+            )}
             <Button variant="secondary" onClick={onClose}>
               {t('export.close')}
             </Button>

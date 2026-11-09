@@ -2,6 +2,7 @@ import { Trans, useTranslation } from "react-i18next";
 
 import { Footer } from "@/components/home/Footer.tsx";
 import { Navbar } from "@/components/Navbar.tsx";
+import { CONTACT_CALL_URL } from "@/lib/contactPrompt.ts";
 import { WAITLIST_ENABLED } from "@/lib/waitlist.ts";
 
 const bold = <span className="font-bold" />;
@@ -71,10 +72,26 @@ export function PrivacyPolicyPage() {
             </div>
           </>
         )}
+        {CONTACT_CALL_URL && (
+          <>
+            <h4 className="font-bold text-lg mb-2">{t('privacy.s3.call.title')}</h4>
+            <div className="flex flex-col gap-2 mb-6 pl-4">
+              <p><Trans i18nKey="privacy.s3.call.p1" components={components} /></p>
+              <ul className="pl-4 flex flex-col gap-3">
+                <li>- <Trans i18nKey="privacy.s3.call.li1" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.call.li2" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.call.li3" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.call.li4" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.call.li5" components={components} /></li>
+              </ul>
+            </div>
+          </>
+        )}
 
         <h3 className="font-bold text-2xl mb-2">{t('privacy.s4.title')}</h3>
         <div className="flex flex-col gap-2 mb-6 pl-4">
           <p><Trans i18nKey="privacy.s4.p1" components={components} /></p>
+          <p><Trans i18nKey="privacy.s4.p2" components={components} /></p>
         </div>
 
         <h3 className="font-bold text-2xl mb-2">{t('privacy.s5.title')}</h3>
