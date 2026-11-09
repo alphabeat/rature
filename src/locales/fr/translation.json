@@ -300,6 +300,10 @@
     "close": "Fermer",
     "error": "L'export a échoué. Veuillez réessayer."
   },
+  "contactPrompt": {
+    "text": "Rature vous sert souvent ? J'aimerais comprendre votre usage : <call>réservez un appel de 20 min</call> ou écrivez-moi à <email>{{email}}</email>. Julien, développeur de Rature",
+    "emailSubject": "Mon usage de Rature"
+  },
   "entityActions": {
     "ariaLabel": "Actions sur l'entité",
     "deleteOne": "Supprimer cette occurrence",
@@ -721,7 +725,7 @@
   },
   "privacy": {
     "title": "Politique de confidentialité",
-    "lastUpdated": "Dernière mise à jour : 08/10/2026",
+    "lastUpdated": "Dernière mise à jour : 09/11/2026",
     "s1": {
       "title": "1. Présentation",
       "p1": "Rature est un outil permettant d'anonymiser des documents PDF en masquant les informations sensibles avant leur partage.",
@@ -755,11 +759,21 @@
         "li3": "<bold>Sous-traitant</bold> : <brevoLink>Brevo</brevoLink> (Sendinblue SAS, Paris), qui héberge la liste dans l'Union européenne.",
         "li4": "<bold>Durée de conservation</bold> : jusqu'à votre désinscription, et au plus tard 12 mois après le lancement de Rature Pro ou l'abandon du projet.",
         "li5": "<bold>Désinscription</bold> : via le lien présent dans chaque email, ou en écrivant à <mailLink>contact@rature.fr</mailLink>."
+      },
+      "call": {
+        "title": "3.2 Prise de rendez-vous (facultative)",
+        "p1": "Si vous réservez volontairement un échange, l'outil de prise de rendez-vous collecte <bold>votre nom, votre adresse email, votre profession</bold> et, si vous les indiquez, la taille de votre structure et vos remarques. Aucun document ni contenu de document n'est transmis.",
+        "li1": "<bold>Finalité</bold> : organiser l'échange et comprendre vos besoins pour faire évoluer Rature. Ces données ne sont ni revendues ni utilisées à d'autres fins.",
+        "li2": "<bold>Base légale</bold> : votre consentement, exprimé par la réservation.",
+        "li3": "<bold>Hébergement</bold> : l'outil de réservation (Cal.com) est installé sur un serveur que nous administrons, il ne s'agit pas du service en ligne de Cal.com. <bold>Sous-traitant</bold> : Infomaniak Network SA (Genève), pour la visioconférence kMeet et l'agenda, hébergés en Suisse.",
+        "li4": "<bold>Durée de conservation</bold> : 12 mois après l'échange au plus.",
+        "li5": "<bold>Suppression</bold> : sur simple demande à <mailLink>contact@rature.fr</mailLink>."
       }
     },
     "s4": {
       "title": "4. Cookies et traceurs",
-      "p1": "Rature <bold>n'utilise aucun cookie</bold> et n'installe aucun traceur sur votre appareil."
+      "p1": "Rature <bold>n'utilise aucun cookie</bold> et n'installe aucun traceur sur votre appareil.",
+      "p2": "Le stockage local de votre navigateur conserve uniquement vos préférences (langue, thème) et le nombre de documents que vous avez téléchargés, pour ne vous proposer un échange qu'une seule fois. Ces informations ne quittent jamais votre appareil."
     },
     "s5": {
       "title": "5. Vos droits",

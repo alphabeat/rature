@@ -14,6 +14,7 @@ import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
 import { downloadPDFDocument } from '@/lib/pdf/exportPDF.ts';
 import { track } from '@/lib/analytics.ts';
+import { recordDownload } from '@/lib/contactPrompt.ts';
 import { DocumentProvider } from '@/providers/DocumentProvider.tsx';
 import type { WorkflowMode } from '@/types/index.ts';
 
@@ -135,6 +136,7 @@ function DocumentLayoutInner() {
               }
               downloadPDFDocument(doc, exportFileName, removeMetadata);
               track('document-downloaded', { pages: pageCount, entities: entities.filter(e => e.included).length, sample: isSample });
+              if (!isSample) recordDownload();
               return true;
             } catch (err) {
               console.error('Export failed:', err);

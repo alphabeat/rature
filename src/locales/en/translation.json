@@ -300,6 +300,10 @@
     "close": "Close",
     "error": "Export failed. Please try again."
   },
+  "contactPrompt": {
+    "text": "Using Rature often? I would like to understand how you use it: <call>book a 20-minute call</call> or email me at <email>{{email}}</email>. Julien, Rature's developer",
+    "emailSubject": "How I use Rature"
+  },
   "entityActions": {
     "ariaLabel": "Entity actions",
     "deleteOne": "Delete this occurrence",
@@ -721,7 +725,7 @@
   },
   "privacy": {
     "title": "Privacy policy",
-    "lastUpdated": "Last updated: 08/10/2026",
+    "lastUpdated": "Last updated: 09/11/2026",
     "s1": {
       "title": "1. Overview",
       "p1": "Rature is a tool for anonymizing PDF documents by masking sensitive information before sharing.",
@@ -755,11 +759,21 @@
         "li3": "<bold>Processor</bold>: <brevoLink>Brevo</brevoLink> (Sendinblue SAS, Paris), which hosts the list in the European Union.",
         "li4": "<bold>Retention</bold>: until you unsubscribe, and at the latest 12 months after Rature Pro launches or the project is dropped.",
         "li5": "<bold>Unsubscribe</bold>: through the link in every email, or by writing to <mailLink>contact@rature.fr</mailLink>."
+      },
+      "call": {
+        "title": "3.2 Booking a call (optional)",
+        "p1": "If you choose to book a call, the booking tool collects <bold>your name, your email address, your profession</bold> and, if you provide them, the size of your organisation and your notes. No document or document content is sent.",
+        "li1": "<bold>Purpose</bold>: organising the call and understanding your needs to improve Rature. This data is never sold or used for anything else.",
+        "li2": "<bold>Legal basis</bold>: your consent, given by booking.",
+        "li3": "<bold>Hosting</bold>: the booking tool (Cal.com) runs on a server we administer, not on Cal.com's online service. <bold>Processor</bold>: Infomaniak Network SA (Geneva), for the kMeet video call and the calendar, hosted in Switzerland.",
+        "li4": "<bold>Retention</bold>: at most 12 months after the call.",
+        "li5": "<bold>Deletion</bold>: on request to <mailLink>contact@rature.fr</mailLink>."
       }
     },
     "s4": {
       "title": "4. Cookies and trackers",
-      "p1": "Rature <bold>uses no cookies</bold> and installs no trackers on your device."
+      "p1": "Rature <bold>uses no cookies</bold> and installs no trackers on your device.",
+      "p2": "Your browser's local storage only keeps your preferences (language, theme) and the number of documents you have downloaded, so that a call is offered to you only once. This information never leaves your device."
     },
     "s5": {
       "title": "5. Your rights",
