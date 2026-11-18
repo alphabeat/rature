@@ -1,6 +1,6 @@
 import type { MetaDescriptor } from 'react-router';
 
-import { entityNodes, webApplication } from '@/lib/entities.ts';
+import { entityNodes, PERSON_REF, WEBSITE_REF, webApplication } from '@/lib/entities.ts';
 import { isGuidePath, localizedPath, publicPage, SITE_URL, type Lang, type TranslatedPath } from '@/lib/publicPages.ts';
 
 export const OG_IMAGE = `${SITE_URL}/og-image.png`;
@@ -24,6 +24,25 @@ function homeJsonLd(lang: Lang, description: string, audienceType: string, featu
   return {
     '@context': 'https://schema.org',
     '@graph': [...entityNodes(lang), webApplication(lang, description, audienceType, featureList)],
+  };
+}
+
+function aboutJsonLd(lang: Lang, title: string) {
+  const aboutUrl = `${SITE_URL}${localizedPath('/about', lang)}`;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      ...entityNodes(lang),
+      {
+        '@type': 'ProfilePage',
+        '@id': `${aboutUrl}#profilepage`,
+        url: aboutUrl,
+        name: title,
+        inLanguage: lang,
+        mainEntity: PERSON_REF,
+        isPartOf: WEBSITE_REF,
+      },
+    ],
   };
 }
 
@@ -69,10 +88,12 @@ const PAGES: Record<TranslatedPath, Record<Lang, PageCopy>> = {
     fr: {
       title: 'À propos | Rature, anonymisation de PDF dans le navigateur',
       description: 'Pourquoi Rature existe et comment il fonctionne : détection automatique des données sensibles, traitement 100% local dans le navigateur, code source ouvert.',
+      jsonLd: aboutJsonLd('fr', 'À propos | Rature, anonymisation de PDF dans le navigateur'),
     },
     en: {
       title: 'About | Rature, PDF anonymization in the browser',
       description: 'Why Rature exists and how it works: automatic detection of sensitive data, 100% local processing in the browser, open source code.',
+      jsonLd: aboutJsonLd('en', 'About | Rature, PDF anonymization in the browser'),
     },
   },
   '/privacy-policy': {
