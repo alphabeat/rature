@@ -21,7 +21,7 @@ export function VerifySteps() {
     <HomeSection id="verify" title={t('home.verify.title')} intro={t('home.verify.intro')}>
       <ol className="w-full grid gap-8 md:grid-cols-2">
         {STEPS.map((key, index) => (
-          <li key={key} className="flex flex-col gap-3 border-t border-border-theme pt-5">
+          <li key={key} className="flex flex-col gap-3">
             <span className="font-mono text-sm text-teal-700 dark:text-teal-400 tabular-nums">
               {String(index + 1).padStart(2, '0')}
             </span>
@@ -47,9 +47,9 @@ export function VerifySteps() {
 
       <figure className="w-full flex flex-col gap-4">
         <figcaption className="text-sm text-fg-muted">{t('home.verify.stats.caption')}</figcaption>
-        <div className="grid sm:grid-cols-2 gap-px bg-border-theme border border-border-theme">
+        <div className="grid gap-6 sm:grid-cols-2">
           {STATS.map(stat => (
-            <div key={stat.key} className="flex flex-col gap-3 bg-card px-6 py-8">
+            <div key={stat.key} className="flex flex-col gap-3 bg-card border border-border-theme px-6 py-8">
               <p className={`font-mono text-5xl font-medium tabular-nums tracking-[-0.02em] ${stat.color}`}>{stat.value}</p>
               <p className="text-sm leading-6 text-fg-muted">{t(`home.verify.stats.${stat.key}`)}</p>
             </div>
