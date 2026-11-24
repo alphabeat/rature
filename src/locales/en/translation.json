@@ -8,7 +8,7 @@
   "home": {
     "title": "Redact your PDFs",
     "subtitle": "before you share them",
-    "description": "Before you send them to opposing counsel, an expert or ChatGPT,<br /><logo /> finds and removes names, addresses, emails, phone numbers and IDs.<br />Everything runs <bold>in your browser</bold>: <accent>no file is uploaded</accent>.",
+    "description": "Before you send them to opposing counsel, an expert or ChatGPT,<br /><logo /> finds and removes <per>names</per>, <loc>addresses</loc>, <email>emails</email>, <phone>phone numbers</phone> and IDs.<br />Everything runs <bold>in your browser</bold>: <accent>no file is uploaded</accent>.",
     "trust": {
       "noUpload": "No file uploaded",
       "free": "Free, no sign-up",
@@ -60,7 +60,12 @@
           "desc": "Rature is open source, under the AGPL licence. The code that processes your documents is published on <github>GitHub</github>: any developer or security expert can read it and confirm that it sends nothing."
         }
       },
-      "test": "In our test, ChatGPT read 17 of 17 items hidden under a fake Word redaction, and 0 in the Rature export. <guide>See the full test</guide>."
+      "stats": {
+        "caption": "In our test",
+        "word": "items ChatGPT read under a fake Word redaction",
+        "rature": "items ChatGPT read in the Rature export",
+        "link": "See the full test"
+      }
     },
     "useCases": {
       "title": "When to redact a PDF",
@@ -121,7 +126,7 @@
       }
     },
     "closing": {
-      "title": "Your PDF stays on your computer. Redact it now.",
+      "title": "Your PDF stays on your computer.<br />Redact it now.",
       "definition": "Rature (rature.fr) is a free, open source tool that redacts PDFs in the browser."
     }
   },
@@ -129,7 +134,7 @@
     "drop": "Drop your PDF here",
     "idle": "Drop your PDF here",
     "choose": "Choose a PDF",
-    "free": "Free, no sign-up.",
+    "free": "Free, no sign-up",
     "sample": "Try a sample document",
     "sampleError": "Could not load the sample. Please try again.",
     "options": "Options",
@@ -892,6 +897,7 @@
       "title": "Rature Pro: a whole case file in one review",
       "badgePaid": "Paid plan",
       "badgeSoon": "Coming soon",
+      "meta": "Paid plan, coming soon",
       "home": "Drop all your documents at once. Names you already redacted are found automatically in every new document.",
       "export": "More documents to redact? With Rature Pro, process the whole case file at once, without selecting the same names again.",
       "action": "Join the waitlist"

@@ -1,8 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ChevronDown, ExternalLink, FileUp, Loader2, RotateCcw, Upload } from 'lucide-react';
+import { ChevronDown, ExternalLink, Loader2, RotateCcw, Upload } from 'lucide-react';
 import { toast } from 'sonner';
 
+import { MiniSheet } from '@/components/home/MiniSheet.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { useAnonymization } from '@/hooks/useAnonymization.ts';
 import { sizeBucket, track } from '@/lib/analytics.ts';
@@ -20,16 +21,6 @@ import {
   type Focus,
 } from '@/models/nerModelFeatures.ts';
 import { NER_MODELS, NER_MODELS_NAMES } from '@/models/utils.ts';
-
-const TEXT_LINES = [
-  { width: '85%' },
-  { width: '92%' },
-  { width: '68%' },
-  { width: '96%' },
-  { width: '55%' },
-  { width: '88%' },
-  { width: '73%' },
-];
 
 // Lets the home page's closing call to action open the same file picker.
 export const PDF_INPUT_ID = 'pdf-input';
@@ -60,10 +51,10 @@ function FeatureChip<T extends string>({ option, selected, onSelect }: FeatureCh
       type="button"
       onClick={() => onSelect(option.value)}
       className={cn(
-        'inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 cursor-pointer select-none whitespace-nowrap',
+        'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] text-xs font-medium border transition-colors duration-150 cursor-pointer select-none whitespace-nowrap',
         selected
-          ? 'bg-accent text-white border-accent shadow-sm'
-          : 'bg-transparent text-fg-muted border-border-theme hover:border-accent/60 hover:text-fg',
+          ? 'bg-accent text-accent-foreground border-accent'
+          : 'bg-transparent text-fg-muted border-border-theme hover:border-border-strong hover:text-fg',
       )}
     >
       <Icon size={12} />
@@ -167,13 +158,13 @@ export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         className={cn(
-          'relative flex flex-row items-center gap-8 px-8 py-6 cursor-pointer select-none overflow-hidden',
-          'border-2 border-dashed transition-colors duration-300',
+          'relative flex flex-row items-center gap-8 px-8 py-8 cursor-pointer select-none overflow-hidden',
+          'border-2 border-dashed transition-colors duration-150',
           isDragging
-            ? 'border-accent bg-accent/10'
+            ? 'border-accent bg-accent/5'
             : isHovering
-              ? 'border-accent bg-accent/5'
-              : 'border-border-strong bg-white/5',
+              ? 'border-fg-subtle'
+              : 'border-border-strong',
         )}
       >
         <input
@@ -187,86 +178,39 @@ export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
           onChange={onInputChange}
         />
 
-        <div style={{ animation: 'doc-float 4.5s ease-in-out infinite' }} aria-hidden="true">
-          <div
-            style={{
-              transform: isActive ? 'scale(1.06) rotate(0deg)' : 'rotate(-3deg)',
-              transition: 'transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            }}
-          >
-            <div
-              className={cn(
-                'relative w-28 h-36 border overflow-hidden transition-all duration-300',
-                isActive
-                  ? 'bg-neutral-100 dark:bg-neutral-700 border-neutral-300 dark:border-neutral-500 shadow-[0_12px_32px_rgba(13,148,136,0.2)]'
-                  : 'bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 shadow-[0_6px_24px_rgba(0,0,0,0.10)]',
-              )}
-            >
-              <div className={cn(
-                'absolute top-0 left-0 right-0 h-1 transition-colors duration-500',
-                isActive ? 'bg-accent' : 'bg-neutral-200 dark:bg-neutral-700',
-              )} />
-
-              <div className="px-3 pt-4 pb-3 flex flex-col gap-2">
-                <div
-                  className={cn(
-                    'h-2.5 mb-1 transition-colors duration-300',
-                    isActive
-                      ? 'bg-neutral-900 dark:bg-neutral-100'
-                      : 'bg-neutral-400 dark:bg-neutral-500',
-                  )}
-                  style={{ width: '55%' }}
-                />
-
-                {TEXT_LINES.map((line, i) => (
-                  <div key={i} className="relative h-1.5">
-                    <div
-                      className="absolute inset-y-0 left-0 rounded-sm bg-neutral-200 dark:bg-neutral-600"
-                      style={{ width: line.width }}
-                    />
-                    <div
-                      className="absolute inset-y-0 left-0 origin-left rounded-sm bg-neutral-900 dark:bg-neutral-100"
-                      style={{
-                        width: line.width,
-                        transform: isActive ? 'scaleX(1)' : 'scaleX(0)',
-                        transition: `transform 0.38s cubic-bezier(0.4, 0, 0.2, 1) ${
-                          isActive ? i * 40 : 0
-                        }ms`,
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* Detects once on load; on hover or drag the entities turn into black bars, like the exported PDF. */}
+        <MiniSheet
+          state={isActive ? 'redacted' : 'detected'}
+          animateIn
+          className="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          style={{ transform: isActive ? 'rotate(0deg) translateY(-2px)' : 'rotate(-2deg)' }}
+        />
 
         <div className="flex flex-col items-start gap-4">
-          <p className="flex items-center gap-2 font-extrabold text-lg tracking-wide text-fg">
-            <FileUp size={22} className="text-accent shrink-0" aria-hidden="true" />
+          <p className="text-base font-medium text-fg">
             {isDragging ? t('dropzone.drop') : t('dropzone.idle')}
           </p>
           <Button
             type="button"
             size="lg"
-            className="h-14 px-8 text-lg"
+            className="h-12 px-6 text-base"
             onClick={e => {
               e.stopPropagation();
               openPicker();
             }}
           >
-            <Upload size={20} aria-hidden="true" />
+            <Upload size={18} strokeWidth={1.5} aria-hidden="true" />
             {t('dropzone.choose')}
           </Button>
-          <p className="text-xs text-fg-muted">
-            {t('dropzone.free')}{' '}
+          <p className="flex flex-col gap-1 text-sm text-fg-muted">
+            {t('dropzone.free')}
             <button
               type="button"
               onClick={openSample}
               disabled={isSampleLoading}
-              className="inline-flex items-center gap-1 font-semibold text-accent underline underline-offset-2 hover:text-accent/70 transition-colors cursor-pointer disabled:cursor-wait"
+              className="self-start inline-flex items-center gap-1 font-medium text-accent underline underline-offset-4 hover:text-accent-hover transition-colors cursor-pointer disabled:cursor-wait"
             >
-              {isSampleLoading && <Loader2 size={11} className="animate-spin" aria-hidden="true" />}
+              {isSampleLoading && <Loader2 size={12} className="animate-spin" aria-hidden="true" />}
               {t('dropzone.sample')}
             </button>
           </p>
@@ -280,8 +224,8 @@ export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
         className={cn(
           'w-full flex items-center justify-center gap-1.5 px-4 py-2',
           'border-x-2 border-b-2 border-dashed border-border-strong',
-          'bg-black/5 text-xs font-medium text-fg-muted cursor-pointer',
-          'hover:text-accent hover:bg-accent/5 transition-all duration-200',
+          'bg-surface-subtle text-xs font-medium text-fg-muted cursor-pointer',
+          'hover:text-fg transition-colors duration-150',
         )}
       >
         {t('dropzone.options')}
@@ -296,29 +240,29 @@ export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
         style={{ gridTemplateRows: isAdvancedOpen ? '1fr' : '0fr' }}
       >
         <div className="overflow-hidden">
-          <div className="flex flex-col gap-3 px-4 pt-3 pb-4 border-x-2 border-b-2 border-dashed border-border-strong bg-black/5">
+          <div className="flex flex-col gap-3 px-4 pt-3 pb-4 border-x-2 border-b-2 border-dashed border-border-strong bg-surface-subtle">
 
             <div className="flex items-center gap-3">
-              <p className="w-24 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
+              <p className="w-24 shrink-0 text-right text-xs text-fg-muted">
                 {t('dropzone.model')}
               </p>
               <div className="flex items-center gap-1.5 flex-wrap text-xs">
-                <span className="font-bold text-fg">{modelMeta.label}</span>
-                <span className="text-fg-muted tabular-nums">{modelMeta.size}</span>
+                <span className="font-medium text-fg">{modelMeta.label}</span>
+                <span className="font-mono text-fg-muted tabular-nums">{modelMeta.size}</span>
                 <a
                   href={modelMeta.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={t('dropzone.learnMore')}
-                  className="text-accent hover:text-accent/70 transition-colors duration-200"
+                  className="text-fg-muted hover:text-fg transition-colors duration-150"
                 >
-                  <ExternalLink size={11} />
+                  <ExternalLink size={12} strokeWidth={1.5} />
                 </a>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
-              <p className="w-24 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
+              <p className="w-24 shrink-0 text-right text-xs text-fg-muted">
                 {t('dropzone.language')}
               </p>
               <div className="flex items-center gap-1.5 flex-wrap">
@@ -334,7 +278,7 @@ export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <p className="w-24 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
+              <p className="w-24 shrink-0 text-right text-xs text-fg-muted">
                 {t('dropzone.speed')}
               </p>
               <div className="flex items-center gap-1.5 flex-wrap">
@@ -350,7 +294,7 @@ export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <p className="w-24 shrink-0 text-right text-xs font-bold text-fg uppercase tracking-wider">
+              <p className="w-24 shrink-0 text-right text-xs text-fg-muted">
                 {t('dropzone.focus')}
               </p>
               <div className="flex items-center gap-1.5 flex-wrap">
@@ -371,7 +315,7 @@ export function DropZone({ onFileSelect, onSampleSelect }: DropZoneProps) {
                   variant="ghost"
                   onClick={resetFeatures}
                 >
-                  <RotateCcw size={11} />
+                  <RotateCcw size={12} strokeWidth={1.5} />
                   {t('dropzone.reset')}
                 </Button>
               </div>
