@@ -89,14 +89,60 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* ─── Page entrance ─────────────────────────────────────────────── */
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(24px); }
+/* ─── Page entrance: one short fade and rise, staggered with animation-delay ─── */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Document idle float ───────────────────────────────────────── */
-@keyframes doc-float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-7px); }
+.rise-in {
+  animation: rise-in 400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Home: detection marks fade from grey to their review color, once ─── */
+@keyframes mark-in {
+  from { background-color: #d4d4d4; transform: scaleX(0.5); }
+}
+
+.mark-in {
+  transform-origin: left;
+  animation: mark-in 500ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+@keyframes word-mark-in {
+  from { background-color: transparent; border-color: transparent; }
+}
+
+.word-mark-in {
+  animation: word-mark-in 500ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise-in, .mark-in, .word-mark-in { animation: none; }
+}
+
+/* ─── Home: light green page fading to white, and a teal band for the closing call to action ─── */
+:root {
+  --home-top: #e8f6ef;
+  --home-bottom: #ffffff;
+  --band-from: #eef9f6;
+  --band-to: #e1f3ee;
+  --band-border: rgba(13, 148, 136, 0.18);
+}
+
+.dark {
+  --home-top: #10251f;
+  --home-bottom: #121218;
+  --band-from: #0f2e2b;
+  --band-to: #0c201f;
+  --band-border: rgba(45, 212, 191, 0.14);
+}
+
+.home-page {
+  background: linear-gradient(to bottom, var(--home-top) 0%, var(--home-bottom) 55%);
+}
+
+.home-band {
+  background: linear-gradient(to bottom, var(--band-from), var(--band-to));
+  border-color: var(--band-border);
 }

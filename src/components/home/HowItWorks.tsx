@@ -1,27 +1,37 @@
+import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 import { HomeSection } from '@/components/home/HomeSection.tsx';
+import { MiniSheet, type SheetState } from '@/components/home/MiniSheet.tsx';
 
-const STEPS = ['drop', 'review', 'export'] as const;
+// Each step shows the same page at that point: as dropped, with its detections, as exported.
+const STEPS: { key: 'drop' | 'review' | 'export'; sheet: SheetState }[] = [
+  { key: 'drop', sheet: 'plain' },
+  { key: 'review', sheet: 'detected' },
+  { key: 'export', sheet: 'redacted' },
+];
 
 export function HowItWorks() {
   const { t } = useTranslation();
 
   return (
     <HomeSection id="how-it-works" title={t('home.howItWorks.title')}>
-      <ol className="w-full grid gap-6 md:grid-cols-3">
-        {STEPS.map((key, index) => (
-          <li
-            key={key}
-            className="flex flex-col gap-3 bg-card border border-border-theme shadow-sm p-6 dark:bg-surface-subtle dark:shadow-none"
-          >
-            <div className="flex items-center gap-3">
-              <span className="flex items-center justify-center w-8 h-8 shrink-0 rounded-full bg-accent/10 text-sm font-bold text-accent">
-                {index + 1}
-              </span>
-              <h3 className="text-base font-bold text-fg">{t(`home.howItWorks.steps.${key}.title`)}</h3>
-            </div>
-            <p className="text-sm text-fg-muted leading-relaxed">{t(`home.howItWorks.steps.${key}.desc`)}</p>
+      <ol className="w-full grid gap-12 md:gap-8 md:grid-cols-3">
+        {STEPS.map(({ key, sheet }, index) => (
+          <li key={key} className="relative flex flex-col gap-3">
+            <MiniSheet state={sheet} size="sm" className="mb-5" />
+            {/* Arrow from this page to the next one, across the column gap. */}
+            {index < STEPS.length - 1 && (
+              <div
+                aria-hidden="true"
+                className="hidden md:flex absolute top-14 left-24 -right-5 -translate-y-1/2 items-center text-teal-600 dark:text-teal-400"
+              >
+                <span className="flex-1 h-px bg-current opacity-40" />
+                <ArrowRight size={18} strokeWidth={1.5} className="-ml-1 shrink-0" />
+              </div>
+            )}
+            <h3 className="text-lg font-medium text-fg">{t(`home.howItWorks.steps.${key}.title`)}</h3>
+            <p className="text-sm leading-6 text-fg-muted">{t(`home.howItWorks.steps.${key}.desc`)}</p>
           </li>
         ))}
       </ol>

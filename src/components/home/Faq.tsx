@@ -21,20 +21,22 @@ export function Faq() {
 
   return (
     <HomeSection id="faq" title={t('home.faq.title')}>
-      <div className="w-full max-w-3xl flex flex-col gap-3">
+      <div className="w-full flex flex-col border-t border-border-theme">
         {QUESTIONS.map(key => (
-          <details
-            key={key}
-            className="group bg-card border border-border-theme shadow-sm dark:bg-surface-subtle dark:shadow-none"
-          >
-            <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden text-base font-bold text-fg hover:text-accent transition-colors">
+          <details key={key} className="group border-b border-border-theme">
+            <summary className="flex items-center justify-between gap-4 py-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden text-base font-medium text-fg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">
               <h3>{t(`home.faq.items.${key}.q`)}</h3>
-              <ChevronDown size={18} className="shrink-0 text-fg-muted transition-transform group-open:rotate-180" aria-hidden="true" />
+              <ChevronDown
+                size={18}
+                strokeWidth={1.5}
+                className="shrink-0 text-fg-muted group-hover:text-fg transition-[color,transform] duration-200 group-open:rotate-180"
+                aria-hidden="true"
+              />
             </summary>
-            <p className="px-6 pb-5 text-sm text-fg-muted leading-relaxed">
+            <p className="pb-6 pr-10 text-sm leading-6 text-fg-muted">
               <Trans
                 i18nKey={`home.faq.items.${key}.a`}
-                components={{ guide: <Link to={localize(GUIDE_LINKS[key] ?? '/guides')} className="text-accent underline underline-offset-4 hover:text-accent-hover" /> }}
+                components={{ guide: <Link to={localize(GUIDE_LINKS[key] ?? '/guides')} className="text-accent underline underline-offset-4 hover:text-accent-hover transition-colors" /> }}
               />
             </p>
           </details>

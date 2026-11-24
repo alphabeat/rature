@@ -8,7 +8,7 @@
   "home": {
     "title": "Anonymisez vos PDF",
     "subtitle": "avant de les partager",
-    "description": "Avant de les envoyer à ChatGPT, à un confrère ou à un expert,<br /><logo /> détecte et retire noms, adresses, emails, téléphones et identifiants.<br />Tout se passe <bold>dans votre navigateur</bold> : <accent>aucun fichier n'est envoyé</accent>.",
+    "description": "Avant de les envoyer à ChatGPT, à un confrère ou à un expert,<br /><logo /> détecte et retire <per>noms</per>, <loc>adresses</loc>, <email>emails</email>, <phone>téléphones</phone> et identifiants.<br />Tout se passe <bold>dans votre navigateur</bold> : <accent>aucun fichier n'est envoyé</accent>.",
     "trust": {
       "noUpload": "Aucun envoi de fichier",
       "free": "Gratuit, sans inscription",
@@ -60,7 +60,12 @@
           "desc": "Rature est open source, sous licence AGPL. Le code qui traite vos documents est publié sur <github>GitHub</github> : n'importe quel développeur ou expert en sécurité peut le relire et confirmer qu'il n'envoie rien."
         }
       },
-      "test": "Dans notre test, ChatGPT a relu 17 données sur 17 cachées sous un faux caviardage Word, et 0 dans l'export Rature. <guide>Voir le test complet</guide>."
+      "stats": {
+        "caption": "Dans notre test",
+        "word": "données relues par ChatGPT sous un faux caviardage Word",
+        "rature": "données relues par ChatGPT dans l'export Rature",
+        "link": "Voir le test complet"
+      }
     },
     "useCases": {
       "title": "Quand anonymiser un PDF",
@@ -121,7 +126,7 @@
       }
     },
     "closing": {
-      "title": "Votre PDF reste sur votre ordinateur. Anonymisez-le maintenant.",
+      "title": "Votre PDF reste sur votre ordinateur.<br />Anonymisez-le maintenant.",
       "definition": "Rature (rature.fr) est un outil gratuit et open source qui anonymise les PDF dans le navigateur."
     }
   },
@@ -129,7 +134,7 @@
     "drop": "Déposez votre PDF ici",
     "idle": "Glissez votre PDF ici",
     "choose": "Choisir un PDF",
-    "free": "Gratuit, sans inscription.",
+    "free": "Gratuit, sans inscription",
     "sample": "Essayer avec un exemple",
     "sampleError": "Impossible de charger l'exemple. Réessayez.",
     "options": "Options",
@@ -892,6 +897,7 @@
       "title": "Rature Pro : tout un dossier en une seule relecture",
       "badgePaid": "Offre payante",
       "badgeSoon": "Bientôt disponible",
+      "meta": "Offre payante, bientôt disponible",
       "home": "Déposez toutes vos pièces d'un coup. Les noms déjà masqués sont retrouvés automatiquement sur chaque nouveau document.",
       "export": "D'autres pièces à anonymiser ? Avec Rature Pro, traitez tout le dossier d'un coup, sans re-sélectionner les mêmes noms.",
       "action": "Rejoindre la liste d'attente"

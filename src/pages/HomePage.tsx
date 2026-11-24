@@ -1,4 +1,5 @@
 import { Code2, CloudOff, Gift, MapPin } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 import { BeforeAfter } from '@/components/home/BeforeAfter.tsx';
@@ -14,7 +15,6 @@ import { VerifySteps } from '@/components/home/VerifySteps.tsx';
 import { Navbar } from '@/components/Navbar.tsx';
 import { ProWaitlist } from '@/components/ProWaitlist.tsx';
 import { useDropZoneHandlers } from '@/hooks/useDropZoneHandlers.ts';
-import { RatureLogo } from '@/components/RatureLogo.tsx';
 import { REPO_URL } from '@/lib/author.ts';
 
 const TRUST = [
@@ -24,111 +24,106 @@ const TRUST = [
   { icon: MapPin, key: 'home.trust.madeInFrance' },
 ] as const;
 
+// The description's tags: the product name and the promise read as plain text in the primary
+// color, and the line breaks flow as spaces so the paragraph wraps to its column.
+const Name = () => <span className="text-fg">Rature</span>;
+const Space = () => ' ';
+
+// The kinds of data Rature finds, marked in their review colors as the hero sheet detects them.
+const MARKS = {
+  per: 'bg-blue-200/70 border-blue-400 dark:bg-blue-400/20',
+  loc: 'bg-green-200/70 border-green-500 dark:bg-green-400/20 dark:border-green-400',
+  email: 'bg-amber-200/70 border-amber-400 dark:bg-amber-400/20',
+  phone: 'bg-red-200/70 border-red-400 dark:bg-red-400/20',
+} as const;
+
+function Mark({ kind, order, children }: { kind: keyof typeof MARKS; order: number; children?: ReactNode }) {
+  return (
+    <span
+      className={`word-mark-in px-0.5 border-b-2 text-fg ${MARKS[kind]}`}
+      style={{ animationDelay: `${500 + order * 160}ms` }}
+    >
+      {children}
+    </span>
+  );
+}
+
 export function HomePage() {
   const { t } = useTranslation();
   const { handleFileSelected, handleSampleSelected } = useDropZoneHandlers();
 
   return (
-    <div className="flex flex-col justify-between flex-1 h-full">
+    <div className="home-page flex flex-col min-h-full">
       <Navbar />
 
-      <div
-        className="fixed inset-0 pointer-events-none z-0"
-        aria-hidden="true"
-        style={{
-          backgroundImage: 'radial-gradient(circle, rgba(13, 148, 136, 0.3) 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
-        }}
-      />
-
-      <div
-        className="fixed inset-0 pointer-events-none z-0"
-        aria-hidden="true"
-        style={{
-          background: 'radial-gradient(ellipse 65% 65% at 50% 50%, transparent 35%, var(--surface) 100%)',
-        }}
-      />
-
-      <section className="relative z-10 flex-1 mx-auto h-full w-full max-w-6xl px-6 pt-32 tall:pt-44 pb-12 flex flex-col gap-12 tall:gap-16 items-center">
-
-        <div className="w-full mb-4 grid gap-10 items-center lg:items-start lg:grid-cols-[1fr_auto] lg:gap-12">
-          <div className="flex flex-col gap-6 items-center text-center lg:items-start lg:text-left lg:pt-4">
-            <h1
-              className="tracking-tight leading-[1.05]"
-              style={{ animation: 'fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) both' }}
-            >
-              <span className="block text-accent text-5xl lg:text-6xl font-extrabold">
-                {t('home.title')}
-              </span>{' '}
-              <span className="block text-3xl lg:text-4xl font-extrabold text-fg mt-1">
-                {t('home.subtitle')}
-              </span>
-            </h1>
-
-            <p
-              className="text-base text-fg-muted leading-relaxed"
-              style={{ animation: 'fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both' }}
-            >
-              <Trans
-                i18nKey="home.description"
-                components={{
-                  logo: <RatureLogo size="lg" />,
-                  bold: <span className="font-bold text-fg" />,
-                  accent: <span className="text-accent font-bold" />,
-                  br: <br />,
-                }}
-              />
-            </p>
-          </div>
-
-          <div className="w-full max-w-xl mx-auto bg-card dark:bg-transparent shadow-2xl md:hidden">
-            <MobileSendLink />
-          </div>
-
-          <div
-            className="hidden md:block w-full max-w-xl lg:w-md mx-auto backdrop-blur-xs bg-card dark:bg-transparent shadow-2xl hover:shadow-xl transition-shadow duration-300"
-            style={{
-              animation: 'fade-up 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both',
-            }}
+      <section className="mx-auto w-full max-w-6xl px-6 pt-32 pb-16 tall:pt-40 tall:pb-24 grid gap-12 items-center lg:grid-cols-[1fr_auto]">
+        <div className="flex flex-col gap-6">
+          <h1
+            className="rise-in text-4xl sm:text-5xl lg:text-[56px] leading-[1.05] font-semibold tracking-[-0.02em] lg:tracking-[-0.03em]"
           >
-            <DropZone onFileSelect={handleFileSelected} onSampleSelect={handleSampleSelected} />
-          </div>
+            <span className="block text-fg">{t('home.title')}</span>{' '}
+            <span className="block text-teal-700 dark:text-teal-300">{t('home.subtitle')}</span>
+          </h1>
+
+          <p className="rise-in max-w-xl text-lg leading-8 text-fg-muted" style={{ animationDelay: '60ms' }}>
+            <Trans
+              i18nKey="home.description"
+              components={{
+                logo: <Name />,
+                bold: <span className="text-fg" />,
+                accent: <span className="text-fg" />,
+                br: <Space />,
+                per: <Mark kind="per" order={0} />,
+                loc: <Mark kind="loc" order={1} />,
+                email: <Mark kind="email" order={2} />,
+                phone: <Mark kind="phone" order={3} />,
+              }}
+            />
+          </p>
+
+          <ul
+            className="rise-in grid sm:grid-cols-[auto_auto] sm:justify-start gap-x-8 gap-y-2 text-sm text-fg-muted"
+            style={{ animationDelay: '120ms' }}
+          >
+            {TRUST.map(item => {
+              const Icon = item.icon;
+              const content = (
+                <>
+                  <Icon size={16} strokeWidth={1.5} className="shrink-0 text-teal-700 dark:text-teal-400" aria-hidden="true" />
+                  {t(item.key)}
+                </>
+              );
+              return (
+                <li key={item.key} className="flex items-center gap-2">
+                  {'href' in item ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 underline decoration-border-strong underline-offset-4 hover:text-fg transition-colors"
+                    >
+                      {content}
+                    </a>
+                  ) : content}
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
-        <ul
-          className="flex items-center gap-4 flex-wrap justify-center"
-          style={{ animation: 'fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both' }}
+        <div className="w-full max-w-xl bg-card md:hidden">
+          <MobileSendLink />
+        </div>
+
+        <div
+          className="rise-in hidden md:block w-full max-w-xl lg:w-md bg-card shadow-[0_8px_24px_rgba(13,148,136,0.08)] dark:shadow-none"
+          style={{ animationDelay: '60ms' }}
         >
-          {TRUST.map(item => {
-            const Icon = item.icon;
-            const content = (
-              <>
-                <Icon size={16} className="text-accent shrink-0" aria-hidden="true" />
-                {t(item.key)}
-              </>
-            );
-            return (
-              <li
-                key={item.key}
-                className="flex items-center gap-2 text-sm font-medium text-fg-muted bg-card shadow-sm border border-border-theme px-3 py-2 dark:bg-surface-subtle dark:shadow-none"
-              >
-                {'href' in item ? (
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-fg transition-colors"
-                  >
-                    {content}
-                  </a>
-                ) : content}
-              </li>
-            );
-          })}
-        </ul>
+          <DropZone onFileSelect={handleFileSelected} onSampleSelect={handleSampleSelected} />
+        </div>
       </section>
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pt-12 pb-24 flex flex-col gap-24">
+      <div className="mx-auto w-full max-w-6xl px-6 pt-20 pb-24 flex flex-col gap-24">
         <HowItWorks />
         <BeforeAfter />
         <VerifySteps />
@@ -136,13 +131,13 @@ export function HomePage() {
         <HomeGuides />
         <Faq />
         {/* Below the proof and the FAQ: the free tool comes first. */}
-        <div className="max-w-3xl w-full mx-auto">
-          <ProWaitlist source="home" />
-        </div>
-        <ClosingCta />
+        <ProWaitlist source="home" />
+        <ClosingCta onSampleSelect={handleSampleSelected} />
       </div>
 
-      <Footer />
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 }

@@ -42,6 +42,7 @@ function ProWaitlistInner({ source, className }: ProWaitlistProps) {
   const [status, setStatus] = useState<Status>('idle');
 
   const cardRef = useRef<HTMLDivElement>(null);
+  const isHome = source === 'home';
 
   // Fires once the card is actually on screen: on the home page it sits below the fold.
   // The navbar button is on every public page, so its views would just mirror page views.
@@ -97,30 +98,36 @@ function ProWaitlistInner({ source, className }: ProWaitlistProps) {
           ref={cardRef}
           className={cn(
             'relative w-full flex flex-col items-start gap-4 border px-5 py-4 text-left sm:flex-row sm:items-center',
-            source === 'home' ? 'border-accent/40 bg-accent/5 dark:border-accent/50 dark:bg-accent/10' : 'border-accent/50 bg-card shadow-lg',
+            isHome ? 'gap-6 border-border-theme px-6 py-6' : 'border-accent/50 bg-card shadow-lg',
             className,
           )}
         >
-          <div className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-accent/10 text-accent">
-            <Sparkles size={20} aria-hidden="true" />
-          </div>
+          {/* On the home page the card stays quiet: one muted line in place of the icon and badges. */}
+          {!isHome && (
+            <div className="flex items-center justify-center w-10 h-10 shrink-0 rounded-full bg-accent/10 text-accent">
+              <Sparkles size={20} aria-hidden="true" />
+            </div>
+          )}
           <div className="flex-1 min-w-0">
-            <span className="inline-block mb-1 px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase whitespace-nowrap bg-accent/10 text-accent">
-              {t('waitlist.cta.badgePaid')}
-            </span>
-            <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wider uppercase whitespace-nowrap bg-amber-100 text-amber-800 dark:bg-amber-400/15 dark:text-amber-300">
-              {t('waitlist.cta.badgeSoon')}
-            </span>
-            <p className="text-base font-bold text-fg">{t('waitlist.cta.title')}</p>
-            <p className="text-sm text-fg-muted">{t(`waitlist.cta.${source}`)}</p>
+            {isHome ? (
+              <p className="mb-1 text-sm text-fg-muted">{t('waitlist.cta.meta')}</p>
+            ) : (
+              <>
+                <span className="inline-block mb-1 px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase whitespace-nowrap bg-accent/10 text-accent">
+                  {t('waitlist.cta.badgePaid')}
+                </span>
+                <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[10px] font-medium tracking-wider uppercase whitespace-nowrap bg-amber-100 text-amber-800 dark:bg-amber-400/15 dark:text-amber-300">
+                  {t('waitlist.cta.badgeSoon')}
+                </span>
+              </>
+            )}
+            <p className={cn('text-base text-fg', isHome ? 'font-medium' : 'font-bold')}>{t('waitlist.cta.title')}</p>
+            <p className={cn('text-sm text-fg-muted', isHome && 'mt-1 leading-6')}>{t(`waitlist.cta.${source}`)}</p>
           </div>
           <Button
-            variant={source === 'home' ? 'secondary' : 'primary'}
+            variant={isHome ? 'secondary' : 'primary'}
             onClick={() => handleOpenChange(true)}
-            className={cn(
-              'shrink-0 self-stretch sm:self-auto',
-              source === 'home' && 'border-accent/50 bg-accent/10 text-accent hover:bg-accent hover:text-accent-foreground',
-            )}
+            className="shrink-0 self-stretch sm:self-auto"
           >
             {t('waitlist.cta.action')}
           </Button>

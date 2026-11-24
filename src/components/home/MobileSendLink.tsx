@@ -33,12 +33,12 @@ export function MobileSendLink() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 text-center border-2 border-dashed border-border-strong px-6 py-6">
-      <Monitor size={28} className="text-accent shrink-0" aria-hidden="true" />
-      <p className="font-extrabold text-lg text-fg">{t('home.mobileLink.title')}</p>
-      <p className="text-sm text-fg-muted leading-relaxed">{t('home.mobileLink.desc')}</p>
-      <Button type="button" size="lg" className="h-auto min-h-14 px-6 py-3 text-base whitespace-normal" onClick={sendLink}>
-        <Send size={20} aria-hidden="true" />
+    <div className="flex flex-col items-start gap-4 border border-border-theme px-6 py-6">
+      <Monitor size={18} strokeWidth={1.5} className="text-fg-muted shrink-0" aria-hidden="true" />
+      <p className="text-lg font-medium text-fg">{t('home.mobileLink.title')}</p>
+      <p className="text-sm leading-6 text-fg-muted">{t('home.mobileLink.desc')}</p>
+      <Button type="button" size="lg" className="w-full h-auto min-h-12 px-6 py-3 text-base whitespace-normal" onClick={sendLink}>
+        <Send size={18} strokeWidth={1.5} aria-hidden="true" />
         {t('home.mobileLink.button')}
       </Button>
     </div>
