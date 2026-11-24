@@ -123,7 +123,7 @@ body {
 
 /* ─── Home: light green page fading to white, and a teal band for the closing call to action ─── */
 :root {
-  --home-top: #e8f6ef;
+  --home-top: #f3fbf7;
   --home-bottom: #ffffff;
   --band-from: #eef9f6;
   --band-to: #e1f3ee;
