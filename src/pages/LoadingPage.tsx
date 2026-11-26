@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AnalysisError, type AnalysisFailureStage } from '@/components/workflow/AnalysisError.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import { SupportForm } from '@/components/workflow/SupportForm.tsx';
 import { useAnonymization } from '@/hooks/useAnonymization.ts';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 import { useNERWorker } from '@/hooks/useNERWorker.ts';
@@ -276,7 +277,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
   };
 
   if (failed) {
-    return <AnalysisError stage={failed.stage} message={failed.message} onRetry={handleRetry} />;
+    return <AnalysisError stage={failed.stage} message={failed.message} pageCount={extractProgress?.total ?? pageCount} onRetry={handleRetry} />;
   }
 
   const StepIcon = STEP_ICONS[iconStep];
@@ -459,6 +460,9 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
           <p className="text-sm font-medium text-fg">{t('loading.stalled.title')}</p>
           <p className="text-xs text-fg-muted leading-relaxed">{t('loading.stalled.desc')}</p>
           <Button size="sm" variant="secondary" onClick={handleRetry}>{t('loading.error.retry')}</Button>
+          <div>
+            <SupportForm kind="stalled" stage={waitingOn} pageCount={extractProgress?.total ?? pageCount} />
+          </div>
         </div>
       )}
     </div>

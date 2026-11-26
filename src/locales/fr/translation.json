@@ -306,7 +306,7 @@
     "error": "L'export a échoué. Veuillez réessayer."
   },
   "contactPrompt": {
-    "text": "Rature vous sert souvent ? J'aimerais comprendre votre usage : <call>réservez un appel de 20 min</call> ou écrivez-moi à <email>{{email}}</email>. Julien, développeur de Rature",
+    "text": "Rature vous sert souvent ? Accordez-moi 20 minutes pour me raconter votre usage, et je vous offre 3 mois de Rature Pro à son ouverture : <call>réservez un créneau</call> ou écrivez-moi à <email>{{email}}</email>. Julien, développeur de Rature",
     "emailSubject": "Mon usage de Rature"
   },
   "entityActions": {
@@ -773,6 +773,15 @@
         "li3": "<bold>Hébergement</bold> : l'outil de réservation (Cal.com) est installé sur un serveur que nous administrons, il ne s'agit pas du service en ligne de Cal.com. <bold>Sous-traitant</bold> : Infomaniak Network SA (Genève), pour la visioconférence kMeet et l'agenda, hébergés en Suisse.",
         "li4": "<bold>Durée de conservation</bold> : 12 mois après l'échange au plus.",
         "li5": "<bold>Suppression</bold> : sur simple demande à <mailLink>contact@rature.fr</mailLink>."
+      },
+      "support": {
+        "title": "3.3 Message après un problème d'analyse (facultatif)",
+        "p1": "Si une analyse échoue ou reste bloquée et que vous m'écrivez volontairement via le formulaire prévu, nous collectons <bold>votre adresse email</bold>, <bold>votre message</bold>, ainsi que l'étape concernée et le nombre de pages approximatif. Ni le document, ni son nom, ni son contenu ne sont transmis.",
+        "li1": "<bold>Finalité</bold> : vous répondre et corriger le problème. Ces données ne sont ni revendues ni utilisées à d'autres fins, et vous n'êtes inscrit à aucune liste de diffusion.",
+        "li2": "<bold>Base légale</bold> : votre consentement, exprimé par l'envoi du message.",
+        "li3": "<bold>Sous-traitant</bold> : <brevoLink>Brevo</brevoLink> (Sendinblue SAS, Paris), qui héberge les données dans l'Union européenne.",
+        "li4": "<bold>Durée de conservation</bold> : 12 mois après votre message au plus.",
+        "li5": "<bold>Suppression</bold> : sur simple demande à <mailLink>contact@rature.fr</mailLink>."
       }
     },
     "s4": {
@@ -897,7 +906,7 @@
       "title": "Rature Pro : tout un dossier en une seule relecture",
       "badgePaid": "Offre payante",
       "badgeSoon": "Bientôt disponible",
-      "meta": "Offre payante, bientôt disponible",
+      "meta": "Offre payante, bientôt disponible. 1 mois offert aux inscrits",
       "home": "Déposez toutes vos pièces d'un coup. Les noms déjà masqués sont retrouvés automatiquement sur chaque nouveau document.",
       "export": "D'autres pièces à anonymiser ? Avec Rature Pro, traitez tout le dossier d'un coup, sans re-sélectionner les mêmes noms.",
       "action": "Rejoindre la liste d'attente"
@@ -909,7 +918,7 @@
       "memory": "<bold>Mémoire :</bold> clients, parties et adresses sont masqués automatiquement sur chaque nouveau document.",
       "private": "<bold>Confidentiel :</bold> conçu pour que vos documents restent dans votre navigateur."
     },
-    "note": "Les inscrits seront informés en premier du tarif et de l'ouverture, avec un tarif de lancement qui leur est réservé.",
+    "note": "Les inscrits auront 1 mois de Rature Pro offert à l'ouverture.",
     "email": "Email",
     "emailPlaceholder": "vous@cabinet.fr",
     "profession": "Profession (facultatif)",
@@ -928,12 +937,31 @@
     "error": "L'inscription a échoué. Réessayez, ou écrivez-nous à contact@rature.fr.",
     "success": {
       "title": "C'est noté",
-      "desc": "Vous serez informé en premier de l'ouverture de Rature Pro et de votre tarif de lancement."
+      "desc": "Vous serez informé en premier de l'ouverture de Rature Pro, avec 1 mois offert."
     }
   },
   "languageSuggestion": {
     "message": "Cette page existe en français.",
     "switch": "Voir en français",
     "dismiss": "Fermer"
+  },
+  "support": {
+    "link": "Dites-moi ce qui s'est passé",
+    "title": "Que s'est-il passé ?",
+    "desc": "Votre message m'arrive directement par email, je vous réponds personnellement. Julien, développeur de Rature",
+    "message": "Ce qui s'est passé",
+    "messagePlaceholder": "Par exemple : un PDF scanné de 80 pages, la page est restée bloquée à l'étape 2, sur Chrome.",
+    "noContent": "Ne copiez aucun extrait du document : décrivez simplement le fichier et ce que vous avez vu.",
+    "email": "Votre email, pour que je puisse vous répondre",
+    "consent": "Votre email et votre message sont transmis à Brevo, uniquement pour que je puisse vous répondre. Aucun document n'est envoyé. <privacyLink>Politique de confidentialité</privacyLink>",
+    "submit": "Envoyer",
+    "submitting": "Envoi…",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "error": "L'envoi a échoué. Réessayez, ou écrivez-moi à julien@rature.fr.",
+    "success": {
+      "title": "Message envoyé",
+      "desc": "Merci, je le lis et je vous réponds par email."
+    }
   }
 }

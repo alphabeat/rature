@@ -306,7 +306,7 @@
     "error": "Export failed. Please try again."
   },
   "contactPrompt": {
-    "text": "Using Rature often? I would like to understand how you use it: <call>book a 20-minute call</call> or email me at <email>{{email}}</email>. Julien, Rature's developer",
+    "text": "Using Rature often? Give me 20 minutes to tell me how you use it, and I will give you 3 months of Rature Pro when it opens: <call>book a slot</call> or email me at <email>{{email}}</email>. Julien, Rature's developer",
     "emailSubject": "How I use Rature"
   },
   "entityActions": {
@@ -773,6 +773,15 @@
         "li3": "<bold>Hosting</bold>: the booking tool (Cal.com) runs on a server we administer, not on Cal.com's online service. <bold>Processor</bold>: Infomaniak Network SA (Geneva), for the kMeet video call and the calendar, hosted in Switzerland.",
         "li4": "<bold>Retention</bold>: at most 12 months after the call.",
         "li5": "<bold>Deletion</bold>: on request to <mailLink>contact@rature.fr</mailLink>."
+      },
+      "support": {
+        "title": "3.3 Message after an analysis problem (optional)",
+        "p1": "If an analysis fails or gets stuck and you choose to write to me through the form provided, we collect <bold>your email address</bold>, <bold>your message</bold>, and the step involved and the approximate page count. The document, its name and its content are never sent.",
+        "li1": "<bold>Purpose</bold>: replying to you and fixing the problem. This data is never sold or used for anything else, and you are not added to any mailing list.",
+        "li2": "<bold>Legal basis</bold>: your consent, given by sending the message.",
+        "li3": "<bold>Processor</bold>: <brevoLink>Brevo</brevoLink> (Sendinblue SAS, Paris), which hosts the data in the European Union.",
+        "li4": "<bold>Retention</bold>: at most 12 months after your message.",
+        "li5": "<bold>Deletion</bold>: on request to <mailLink>contact@rature.fr</mailLink>."
       }
     },
     "s4": {
@@ -897,7 +906,7 @@
       "title": "Rature Pro: a whole case file in one review",
       "badgePaid": "Paid plan",
       "badgeSoon": "Coming soon",
-      "meta": "Paid plan, coming soon",
+      "meta": "Paid plan, coming soon. 1 month free for waitlist members",
       "home": "Drop all your documents at once. Names you already redacted are found automatically in every new document.",
       "export": "More documents to redact? With Rature Pro, process the whole case file at once, without selecting the same names again.",
       "action": "Join the waitlist"
@@ -909,7 +918,7 @@
       "memory": "<bold>Memory:</bold> clients, parties and addresses are redacted automatically in every new document.",
       "private": "<bold>Confidential:</bold> designed so your documents stay in your browser."
     },
-    "note": "Waitlist members hear about pricing and launch first, with a launch price reserved for them.",
+    "note": "Waitlist members get 1 month of Rature Pro free at launch.",
     "email": "Email",
     "emailPlaceholder": "you@firm.com",
     "profession": "Profession (optional)",
@@ -928,12 +937,31 @@
     "error": "Sign-up failed. Try again, or email us at contact@rature.fr.",
     "success": {
       "title": "You're on the list",
-      "desc": "You will be the first to hear when Rature Pro opens, along with your launch price."
+      "desc": "You will be the first to hear when Rature Pro opens, with 1 month free."
     }
   },
   "languageSuggestion": {
     "message": "This page is available in English.",
     "switch": "View in English",
     "dismiss": "Dismiss"
+  },
+  "support": {
+    "link": "Tell me what happened",
+    "title": "What happened?",
+    "desc": "Your message reaches me directly by email and I reply personally. Julien, Rature's developer",
+    "message": "What happened",
+    "messagePlaceholder": "For example: an 80-page scanned PDF, the page got stuck at step 2, in Chrome.",
+    "noContent": "Do not paste anything from the document: just describe the file and what you saw.",
+    "email": "Your email, so I can reply",
+    "consent": "Your email and message are sent to Brevo, only so I can reply to you. No document is sent. <privacyLink>Privacy policy</privacyLink>",
+    "submit": "Send",
+    "submitting": "Sending…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "error": "Sending failed. Try again, or email me at julien@rature.fr.",
+    "success": {
+      "title": "Message sent",
+      "desc": "Thank you, I will read it and reply by email."
+    }
   }
 }

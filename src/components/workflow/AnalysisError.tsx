@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import { Button } from '@/components/ui/button.tsx';
+import { SupportForm } from '@/components/workflow/SupportForm.tsx';
 import { useLocalizedPath } from '@/hooks/useLocalizedPath.ts';
 
 export type AnalysisFailureStage = 'model-download' | 'extract' | 'ner';
@@ -10,10 +11,11 @@ export type AnalysisFailureStage = 'model-download' | 'extract' | 'ner';
 interface AnalysisErrorProps {
   stage: AnalysisFailureStage;
   message?: string;
+  pageCount: number;
   onRetry: () => void;
 }
 
-export function AnalysisError({ stage, message, onRetry }: AnalysisErrorProps) {
+export function AnalysisError({ stage, message, pageCount, onRetry }: AnalysisErrorProps) {
   const { t } = useTranslation();
   const localize = useLocalizedPath();
 
@@ -37,6 +39,8 @@ export function AnalysisError({ stage, message, onRetry }: AnalysisErrorProps) {
           <Link to={localize('/')}>{t(canRetry ? 'loading.error.home' : 'loading.error.otherFile')}</Link>
         </Button>
       </div>
+
+      <SupportForm kind="failed" stage={stage} pageCount={pageCount} />
 
       {message && (
         <details className="w-full max-w-md text-xs text-fg-subtle">

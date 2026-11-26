@@ -4,16 +4,18 @@ import { track } from '@/lib/analytics.ts';
 import { CONTACT_CALL_URL, CONTACT_EMAIL } from '@/lib/contactPrompt.ts';
 
 interface ContactPromptProps {
+  /** Download threshold that triggered the prompt (2 or 5), sent with the click event. */
+  nth: number
   onContact: () => void
 }
 
-// Shown once, after a download, to users who have downloaded 2 or more documents: asks for a
-// 20-minute call or an email to recruit Pro interviews. The parent tracks dismissal on close.
-export function ContactPrompt({ onContact }: ContactPromptProps) {
+// Shown after a download at the 2nd and 5th document: offers 3 free months of Rature Pro for a
+// 20-minute call (or an email) to recruit Pro interviews. The parent tracks dismissal on close.
+export function ContactPrompt({ nth, onContact }: ContactPromptProps) {
   const { t } = useTranslation();
 
   const handleClick = (method: 'call' | 'email') => () => {
-    track('contact-prompt-clicked', { method });
+    track('contact-prompt-clicked', { method, nth });
     onContact();
   };
 
