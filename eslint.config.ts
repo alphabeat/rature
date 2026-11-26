@@ -7,7 +7,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import stylistic from '@stylistic/eslint-plugin';
 
 export default defineConfig([
-  globalIgnores(['build', '.react-router']),
+  globalIgnores(['build', '.react-router', '.claude']),
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     plugins: {
