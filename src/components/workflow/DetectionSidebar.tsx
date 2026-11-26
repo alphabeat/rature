@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils.ts';
 import { useAnonymization } from '@/hooks/useAnonymization.ts';
 import { NER_MODELS } from '@/models/utils.ts';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
+import { textCoverage } from '@/lib/pdf/textCoverage.ts';
 
 type GroupedByNameEntity = {
   text: string;
@@ -74,7 +75,7 @@ export const DetectionSidebar = React.memo(function DetectionSidebar({
 }: DetectionSidebarProps) {
   const { t } = useTranslation();
   const { modelName, modelTokens } = useAnonymization();
-  const { pageCount } = usePdfProcessing();
+  const { extractedText, pageCount } = usePdfProcessing();
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState<string | 'all'>('all');
   const [collapsedTypes, setCollapsedTypes] = useState<Set<string>>(new Set());
@@ -97,6 +98,9 @@ export const DetectionSidebar = React.memo(function DetectionSidebar({
     const selectedEl = scrollContainerRef.current.querySelector('[data-selected="true"]');
     selectedEl?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [selectedEntityId]);
+
+  const labeledCount = useMemo(() => entities.filter(e => e.type !== 'O').length, [entities]);
+  const coverage = useMemo(() => textCoverage(extractedText), [extractedText]);
 
   const includedCount = useMemo(() => entities.filter(e => e.included).length, [entities]);
 
@@ -387,7 +391,17 @@ export const DetectionSidebar = React.memo(function DetectionSidebar({
           );
         })}
 
-        {filtered.length === 0 && (
+        {labeledCount === 0 && (
+          <div className="flex flex-col gap-2 px-4 py-8 text-sm">
+            <p className="font-semibold text-fg">{t(`sidebar.zeroEntities.${coverage}.title`)}</p>
+            <p className="text-fg-muted leading-relaxed">{t(`sidebar.zeroEntities.${coverage}.body`)}</p>
+            {coverage !== 'full' && (
+              <p className="text-fg-muted leading-relaxed">{t('sidebar.zeroEntities.nextStep')}</p>
+            )}
+          </div>
+        )}
+
+        {labeledCount > 0 && filtered.length === 0 && (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <p className="text-sm text-fg-muted">{t('sidebar.noEntities')}</p>
             <button
