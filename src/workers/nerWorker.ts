@@ -6,10 +6,13 @@ import {
   NERmemberta4Entities,
   NERmembertLarge4Entities,
 } from "@/models/index.ts";
-import type { TokenClassificationModel } from "@/models/token-classification-model.ts";
+import type { NERStep, TokenClassificationModel } from "@/models/token-classification-model.ts";
 import { type NERModel } from "@/models/utils.ts";
 
 declare const self: DedicatedWorkerGlobalScope;
+
+/** `process()` steps, then posting the result back to the page. */
+export type NERJobStep = NERStep | 'posting';
 
 let nerPipeline: TokenClassificationModel | null = null;
 let isInitialized = false;
@@ -72,6 +75,12 @@ async function processText(text: string, jobId: string) {
     return;
   }
 
+  let step: NERJobStep = 'classify';
+  const reportStep = (next: NERJobStep) => {
+    step = next;
+    self.postMessage({ type: 'step', jobId, step });
+  };
+
   try {
     const startTime = performance.now();
     await nerPipeline.process(text, (info) => {
@@ -81,9 +90,10 @@ async function processText(text: string, jobId: string) {
         totalChunks: info.totalChunks,
         totalPages: info.totalPages,
       });
-    });
+    }, reportStep);
     const endTime = performance.now();
 
+    reportStep('posting');
     self.postMessage({
       type: "result",
       jobId,
@@ -98,6 +108,7 @@ async function processText(text: string, jobId: string) {
       type: "error",
       jobId,
       name: error instanceof Error ? error.name : typeof error,
+      step,
       message: `Processing failed: ${error}`,
     });
   }

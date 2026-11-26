@@ -12,7 +12,7 @@ import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
 import { failureDetail, pagesBucket, sizeBucket, track } from '@/lib/analytics.ts';
 import { isModelCached } from '@/lib/cache.ts';
 import { textCoverage, type TextCoverage } from '@/lib/pdf/textCoverage.ts';
-import { CUSTOM_PAGE_SPLIT_TOKEN, NER_MODELS } from '@/models/utils.ts';
+import { joinPagesForNer, NER_MODELS } from '@/models/utils.ts';
 import { Navigate } from 'react-router';
 
 interface LoadingPageProps {
@@ -32,7 +32,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
   const { t, i18n } = useTranslation();
   const localize = useLocalizedPath();
   const { modelName } = useAnonymization();
-  const { downloadProgress, processingProgress, modelTokens, status: workerStatus, error, errorName, initialize, processText, terminate } = useNERWorker();
+  const { downloadProgress, processingProgress, jobStep, modelTokens, status: workerStatus, error, errorName, initialize, processText, terminate } = useNERWorker();
   const { setModelTokens, setNerEntities } = useAnonymization();
   const { file, pageCount, processFile, reset, setFile } = usePdfProcessing();
 
@@ -74,6 +74,8 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
       download: downloadProgress?.percent ?? -1,
       extract: extractProgress ? percent(extractProgress.done, extractProgress.total) : -1,
       ner: processingProgress ? percent(processingProgress.chunksProcessed, processingProgress.totalChunks) : -1,
+      // Where NER is: model inference ('classify'), then the post-processing steps, 'posting' last.
+      step: jobStep ?? 'none',
       pages: pagesBucket(extractProgress?.total ?? pageCount),
       mb: file ? sizeBucket(file.size) : 'unknown',
     });
@@ -139,7 +141,8 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
       ({ entities } = await processText(documentText));
     } catch (err) {
       console.error(err);
-      track('analysis-failed', { stage: 'ner', ...failureDetail(err, pageCount, documentText.length) });
+      const step = (err as { step?: string }).step ?? 'unknown';
+      track('analysis-failed', { stage: 'ner', step, ...failureDetail(err, pageCount, documentText.length) });
       fail('ner', err instanceof Error ? err.message : String(err));
       return;
     }
@@ -171,7 +174,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
     processFile(file, (done, total) => setExtractProgress({ done, total }), signal)
       .then((extracts) => {
         coverageRef.current = textCoverage(extracts);
-        setText(extracts.map((extract) => extract.text.replaceAll(/\n+/g, ' ')).join(CUSTOM_PAGE_SPLIT_TOKEN));
+        setText(joinPagesForNer(extracts.map((extract) => extract.text)));
       })
       .catch((err) => {
         if (signal.aborted) return;
@@ -207,7 +210,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
     lastActivityRef.current = performance.now();
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setStalled(false);
-  }, [downloadProgress, extractProgress, processingProgress, text, workerStatus]);
+  }, [downloadProgress, extractProgress, jobStep, processingProgress, text, workerStatus]);
 
   useEffect(() => {
     const timer = setInterval(() => {
