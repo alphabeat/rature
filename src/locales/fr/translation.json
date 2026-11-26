@@ -275,7 +275,22 @@
     "highlightAll": "Surligner toutes les occurrences",
     "prevOccurrence": "Occurrence précédente",
     "nextOccurrence": "Occurrence suivante",
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "zeroEntities": {
+      "none": {
+        "title": "Pas de texte dans ce PDF",
+        "body": "Ce document est scanné : ses pages sont des images, et Rature ne lit que le texte. Rien n'a donc pu être détecté."
+      },
+      "partial": {
+        "title": "Aucune donnée personnelle détectée",
+        "body": "Certaines pages sont des images scannées et n'ont pas été analysées."
+      },
+      "full": {
+        "title": "Aucune donnée personnelle détectée",
+        "body": "Relisez quand même le document : sélectionnez un passage pour l'ajouter à la liste."
+      },
+      "nextStep": "Que faire : si vous avez le fichier d'origine (Word, etc.), exportez-le en PDF et réessayez. Sinon, ajoutez une couche de texte avec un logiciel d'OCR installé sur votre ordinateur (par exemple Adobe Acrobat, « Reconnaître le texte »), plutôt qu'avec un service en ligne."
+    }
   },
   "export": {
     "title": "Exporter le PDF anonymisé",
@@ -316,8 +331,7 @@
   },
   "emptyPage": {
     "title": "Page non traitée",
-    "description": "Cette page semble être une image scannée. La reconnaissance optique de caractères (OCR) sera disponible prochainement.",
-    "comingSoon": "Bientôt disponible"
+    "description": "Cette page semble être une image scannée : Rature n'en lit pas le texte."
   },
   "selectionPopover": {
     "addAsEntity": "Ajouter comme entité",

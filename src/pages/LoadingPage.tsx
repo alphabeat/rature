@@ -11,6 +11,7 @@ import { useNERWorker } from '@/hooks/useNERWorker.ts';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
 import { failureDetail, pagesBucket, sizeBucket, track } from '@/lib/analytics.ts';
 import { isModelCached } from '@/lib/cache.ts';
+import { textCoverage, type TextCoverage } from '@/lib/pdf/textCoverage.ts';
 import { CUSTOM_PAGE_SPLIT_TOKEN, NER_MODELS } from '@/models/utils.ts';
 import { Navigate } from 'react-router';
 
@@ -46,6 +47,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
   const [extractProgress, setExtractProgress] = useState<{ done: number; total: number } | null>(null);
   const [stalled, setStalled] = useState(false);
   const cachedRef = useRef(false);
+  const coverageRef = useRef<TextCoverage>('full');
   const extractStartedRef = useRef(false);
   const extractAbortRef = useRef<AbortController | null>(null);
   const nerStartedRef = useRef(false);
@@ -149,6 +151,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
       seconds: Math.round((performance.now() - startedAt) / 1000),
       entities: labeledEntities.length,
       cached: cachedRef.current,
+      text: coverageRef.current,
     });
 
     setNerEntities(labeledEntities);
@@ -167,6 +170,7 @@ export function LoadingPage({ onComplete, onRetry }: LoadingPageProps) {
 
     processFile(file, (done, total) => setExtractProgress({ done, total }), signal)
       .then((extracts) => {
+        coverageRef.current = textCoverage(extracts);
         setText(extracts.map((extract) => extract.text.replaceAll(/\n+/g, ' ')).join(CUSTOM_PAGE_SPLIT_TOKEN));
       })
       .catch((err) => {

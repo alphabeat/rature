@@ -15,6 +15,7 @@ import { useEntityDrag } from '@/hooks/useEntityDrag.ts';
 import { useTextSelection } from '@/hooks/useTextSelection.ts';
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
 import { createTextParts } from '@/lib/pdf/createTextParts.tsx';
+import { isScannedPage } from '@/lib/pdf/textCoverage.ts';
 import { cn } from '@/lib/utils.ts';
 import type { GroupedEntity } from '@/types/index.ts';
 
@@ -149,7 +150,7 @@ export const PDFViewer = React.memo(function PDFViewer({
     ? focusedMatch.start
     : undefined;
 
-  const isEmptyPage = pageContent.text.trim().length < 15;
+  const isEmptyPage = isScannedPage(pageContent.text);
 
   const textParts = useMemo(() => createTextParts({
     model: modelName,

@@ -25,13 +25,6 @@ export function EmptyPDFPage() {
           {t('emptyPage.description')}
         </p>
       </div>
-
-      <div className="flex items-center gap-1.5 rounded-full border border-teal-200 dark:border-teal-800/60 bg-teal-50 dark:bg-teal-950/30 px-3 py-2 text-sm font-medium text-teal-600 dark:text-teal-400 tracking-wide">
-        <p className="flex items-center justify-center h-4 w-4">
-          <span className="block h-1.5 w-1.5 rounded-full bg-teal-500" />
-        </p>
-        <span>{t('emptyPage.comingSoon')}</span>
-      </div>
     </div>
   );
 }

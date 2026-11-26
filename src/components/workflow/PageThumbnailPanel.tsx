@@ -4,6 +4,7 @@ import { ScanLine } from 'lucide-react';
 
 import { usePdfProcessing } from '@/hooks/usePdfProcessing.ts';
 import { redactPDFDocument } from '@/lib/pdf/redactPDF.ts';
+import { isScannedPage } from '@/lib/pdf/textCoverage.ts';
 import { cn } from '@/lib/utils.ts';
 import type { GroupedEntity } from '@/types/index.ts';
 
@@ -173,7 +174,7 @@ export function PageThumbnailPanel({ currentPage, onPageChange, entities, redact
             pdfDocument={displayDoc}
             isActive={currentPage === i + 1}
             isPending={pendingPages?.has(i) ?? false}
-            isEmpty={(extractedText[i]?.text ?? '').trim().length < 15}
+            isEmpty={isScannedPage(extractedText[i]?.text ?? '')}
             onClick={() => onPageChange(i + 1)}
           />
         ))}

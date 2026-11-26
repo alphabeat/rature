@@ -275,7 +275,22 @@
     "highlightAll": "Highlight all occurrences",
     "prevOccurrence": "Previous occurrence",
     "nextOccurrence": "Next occurrence",
-    "delete": "Delete"
+    "delete": "Delete",
+    "zeroEntities": {
+      "none": {
+        "title": "No text in this PDF",
+        "body": "This document is scanned: its pages are images, and Rature only reads text. Nothing could be detected."
+      },
+      "partial": {
+        "title": "No personal data detected",
+        "body": "Some pages are scanned images and were not analysed."
+      },
+      "full": {
+        "title": "No personal data detected",
+        "body": "Review the document anyway: select a passage to add it to the list."
+      },
+      "nextStep": "What to do: if you have the original file (Word, etc.), export it to PDF and try again. Otherwise, add a text layer with OCR software installed on your computer (for example Adobe Acrobat, \"Recognize Text\"), rather than an online service."
+    }
   },
   "export": {
     "title": "Export anonymized PDF",
@@ -316,8 +331,7 @@
   },
   "emptyPage": {
     "title": "Page not processed",
-    "description": "This page appears to be a scanned image. Optical Character Recognition (OCR) will be available soon.",
-    "comingSoon": "Coming soon"
+    "description": "This page appears to be a scanned image: Rature cannot read its text."
   },
   "selectionPopover": {
     "addAsEntity": "Add as entity",
