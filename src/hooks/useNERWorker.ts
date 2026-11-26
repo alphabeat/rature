@@ -2,6 +2,7 @@ import { useRef, useState, useCallback } from "react";
 
 import type { NERModel } from "@/models/utils.ts";
 import type { GroupedEntity, NERPipelineEntity } from "@/types/index.ts";
+import type { NERJobStep } from "@/workers/nerWorker.ts";
 import NerWorker from "@/workers/nerWorker.ts?worker&url";
 
 export interface NERResult {
@@ -52,6 +53,11 @@ export type NERWorkerMessage =
     totalPages: number;
   }
   | {
+    type: "step";
+    jobId: string;
+    step: NERJobStep;
+  }
+  | {
     type: "result";
     jobId: string;
     rawEntities: NERPipelineEntity[];
@@ -62,6 +68,7 @@ export type NERWorkerMessage =
     type: "error";
     jobId: string;
     name?: string;
+    step?: NERJobStep;
     message: string;
   };
 
@@ -74,6 +81,8 @@ export function useNERWorker() {
   const [errorName, setErrorName] = useState<string | null>(null);
   const [downloadProgress, setDownloadProgress] = useState<DownloadProgress | null>(null);
   const [processingProgress, setProcessingProgress] = useState<ProcessingProgress | null>(null);
+  // The step the current job is in, so a stall or an error after NER can be traced to it.
+  const [jobStep, setJobStep] = useState<NERJobStep | null>(null);
   const modelNameRef = useRef<NERModel | null>(null);
   const pendingJobsRef = useRef<
     Map<
@@ -128,6 +137,10 @@ export function useNERWorker() {
         });
         break;
 
+      case "step":
+        setJobStep(event.data.step);
+        break;
+
       case "result": {
         console.log(event.data);
         const job = pendingJobsRef.current.get(event.data.jobId);
@@ -146,8 +159,9 @@ export function useNERWorker() {
       case "error": {
         const errorJob = pendingJobsRef.current.get(event.data.jobId);
         if (errorJob) {
-          const jobError = new Error(event.data.message);
+          const jobError: Error & { step?: NERJobStep } = new Error(event.data.message);
           if (event.data.name) jobError.name = event.data.name;
+          jobError.step = event.data.step;
           errorJob.reject(jobError);
           pendingJobsRef.current.delete(event.data.jobId);
         } else {
@@ -218,6 +232,7 @@ export function useNERWorker() {
     downloadProgress,
     error,
     errorName,
+    jobStep,
     modelTokens,
     processingProgress,
     status,

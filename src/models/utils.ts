@@ -12,6 +12,10 @@ export type NERModel = typeof NER_MODELS_NAMES[number];
 
 export const CUSTOM_PAGE_SPLIT_TOKEN = "\n\n[CUSTOM_PAGE_TOKEN]\n\n";
 
+/** The NER input for a document: one line per page, pages joined with `CUSTOM_PAGE_SPLIT_TOKEN`. */
+export const joinPagesForNer = (pages: string[]) =>
+  pages.map((text) => text.replaceAll(/\n+/g, ' ')).join(CUSTOM_PAGE_SPLIT_TOKEN);
+
 type EntityMeta = {
   dot: string;
   badge: string;

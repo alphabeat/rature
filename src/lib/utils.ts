@@ -29,4 +29,8 @@ export const ID_REGEX = new RegExp(
 
 export const IP_ADDRESS_REGEX = new RegExp(/\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/, 'g');
 
-export const URL_REGEX = new RegExp(/\b(?:https?:\/\/)?(?:www\.)?(?:(?:[-a-zA-Z0-9@:%._+~#=]{2,256}\.)+[a-zA-Z]{2,6})\/?(?:[/\d\w.-]*)*(?:[?])*(?:[^\s]+)*\b/, 'g');
+// Domain labels cannot contain dots and the path must end on a word character or '/', so the match
+// stays linear: the previous pattern backtracked exponentially on runs like `Nom......Prénom` or
+// `site.fr//////`, freezing the NER worker for minutes. Not preceded by '@', '.' or a word
+// character, so the domain of an email is not matched again as a URL.
+export const URL_REGEX = /(?<![\w@.-])(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]{2,}\.(?:[a-zA-Z0-9-]+\.)*[a-zA-Z]{2,6}\b(?::\d{1,5})?(?:[/?#][^\s]*[\w/])?/g;

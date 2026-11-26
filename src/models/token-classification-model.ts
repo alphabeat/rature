@@ -27,6 +27,9 @@ type InitOptions = {
 
 type Candidate = NERPipelineEntity & { position: number };
 
+/** Steps of `process()`, reported so a stall or an error can be traced to one of them. */
+export type NERStep = 'classify' | 'regex' | 'merge' | 'offsets' | 'aggregate' | 'expand' | 'dedupe';
+
 export class TokenClassificationModel {
   public MAX_CHUNK_LENGTH: number = 150;
   public model: string;
@@ -97,33 +100,67 @@ export class TokenClassificationModel {
   public async process(
     text: string,
     onProgress?: (info: { chunksProcessed: number; totalChunks: number; totalPages: number }) => void,
+    onStep?: (step: NERStep) => void,
   ) {
     this.rawPipelineEntities = [];
     this.entitiesWithOffset = [];
     this.entities = [];
     this.fullText = text.replaceAll('…', '...').replaceAll(CUSTOM_PAGE_SPLIT_TOKEN, ' ');
     this.textGroupedByPage = text.replaceAll('…', '...').split(CUSTOM_PAGE_SPLIT_TOKEN);
+    const originalPages = text.split(CUSTOM_PAGE_SPLIT_TOKEN);
 
     // Extract
+    onStep?.('classify');
     this.rawPipelineEntities = await this.extractClassifierEntities(onProgress);
+    onStep?.('regex');
     this.regexEntities = this.extractRegexEntities();
 
     // Merge
+    onStep?.('merge');
     this.mergedEntities = this.mergeAllEntities(this.rawPipelineEntities, this.regexEntities);
 
     // Reconstruct indexes (start/end) for each entity
+    onStep?.('offsets');
     this.entitiesWithOffset = this.buildOffsets(this.mergedEntities);
 
     // Aggregate
+    onStep?.('aggregate');
     this.entities = this.aggregateEntities(this.entitiesWithOffset);
 
     // Expand partial matches and deduplicate sub-entities
+    onStep?.('expand');
     this.entities = this.expandAndDeduplicateEntities(this.entities);
 
     // Deduplicate across labels
+    onStep?.('dedupe');
     this.entities = this.deduplicateByLabel(this.entities);
 
+    // Offsets so far point into the text with '…' spelled '...': map them back to the page text.
+    this.entities = this.toOriginalOffsets(this.entities, originalPages);
+
     return this.entities;
+  }
+
+  private toOriginalOffsets(entities: GroupedEntity[], originalPages: string[]): GroupedEntity[] {
+    const maps = originalPages.map((page) => {
+      if (!page.includes('…')) return null;
+      // For each index of the '...' text, the index of the same character in the page text.
+      const map: number[] = [];
+      for (let i = 0; i < page.length; i++) {
+        map.push(i);
+        if (page[i] === '…') map.push(i, i);
+      }
+      return map;
+    });
+
+    return entities.map((entity) => {
+      const map = maps[entity.page - 1];
+      if (!map) return entity;
+      const page = originalPages[entity.page - 1];
+      const start = map[entity.start] ?? page.length;
+      const end = entity.end >= map.length ? page.length : map[entity.end - 1] + 1;
+      return { ...entity, start, end, text: page.slice(start, end) };
+    });
   }
 
   private isPartOfWord(token: NERPipelineEntity): boolean {
@@ -200,13 +237,14 @@ export class TokenClassificationModel {
         type: 'R-EMAIL' as const,
         word: email.trim(),
       })),
-      ...Array.from(dates).map((date) => ({
-        type: 'R-DATE' as const,
-        word: date.trim(),
-      })),
+      // URLs before dates: a URL containing a date (`/2008-05-01/`) must be merged whole.
       ...Array.from(urls).map((url) => ({
         type: 'R-URL' as const,
         word: url.trim(),
+      })),
+      ...Array.from(dates).map((date) => ({
+        type: 'R-DATE' as const,
+        word: date.trim(),
       })),
       ...Array.from(ids).map((id) => ({
         type: 'R-ID' as const,
@@ -231,7 +269,8 @@ export class TokenClassificationModel {
 
     for (const entity of regexEntities) {
       const { type, word } = entity;
-      const tokenizedWord = tokenizer.tokenize(word).map((token) => token.replace(/^[_▁]/, ''));
+      // Strip the SentencePiece word prefix, but keep a literal '_' token (`article_lc`).
+      const tokenizedWord = tokenizer.tokenize(word).map((token) => (token.length > 1 ? token.replace(/^[_▁]/, '') : token));
       let cursor = 0;
 
       const firstToken = tokenizedWord[0];
@@ -259,7 +298,8 @@ export class TokenClassificationModel {
             const { position } = candidate[i - 1];
             const newCandidate = mergedEntities[position + 1];
 
-            if (newCandidate.word === token) {
+            // The candidate's first token can be the document's last one.
+            if (newCandidate?.word === token) {
               candidates[j].push({
                 ...newCandidate,
                 position: position + 1,
@@ -299,31 +339,34 @@ export class TokenClassificationModel {
 
     let cursor = 0;
     let currentPage = 1;
-    let originalText = this.textGroupedByPage[currentPage - 1];
+    let originalText = this.textGroupedByPage[0] ?? '';
 
     for (let i = 0; i < rawEntities.length; i++) {
       const token = rawEntities[i];
+      const firstChar = token.word.replace('##', '')[0];
+      if (!firstChar) continue;
 
-      if (i > 0) {
-        while (cursor < originalText.length && originalText[cursor] !== token.word.replace('##', '')[0]) {
-          cursor++;
-        }
+      // Find the token from the cursor on. Not on the rest of this page: it starts the next page
+      // that has text (empty pages, e.g. scans, are skipped). Found on neither: the tokenizer
+      // changed the text (unknown token), skip it rather than shift every later token.
+      let position = originalText.indexOf(firstChar, cursor);
+      if (position === -1) {
+        let nextPage = currentPage + 1;
+        while (nextPage <= totalPages && !this.textGroupedByPage[nextPage - 1]) nextPage++;
+        const nextText = this.textGroupedByPage[nextPage - 1];
+        const nextPosition = nextText?.indexOf(firstChar) ?? -1;
+        if (nextPosition === -1) continue;
+
+        currentPage = nextPage;
+        originalText = nextText;
+        position = nextPosition;
       }
+      cursor = position;
 
-      if (cursor >= originalText.length && currentPage <= totalPages) {
-        cursor = 0;
-        currentPage++;
-        originalText = this.textGroupedByPage[currentPage - 1];
-      }
+      const lastToken = entitiesWithOffset[entitiesWithOffset.length - 1];
 
-      if (!originalText || currentPage > totalPages) {
-        console.warn('Cursor reached end of text before scanning the whole document.');
-        return entitiesWithOffset;
-      }
-
-      if (this.isPartOfWord(token)) {
+      if (this.isPartOfWord(token) && lastToken?.page === currentPage) {
         const tokenWord = token.word.replace('##', '');
-        const lastToken = entitiesWithOffset[entitiesWithOffset.length - 1];
 
         const start = lastToken.start;
         const end = cursor + tokenWord.length;
@@ -336,7 +379,7 @@ export class TokenClassificationModel {
         lastToken.end = end;
       } else {
         const start = cursor;
-        const end = start + token.word.length;
+        const end = start + token.word.replace('##', '').length;
 
         cursor = end;
 

@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "indexnow": "bun scripts/indexnow.ts",
     "sample:entities": "bun --tsconfig-override tsconfig.app.json scripts/sample-entities.ts",
+    "stress:ner": "bun --tsconfig-override tsconfig.app.json scripts/ner-stress/run.ts",
     "preview": "vite preview --outDir build/client"
   },
   "dependencies": {
