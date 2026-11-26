@@ -27,12 +27,13 @@ export function ExportModal({ entities, fileName, includedImageCount, imageMetho
   const [removeMetadata, setRemoveMetadata] = useState(true);
   const [done, setDone] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
-  const [showContact, setShowContact] = useState(false);
+  // Download threshold (2 or 5) when the contact prompt is shown, null otherwise.
+  const [contactNth, setContactNth] = useState<number | null>(null);
   // Closing the modal while the contact prompt is shown and unclicked counts as a dismissal.
-  const contactPending = useRef(false);
+  const contactPending = useRef<number | null>(null);
 
   useEffect(() => () => {
-    if (contactPending.current) track('contact-prompt-dismissed');
+    if (contactPending.current !== null) track('contact-prompt-dismissed', { nth: contactPending.current });
   }, []);
 
   const originalBaseName = fileName.replace(/\.pdf$/i, '');
@@ -65,10 +66,11 @@ export function ExportModal({ entities, fileName, includedImageCount, imageMetho
       const fileName = effectiveFileName || t('export.defaultFileName');
 
       if (await onDownload({ removeMetadata, exportFileName: fileName })) {
-        if (claimContactPrompt()) {
-          contactPending.current = true;
-          track('contact-prompt-shown');
-          setShowContact(true);
+        const nth = claimContactPrompt();
+        if (nth !== null) {
+          contactPending.current = nth;
+          track('contact-prompt-shown', { nth });
+          setContactNth(nth);
         }
         setDone(true);
       }
@@ -270,8 +272,8 @@ export function ExportModal({ entities, fileName, includedImageCount, imageMetho
                 {t('export.successDesc')}
               </p>
             </div>
-            {showContact ? (
-              <ContactPrompt onContact={() => { contactPending.current = false; }} />
+            {contactNth !== null ? (
+              <ContactPrompt nth={contactNth} onContact={() => { contactPending.current = null; }} />
             ) : (
               <ProWaitlist
                 source="export"

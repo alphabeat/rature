@@ -3,6 +3,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { Footer } from "@/components/home/Footer.tsx";
 import { Navbar } from "@/components/Navbar.tsx";
 import { CONTACT_CALL_URL } from "@/lib/contactPrompt.ts";
+import { SUPPORT_ENABLED } from "@/lib/support.ts";
 import { WAITLIST_ENABLED } from "@/lib/waitlist.ts";
 
 const bold = <span className="font-bold" />;
@@ -83,6 +84,22 @@ export function PrivacyPolicyPage() {
                 <li>- <Trans i18nKey="privacy.s3.call.li3" components={components} /></li>
                 <li>- <Trans i18nKey="privacy.s3.call.li4" components={components} /></li>
                 <li>- <Trans i18nKey="privacy.s3.call.li5" components={components} /></li>
+              </ul>
+            </div>
+          </>
+        )}
+
+        {SUPPORT_ENABLED && (
+          <>
+            <h4 className="font-bold text-lg mb-2">{t('privacy.s3.support.title')}</h4>
+            <div className="flex flex-col gap-2 mb-6 pl-4">
+              <p><Trans i18nKey="privacy.s3.support.p1" components={components} /></p>
+              <ul className="pl-4 flex flex-col gap-3">
+                <li>- <Trans i18nKey="privacy.s3.support.li1" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.support.li2" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.support.li3" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.support.li4" components={components} /></li>
+                <li>- <Trans i18nKey="privacy.s3.support.li5" components={components} /></li>
               </ul>
             </div>
           </>
